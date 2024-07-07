@@ -134,6 +134,8 @@ GameObject:
   - component: {fileID: 5773196}
   - component: {fileID: 5773195}
   - component: {fileID: 5773194}
+  - component: {fileID: 5773197}
+  - component: {fileID: 5773198}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -150,8 +152,8 @@ Transform:
   m_GameObject: {fileID: 5773192}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.7976, y: 1.24, z: -7.6532993}
-  m_LocalScale: {x: 2.5675, y: 1, z: 3.3794653}
+  m_LocalPosition: {x: -9.7976, y: 0.63, z: -7.6532993}
+  m_LocalScale: {x: 2.5675, y: 2.5986, z: 3.3794653}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1541277981}
@@ -171,7 +173,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -227,6 +229,40 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5773192}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &5773197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5773192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d70f526b950c6124e9ee3f739e98f64d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObject: {fileID: 5773192}
+--- !u!114 &5773198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5773192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2514704810
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &12278331
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,6 +464,8 @@ GameObject:
   - component: {fileID: 211929697}
   - component: {fileID: 211929696}
   - component: {fileID: 211929695}
+  - component: {fileID: 211929698}
+  - component: {fileID: 211929699}
   m_Layer: 0
   m_Name: Cube (3)
   m_TagString: Untagged
@@ -444,8 +482,8 @@ Transform:
   m_GameObject: {fileID: 211929693}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.5224, y: 1.24, z: -7.6532993}
-  m_LocalScale: {x: 2.5675, y: 1, z: 3.3794653}
+  m_LocalPosition: {x: 7.5224, y: 0.63, z: -7.6532993}
+  m_LocalScale: {x: 2.5675, y: 2.5986, z: 3.3794653}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1541277981}
@@ -465,7 +503,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -521,6 +559,40 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 211929693}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &211929698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211929693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d70f526b950c6124e9ee3f739e98f64d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObject: {fileID: 211929693}
+--- !u!114 &211929699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211929693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1680269655
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &230661159
 GameObject:
   m_ObjectHideFlags: 0
@@ -719,6 +791,8 @@ GameObject:
   - component: {fileID: 487017623}
   - component: {fileID: 487017622}
   - component: {fileID: 487017621}
+  - component: {fileID: 487017624}
+  - component: {fileID: 487017625}
   m_Layer: 0
   m_Name: Cube (5)
   m_TagString: Untagged
@@ -735,8 +809,8 @@ Transform:
   m_GameObject: {fileID: 487017619}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.1424003, y: 1.24, z: -2.0133}
-  m_LocalScale: {x: 2.5675, y: 1, z: 3.3794653}
+  m_LocalPosition: {x: 5.1424003, y: 0.63, z: -2.0133}
+  m_LocalScale: {x: 2.5675, y: 2.5986, z: 3.3794653}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1541277981}
@@ -756,7 +830,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -812,6 +886,40 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 487017619}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &487017624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 487017619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d70f526b950c6124e9ee3f739e98f64d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObject: {fileID: 487017619}
+--- !u!114 &487017625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 487017619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 231895488
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &631795657
 GameObject:
   m_ObjectHideFlags: 0
@@ -874,6 +982,8 @@ GameObject:
   - component: {fileID: 664577088}
   - component: {fileID: 664577087}
   - component: {fileID: 664577086}
+  - component: {fileID: 664577089}
+  - component: {fileID: 664577090}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
@@ -890,8 +1000,8 @@ Transform:
   m_GameObject: {fileID: 664577084}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.5476, y: 1.24, z: -7.6532993}
-  m_LocalScale: {x: 2.5675, y: 1, z: 3.3794653}
+  m_LocalPosition: {x: -1.5476, y: 0.63, z: -7.6532993}
+  m_LocalScale: {x: 2.5675, y: 2.5986, z: 3.3794653}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1541277981}
@@ -911,7 +1021,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -967,6 +1077,40 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 664577084}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &664577089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664577084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d70f526b950c6124e9ee3f739e98f64d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObject: {fileID: 664577084}
+--- !u!114 &664577090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664577084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 277175935
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &919783836
 GameObject:
   m_ObjectHideFlags: 0
@@ -1058,6 +1202,8 @@ GameObject:
   - component: {fileID: 1101347510}
   - component: {fileID: 1101347509}
   - component: {fileID: 1101347508}
+  - component: {fileID: 1101347511}
+  - component: {fileID: 1101347512}
   m_Layer: 0
   m_Name: Cube (4)
   m_TagString: Untagged
@@ -1074,8 +1220,8 @@ Transform:
   m_GameObject: {fileID: 1101347506}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.6976, y: 1.24, z: -2.0133}
-  m_LocalScale: {x: 2.5675, y: 1, z: 3.3794653}
+  m_LocalPosition: {x: -6.6976, y: 0.63, z: -2.0133}
+  m_LocalScale: {x: 2.5675, y: 2.5986, z: 3.3794653}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1541277981}
@@ -1095,7 +1241,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1151,6 +1297,40 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1101347506}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1101347511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101347506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d70f526b950c6124e9ee3f739e98f64d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObject: {fileID: 1101347506}
+--- !u!114 &1101347512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101347506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 3242642683
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &1136949100
 GameObject:
   m_ObjectHideFlags: 0
@@ -1487,6 +1667,7 @@ Transform:
   - {fileID: 211929694}
   - {fileID: 1101347507}
   - {fileID: 487017620}
+  - {fileID: 1589801342}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1589801338
@@ -1501,6 +1682,8 @@ GameObject:
   - component: {fileID: 1589801341}
   - component: {fileID: 1589801340}
   - component: {fileID: 1589801339}
+  - component: {fileID: 1589801343}
+  - component: {fileID: 1589801344}
   m_Layer: 0
   m_Name: Cube (6)
   m_TagString: Untagged
@@ -1523,7 +1706,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1587,13 +1770,47 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1589801338}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.06, y: 0.78, z: -5.89}
-  m_LocalScale: {x: 2.5675, y: 1, z: 3.3794653}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.77759993, y: 0.63, z: 2.5867}
+  m_LocalScale: {x: 2.5675, y: 2.5986, z: 3.3794653}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1541277981}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1589801343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1589801338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d70f526b950c6124e9ee3f739e98f64d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObject: {fileID: 1589801338}
+--- !u!114 &1589801344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1589801338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 3533660453
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &1757470107
 GameObject:
   m_ObjectHideFlags: 0
@@ -1900,4 +2117,3 @@ SceneRoots:
   - {fileID: 1378474739}
   - {fileID: 12278334}
   - {fileID: 1541277981}
-  - {fileID: 1589801342}
