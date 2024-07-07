@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     private State state;
     private bool isLocalPlayerReady;
+    
 
     private void Awake(){
         state = State.NotReady;
