@@ -40,6 +40,11 @@ public class TestingLobby : MonoBehaviour
         try{
             string lobbyName = "MyLobby";
             int maxPlayers = 2;
+
+            CreateLobbyOptions createLobbyOptions= new CreateLobbyOptions{
+                IsPrivate = true;//여기서 부터 이어서 하기
+            };
+
             Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers);
             
             hostLobby = lobby;
