@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/test/multiplay_test.unity
     guid: 2defc62d6ea48264d89b4612823bb229
   - enabled: 0
@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/test/netcode_test2.unity
     guid: d1ecdcc25d6a13641925e451cfc9b1ca
+  - enabled: 1
+    path: Assets/Scenes/test/multiplayer test.unity
+    guid: a64fa478ebedae7458a25cb52db72342
   m_configObjects: {}
