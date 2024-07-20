@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class PlayerMovement : MonoBehaviour
+using Unity.Netcode;
+public class PlayerMovement : NetworkBehaviour
 {
     Animator _animator;
     Camera _camera;
+    [SerializeField]
+    GameObject MainCamera;
     CharacterController _controller;
 
     public float speed = 5f;
@@ -21,11 +23,23 @@ public class PlayerMovement : MonoBehaviour
         _animator = this.GetComponent<Animator>();
         _camera = Camera.main;
         _controller = this.GetComponent<CharacterController>();
+
+        if(!IsOwner){
+            MainCamera.gameObject.SetActive(false);
+        }else{
+            MainCamera.gameObject.SetActive(true);
+        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if(!IsOwner){
+            return;
+        }
+
         if (Input.GetKey(KeyCode.LeftAlt))
         {
             toggleCameraRotation = true; // �ѷ����� Ȱ��ȭ
@@ -47,6 +61,11 @@ public class PlayerMovement : MonoBehaviour
 
     void LateUpdate()
     {
+
+        if(!IsOwner){
+            return;
+        }
+
         if (toggleCameraRotation != true)
         {
             Vector3 playerRotate = Vector3.Scale(_camera.transform.forward, new Vector3(1, 0, 1));

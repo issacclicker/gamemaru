@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class NewBehaviourScript : MonoBehaviour
+public class NewBehaviourScript : NetworkBehaviour
 {
     public Transform objectTofollow;
     public float followSpeed = 10f;
@@ -23,6 +24,11 @@ public class NewBehaviourScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        if(!IsOwner){
+            return;
+        }
+
         rotX = transform.localRotation.eulerAngles.x;
         rotY = transform.localRotation.eulerAngles.y;
 
@@ -36,6 +42,11 @@ public class NewBehaviourScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(!IsOwner){
+            return;
+        }
+
         rotX += -(Input.GetAxis("Mouse Y")) * sensitivity * Time.deltaTime;
         rotY += Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
 
@@ -45,6 +56,8 @@ public class NewBehaviourScript : MonoBehaviour
     }
     void LateUpdate()
     {
+        if(!IsOwner){ return; }
+
         transform.position = Vector3.MoveTowards(transform.position, objectTofollow.position, followSpeed * Time.deltaTime);
 
         finalDir = transform.TransformPoint(dirNormalized * maxDistance);
