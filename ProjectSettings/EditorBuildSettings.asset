@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/test/multiplay_test.unity
+    guid: 2defc62d6ea48264d89b4612823bb229
+  - enabled: 0
     path: Assets/Scenes/test/LobbyTest.unity
     guid: 657495be5f17fb64bba55cdb1ac7323f
   - enabled: 0
