@@ -28,11 +28,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftAlt))
         {
-            toggleCameraRotation = true; // µÑ·¯º¸±â È°¼ºÈ­
+            toggleCameraRotation = true; // ï¿½Ñ·ï¿½ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­
         }
         else
         {
-            toggleCameraRotation = false; // µÑ·¯º¸±â ºñÈ°¼ºÈ­
+            toggleCameraRotation = false; // ï¿½Ñ·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
         }
         if (Input.GetKey(KeyCode.LeftShift))
         {

@@ -23,7 +23,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/test/netcode_test2.unity
     guid: d1ecdcc25d6a13641925e451cfc9b1ca
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/test/multiplayer test.unity
     guid: a64fa478ebedae7458a25cb52db72342
   - enabled: 1
