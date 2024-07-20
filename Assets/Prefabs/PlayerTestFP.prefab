@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: -5085577560315372314}
   - component: {fileID: 7604586803039935930}
   - component: {fileID: 2771083496176223243}
-  - component: {fileID: 6249894604370087139}
   m_Layer: 0
   m_Name: PlayerTestFP
   m_TagString: Player
@@ -207,19 +206,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &6249894604370087139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1554407751774150936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cfb5ecdc24e6204cb1808742b48ca6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
 --- !u!1 &6847800671455106619
 GameObject:
   m_ObjectHideFlags: 0
