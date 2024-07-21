@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine;
 
+//안 쓸 예정
+
 public class TigerController : MonoBehaviour
 {
     [SerializeField] private Transform characterBody;

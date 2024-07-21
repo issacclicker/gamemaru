@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//playerMovement ë¡œ í†µí•©
+
 public class fox1 : MonoBehaviour
 {
     public float speed;
@@ -15,15 +17,15 @@ public class fox1 : MonoBehaviour
     bool jDown;
     bool iDown;
 
-    //ÀüÃ¼ ÀÌµ¿ ¹æÇâ ÀúÀåÇÒ º¯¼ö
+    //ï¿½ï¿½Ã¼ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     Vector3 moveVec;
 
     Rigidbody rigid;
     
-    //Æ®¸®°Å µÈ ¾ÆÀÌÅÛÀ» ÀúÀåÇÒ º¯¼ö
+    //Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     GameObject nearObject;
 
-    //È¹µæÇÑ ¿©ÀÇÁÖ ¼ö
+    //È¹ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     private int beadCount = 0;
 
     void Awake()
@@ -41,37 +43,37 @@ public class fox1 : MonoBehaviour
         Interaction();
     }
 
-    //ÀÔ·Â¹Þ´Â ÇÔ¼ö
+    //ï¿½Ô·Â¹Þ´ï¿½ ï¿½Ô¼ï¿½
     void GetInput()
     {
-        //ÀÌµ¿ÇÒ ¹æÇâ ÀÔ·Â ¹Þ±â
+        //ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ ï¿½Þ±ï¿½
         hAxis = Input.GetAxisRaw("Horizontal");
         vAxis = Input.GetAxisRaw("Vertical");
 
-        //Á¡ÇÁ ÀÔ·Â ¹Þ±â
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ ï¿½Þ±ï¿½
         jDown = Input.GetButtonDown("Jump");
 
-        //±¸½½ ¸Ô±â
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½Ô±ï¿½
         iDown = Input.GetButtonDown("Interaction");
     }
 
-    //ÀÌµ¿½ÃÅ°±â
+    //ï¿½Ìµï¿½ï¿½ï¿½Å°ï¿½ï¿½
     void Move()
     {
-        //´ë°¢¼± ¹æÇâ¿¡¼­µµ 1¸¸ ÀÌµ¿ÇÏµµ·Ï
+        //ï¿½ë°¢ï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Ïµï¿½ï¿½ï¿½
         moveVec = new Vector3(hAxis, 0, vAxis).normalized;
 
-        //ÀÌµ¿ ¼Óµµ °ª¿¡ µû¶ó ÀÌµ¿
+        //ï¿½Ìµï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
         transform.position += moveVec * speed * Time.deltaTime;
     }
 
-    //È¸Àü½ÃÅ°±â
+    //È¸ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½
     void Turn()
     {
         transform.LookAt(transform.position + moveVec);
     }
 
-    //Á¡ÇÁÇÏ±â
+    //ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
     void Jump()
     {
         if (jDown)
@@ -82,7 +84,7 @@ public class fox1 : MonoBehaviour
 
     void Interaction()
     {
-        //¿©ÀÇÁÖ ¸Ô±â
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô±ï¿½
         if(iDown && nearObject != null && !jDown)
         {
             if(nearObject.tag == "Bead")
@@ -101,19 +103,19 @@ public class fox1 : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        //´êÀº ¿©ÀÇÁÖ ÀúÀå
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (other.tag == "Bead")
             nearObject = other.gameObject;
     }
 
     void OnTriggerExit(Collider other)
     {
-        //¿©ÀÇÁÖ°¡ ÀÖ´Â ¿µ¿ªÀ» ¹þ¾î³ª¸é ¿©ÀÇÁÖ ¾ø¾Ö±â
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Ö°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½î³ªï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ö±ï¿½
         if (other.tag == "Bead")
             nearObject = null;
     }
 
-    // ÅØ½ºÆ® ¾÷µ¥ÀÌÆ®
+    // ï¿½Ø½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     private void UpdateBeadCountText()
     {
         beadCountText.text = "Number: " + beadCount;
