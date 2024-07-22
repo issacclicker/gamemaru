@@ -34,8 +34,9 @@ public class PlayerMovement : NetworkBehaviour
     private HalfScreen halfScr; //from HalfScreen.cs
 
     //Tiger UI(from Tiger_Controller.cs)
-    public GameObject Heart1, Heart2,Heart3;
-    [SerializeField] //체력 디버깅용
+    // public GameObject Heart1, Heart2,Heart3;
+    //체력 디버깅용
+    [SerializeField] 
     public static int health;
 
     //Fox features(from fox1.cs)
@@ -68,7 +69,7 @@ public class PlayerMovement : NetworkBehaviour
             MainCamera.gameObject.SetActive(true);
         }
 
-        playerState = "Fox"; //테스트를 위한 플레이어 상태 설정
+        // playerState = "Fox"; //테스트를 위한 플레이어 상태 설정
         
 
         if(playerState == "Tiger"){
@@ -190,6 +191,7 @@ public class PlayerMovement : NetworkBehaviour
         if (health > 0)
         {
             health = health - 1;
+            Debug.Log("Hunt Fail!");
         }
 
         // UpdateHeartUI();

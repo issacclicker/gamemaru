@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9178411311281949299}
   - component: {fileID: 2442454872240577038}
   - component: {fileID: 174772240692611201}
+  - component: {fileID: 9130685224232239991}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3237205757965180500}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.386, z: 0.952}
+  m_LocalPosition: {x: 0, y: 1.108, z: 0.952}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -105,6 +106,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &9130685224232239991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3237205757965180500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8b55634b8f9937438c85ea9d8684025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHead: {fileID: 3253949356774891535}
 --- !u!1 &4395776245041240624
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,12 +385,7 @@ MonoBehaviour:
   toggleCameraRotation: 0
   run: 0
   smoothness: 10
-  playerState: 
-  Heart1: {fileID: 0}
-  Heart2: {fileID: 0}
-  Heart3: {fileID: 0}
-  Bead: []
-  beadCountText: {fileID: 0}
+  playerState: Tiger
 --- !u!143 &6395637254529567614
 CharacterController:
   m_ObjectHideFlags: 0
