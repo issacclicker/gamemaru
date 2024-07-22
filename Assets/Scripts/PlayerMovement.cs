@@ -45,10 +45,10 @@ public class PlayerMovement : NetworkBehaviour
     bool iDown;
     GameObject nearObject;
 
-    void Awake()
-    {
-        UpdateBeadCountText();
-    }
+    // void Awake()
+    // {
+    //     UpdateBeadCountText();
+    // }
 
 
 
@@ -102,7 +102,7 @@ public class PlayerMovement : NetworkBehaviour
             }
 
             //Tiger UI update
-            UpdateHeartUI();
+            // UpdateHeartUI();
         }
         else
         {
@@ -191,7 +191,7 @@ public class PlayerMovement : NetworkBehaviour
             health = health - 1;
         }
 
-        UpdateHeartUI();
+        // UpdateHeartUI();
 
         if (health == 0)
         {
@@ -239,25 +239,25 @@ public class PlayerMovement : NetworkBehaviour
     }
 
     //하트 UI 표시
-    void UpdateHeartUI()
-    {
-        Heart1.SetActive(health >= 1);
-        Heart2.SetActive(health >= 2);
-        Heart3.SetActive(health >= 3);
-    }
+    // void UpdateHeartUI()
+    // {
+    //     Heart1.SetActive(health >= 1);
+    //     Heart2.SetActive(health >= 2);
+    //     Heart3.SetActive(health >= 3);
+    // }
     IEnumerator ResetHealthAfterDelay()
     {
         yield return new WaitForSeconds(5);
         health = 3;
-        UpdateHeartUI();
+        // UpdateHeartUI();
     }
 
 
     //Fox Interactions
-    private void UpdateBeadCountText()
-    {
-        beadCountText.text = "Number: " + beadCount;
-    }
+    // private void UpdateBeadCountText()
+    // {
+    //     beadCountText.text = "Number: " + beadCount;
+    // }
     void Interaction()
     {
         //여의주 먹기
@@ -265,12 +265,12 @@ public class PlayerMovement : NetworkBehaviour
         {
             if(nearObject.tag == "Bead")
             {
-                Item item = nearObject.GetComponent<Item>();
-                int beadIndex = item.value;
+                // Item item = nearObject.GetComponent<Item>();
+                // int beadIndex = item.value;
                 // hasBeads[beadIndex] = true;
 
                 beadCount++;
-                UpdateBeadCountText();
+                // UpdateBeadCountText();
 
                 Destroy(nearObject);
             }
