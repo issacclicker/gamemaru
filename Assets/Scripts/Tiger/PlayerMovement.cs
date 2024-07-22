@@ -66,6 +66,12 @@ public class PlayerMovement : NetworkBehaviour
         }else{
             MainCamera.gameObject.SetActive(true);
         }
+
+        if(IsServer){
+            playerState = "Tiger";
+        }else{
+            playerState = "Fox";
+        }
         
     }
 
