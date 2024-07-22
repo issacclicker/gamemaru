@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
+using Unity.Netcode;
 
-public class NPCController : MonoBehaviour
+public class NPCController : NetworkBehaviour
 {
     public float maxSpeed = 1.25f; // 호랑이 속도의 4분의 1
     public float minDirectionChangeInterval = 2.5f; 

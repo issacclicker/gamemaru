@@ -35,13 +35,14 @@ public class PlayerMovement : NetworkBehaviour
 
     //Tiger UI(from Tiger_Controller.cs)
     public GameObject Heart1, Heart2,Heart3;
+    [SerializeField] //체력 디버깅용
     public static int health;
 
     //Fox features(from fox1.cs)
     private int beadCount = 0;
-    public GameObject[] Bead;
+    // public GameObject[] Bead;
     // public bool[] hasBeads; 
-    public Text beadCountText;
+    // public Text beadCountText;
     bool iDown;
     GameObject nearObject;
 
@@ -71,7 +72,7 @@ public class PlayerMovement : NetworkBehaviour
         
 
         if(playerState == "Tiger"){
-            halfScr = FindObjectOfType<HalfScreen>();
+            // halfScr = FindObjectOfType<HalfScreen>();
             health = 3;
         }
         
