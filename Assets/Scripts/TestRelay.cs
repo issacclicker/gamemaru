@@ -14,8 +14,19 @@ public class TestRelay : MonoBehaviour
 
     public string TestCode;
 
-    public GameObject CreateBtnText;
+    // public GameObject CreateBtnText;
 
+    //비활성화 시킬 UI
+    public GameObject[] UI_Objects;
+
+    public GameObject TestCodeUI;
+    private Text _testCodeUI;
+    //joinCode 빼내기
+    private string _joinCode;
+
+    private void Awake(){
+        _testCodeUI = TestCodeUI.GetComponent<Text>();
+    }
 
     
     private async void Start(){
@@ -43,7 +54,12 @@ public class TestRelay : MonoBehaviour
             );
 
             NetworkManager.Singleton.StartHost();
-            CreateBtnText.GetComponent<Text>().text = joinCode;
+            // CreateBtnText.GetComponent<Text>().text = joinCode;
+
+            _joinCode = joinCode;
+            DisableUIObjects();
+            JoinCodeText_Change();
+
         }
         catch(RelayServiceException e){
             Debug.Log(e);
@@ -66,6 +82,8 @@ public class TestRelay : MonoBehaviour
                 joinAllocation.HostConnectionData
             );
 
+            DisableUIObjects();
+
             NetworkManager.Singleton.StartClient();
         }catch(RelayServiceException e){
             Debug.Log(e);
@@ -74,5 +92,15 @@ public class TestRelay : MonoBehaviour
 
     public void onClick(){
         JoinRelay(TestCode);
+    }
+
+    private void JoinCodeText_Change(){
+        _testCodeUI.text = _joinCode;
+    }
+
+    private void DisableUIObjects(){
+        for(int i = 0;i<UI_Objects.Length;i++){
+            UI_Objects[i].SetActive(false);
+        }
     }
 }
