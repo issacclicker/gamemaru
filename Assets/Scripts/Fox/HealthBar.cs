@@ -5,26 +5,27 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    public float health = 100; // ÃÊ±â Ã¼·Â
-    public Image healthpoints; // Ã¼·Â¹Ù ÀÌ¹ÌÁö
-    private bool canEatFood = false; // ¸ÔÀÌ¸¦ ¸ÔÀ» ¼ö ÀÖ´ÂÁö ¿©ºÎ
+    public float health = 100; // ï¿½Ê±ï¿½ Ã¼ï¿½ï¿½
+    public Image healthpoints; // Ã¼ï¿½Â¹ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½
+    // private bool canEatFood = false; // ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+
+    public bool IsGameStarted = false;
 
     private void Update()
     {
-        // // E Å°¸¦ ´­·¶À» ¶§ ¸ÔÀÌ ¸Ô±â
+        // // E Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô±ï¿½
         // if (canEatFood && Input.GetKeyDown(KeyCode.E))
         // {
         //     EatFood(5f);
         // }
 
-        // ¸ÔÀÌ¸¦ ¸ÔÁö ¾Ê¾ÒÀ» ¶§ Ã¼·Â °¨¼Ò
-        if (!canEatFood)
-        {
+        // ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾ï¿½ï¿½ï¿½ ï¿½ï¿½ Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        if(IsGameStarted)
             PoisonZone(2f * Time.deltaTime);
-        }
+        
     }
 
-    //¸ÔÀÌ¿ÍÀÇ °Å¸®°¡ °¡±î¿ï ¶§
+    //ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     // private void OnTriggerEnter(Collider other)
     // {
     //     if (other.CompareTag("Food"))
@@ -33,7 +34,7 @@ public class HealthBar : MonoBehaviour
     //     }
     // }
 
-    // //¸ÔÀÌ¿ÍÀÇ °Å¸®°¡ ¸Ö ¶§
+    // //ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½
     // private void OnTriggerExit(Collider other)
     // {
     //     if (other.CompareTag("Food"))
@@ -42,7 +43,7 @@ public class HealthBar : MonoBehaviour
     //     }
     // }
 
-    // E Å°¸¦ ´­·¶À» ¶§ Ã¼·Â È¸º¹
+    // E Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Ã¼ï¿½ï¿½ È¸ï¿½ï¿½
     public void EatFood(float heal)
     {
         if (health < 100)
@@ -53,7 +54,7 @@ public class HealthBar : MonoBehaviour
         }
     }
 
-    // ¸Å ÇÁ·¹ÀÓ¸¶´Ù ÇÇÇØ
+    // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void PoisonZone(float damage)
     {
         if (health > 0)

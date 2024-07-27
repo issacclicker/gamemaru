@@ -67,7 +67,7 @@ public class PlayerMovement : NetworkBehaviour
 
         UIManagerObject.GetComponent<UIManager>().playerState = playerState;
         _uiManager.UIEnable();
-
+        _healthBar.IsGameStarted = true;
 
     }
 

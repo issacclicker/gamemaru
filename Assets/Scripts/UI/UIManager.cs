@@ -20,13 +20,15 @@ public class UIManager : MonoBehaviour
 
     //여우 UI 변수
     public int beadCount; //여의주 갯수
-    public Text beadCountText;
+    public Text beadCountText; //여의주 갯수 텍스트
+    public GameObject HealthBar; //체력바
 
     //변수 초기화, UI 비활성화
     void Start (){
         Heart1.SetActive(false);
         Heart2.SetActive(false);
         Heart3.SetActive(false);
+        HealthBar.SetActive(false);
         health_tiger = 3;
         beadCount = 0;
     }
@@ -38,6 +40,7 @@ public class UIManager : MonoBehaviour
         }
         else if(playerState=="Fox")
         {
+            HealthBar.SetActive(true);
             UpdateBeadCountText();
         }
     }
