@@ -11,11 +11,11 @@ public class HealthBar : MonoBehaviour
 
     private void Update()
     {
-        // E 키를 눌렀을 때 먹이 먹기
-        if (canEatFood && Input.GetKeyDown(KeyCode.E))
-        {
-            EatFood(5f);
-        }
+        // // E 키를 눌렀을 때 먹이 먹기
+        // if (canEatFood && Input.GetKeyDown(KeyCode.E))
+        // {
+        //     EatFood(5f);
+        // }
 
         // 먹이를 먹지 않았을 때 체력 감소
         if (!canEatFood)
@@ -25,22 +25,22 @@ public class HealthBar : MonoBehaviour
     }
 
     //먹이와의 거리가 가까울 때
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Food"))
-        {
-            canEatFood = true;
-        }
-    }
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     if (other.CompareTag("Food"))
+    //     {
+    //         canEatFood = true;
+    //     }
+    // }
 
-    //먹이와의 거리가 멀 때
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Food"))
-        {
-            canEatFood = false;
-        }
-    }
+    // //먹이와의 거리가 멀 때
+    // private void OnTriggerExit(Collider other)
+    // {
+    //     if (other.CompareTag("Food"))
+    //     {
+    //         canEatFood = false;
+    //     }
+    // }
 
     // E 키를 눌렀을 때 체력 회복
     public void EatFood(float heal)

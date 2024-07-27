@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6024117657524311703}
   - component: {fileID: 8156567152322195913}
   - component: {fileID: 645665150261076783}
-  - component: {fileID: 8895317367436162138}
   - component: {fileID: 927373750559755116}
   m_Layer: 0
   m_Name: Cube (3)
@@ -120,27 +119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d70f526b950c6124e9ee3f739e98f64d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8895317367436162138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1519646716735839046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 406591503
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
 --- !u!114 &927373750559755116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,8 +145,8 @@ GameObject:
   - component: {fileID: 6140783005155395474}
   - component: {fileID: 8304856904535892274}
   - component: {fileID: 2300755746719227601}
-  - component: {fileID: 1417577631600876142}
   - component: {fileID: 1542543628608546539}
+  - component: {fileID: 1417577631600876142}
   - component: {fileID: 1974145041239585820}
   m_Layer: 0
   m_Name: Cube (4)
@@ -263,18 +241,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1417577631600876142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3431520577080984453}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d70f526b950c6124e9ee3f739e98f64d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1542543628608546539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,7 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1156060487
+  GlobalObjectIdHash: 3344569952
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -296,6 +262,18 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &1417577631600876142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3431520577080984453}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d70f526b950c6124e9ee3f739e98f64d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1974145041239585820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,7 +301,6 @@ GameObject:
   - component: {fileID: 5160784154900831728}
   - component: {fileID: 517379592337930870}
   - component: {fileID: 5636092540498695142}
-  - component: {fileID: 1346944955037172326}
   - component: {fileID: 3305228918192719374}
   m_Layer: 0
   m_Name: Cube (5)
@@ -430,27 +407,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d70f526b950c6124e9ee3f739e98f64d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1346944955037172326
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5344025254316428151}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1438088879
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
 --- !u!114 &3305228918192719374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -474,6 +430,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4364042934575207359}
+  - component: {fileID: 7029223603998728660}
   m_Layer: 0
   m_Name: testing env
   m_TagString: Untagged
@@ -503,6 +460,27 @@ Transform:
   - {fileID: 2121091375181729099}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7029223603998728660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6528791521422134429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 0
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &7667989877751361267
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,7 +494,6 @@ GameObject:
   - component: {fileID: 8627827911748864047}
   - component: {fileID: 5741840588867658038}
   - component: {fileID: 456063129248353962}
-  - component: {fileID: 6482031366690995958}
   - component: {fileID: 7956047318089791643}
   m_Layer: 0
   m_Name: Cube (6)
@@ -623,27 +600,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d70f526b950c6124e9ee3f739e98f64d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6482031366690995958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7667989877751361267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 648913317
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
 --- !u!114 &7956047318089791643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -776,7 +732,6 @@ GameObject:
   - component: {fileID: 1806059279279872919}
   - component: {fileID: 1764700663519203138}
   - component: {fileID: 5563553358786418335}
-  - component: {fileID: 8369013936298027852}
   - component: {fileID: 7615907981188481522}
   m_Layer: 0
   m_Name: Cube (2)
@@ -883,27 +838,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d70f526b950c6124e9ee3f739e98f64d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8369013936298027852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8112650034272089000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1405707999
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
 --- !u!114 &7615907981188481522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -930,7 +864,6 @@ GameObject:
   - component: {fileID: 967251860769238186}
   - component: {fileID: 3855899065640778759}
   - component: {fileID: 4483121807630274008}
-  - component: {fileID: 3351380993160219090}
   - component: {fileID: 4864773443953689289}
   - component: {fileID: 1321815338985259660}
   m_Layer: 0
@@ -1026,27 +959,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3351380993160219090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8175248929847256985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1149271205
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
 --- !u!114 &4864773443953689289
 MonoBehaviour:
   m_ObjectHideFlags: 0
