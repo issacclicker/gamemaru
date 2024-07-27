@@ -1,7 +1,10 @@
 using UnityEngine;
 using System.Collections;
+using Unity.Netcode;
 
-public class CubeController : MonoBehaviour
+
+//호랑이 공격 스크립트
+public class CubeController : NetworkBehaviour
 {
 
     public GameObject playerHead;
@@ -27,6 +30,11 @@ public class CubeController : MonoBehaviour
 
     void Update()
     {
+        if(!IsOwner){
+            return;
+        }
+
+
         if (Input.GetButtonDown("Interaction") && playerState == "Tiger")
         {
             Debug.Log("Attack!");

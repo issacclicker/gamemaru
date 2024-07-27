@@ -275,7 +275,8 @@ public class PlayerMovement : NetworkBehaviour
                 beadCount++;
                 // UpdateBeadCountText();
 
-                Destroy(nearObject);
+                // Destroy(nearObject);
+                nearObject.SetActive(false);
             }
         }
     }
