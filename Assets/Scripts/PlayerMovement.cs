@@ -276,7 +276,8 @@ public class PlayerMovement : NetworkBehaviour
                 // UpdateBeadCountText();
 
                 // Destroy(nearObject);
-                nearObject.SetActive(false);
+                nearObject.GetComponent<BoxCollider>().enabled = false;
+                nearObject.GetComponent<MeshRenderer>().enabled = false;
             }
         }
     }
