@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Bead
   - NPC
+  - Food
   layers:
   - Default
   - TransparentFX

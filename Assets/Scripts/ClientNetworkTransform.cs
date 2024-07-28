@@ -18,5 +18,19 @@ namespace Unity.Multiplayer.Samples.Utilities.ClientAuthority
         {
             return false;
         }
+
+        public override void OnNetworkSpawn()
+        {
+            if (IsOwner)
+            {
+                var characterController = GetComponent<CharacterController>();
+                if (characterController != null)
+                {
+                    characterController.enabled = true;
+                }
+            }
+
+            base.OnNetworkSpawn();
+        }
     }
 }
