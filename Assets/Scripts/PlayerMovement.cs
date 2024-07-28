@@ -47,8 +47,8 @@ public class PlayerMovement : NetworkBehaviour
 
     public GameObject animalModel;//이미호
     public GameObject currentModel; 
-    private GameObject originalModel;
-    private bool isAnimal = false; 
+    public GameObject originalModel;
+    public bool isAwaken = false; //이미호 인지 아닌지
 
 
 
@@ -291,7 +291,7 @@ public class PlayerMovement : NetworkBehaviour
     //이미호로 바뀌는 함수
     private void ChangeModel()
     {
-        if (_uiManager.beadCount >= 2 && !isAnimal)
+        if (_uiManager.beadCount >= 2 && !isAwaken)
         {
             if (currentModel != originalModel)
             {
@@ -302,7 +302,7 @@ public class PlayerMovement : NetworkBehaviour
 
             newModel.transform.SetParent(transform);
             currentModel = newModel;
-            isAnimal = true;
+            isAwaken = true;
 
             if (originalModel != null)
             {
@@ -334,7 +334,7 @@ public class PlayerMovement : NetworkBehaviour
     //모델 바꾸는 함수
     public void RevertToOriginalModel()
     {
-        if (isAnimal)
+        if (isAwaken)
         {
             Destroy(currentModel);
 
@@ -347,7 +347,7 @@ public class PlayerMovement : NetworkBehaviour
                 }
             }
 
-            isAnimal = false;
+            isAwaken = false;
         }
     }
 
