@@ -45,6 +45,11 @@ public class PlayerMovement : NetworkBehaviour
     HealthBar _healthBar; //여우 체력바
 
 
+    public GameObject animalModel;//이미호
+    private GameObject currentModel; 
+    private GameObject originalModel;
+    private bool isAnimal = false; 
+
 
 
     // // Start is called before the first frame update
@@ -259,6 +264,7 @@ public class PlayerMovement : NetworkBehaviour
                 // Destroy(nearObject); //destroy 보다 이게 나을거 같아서 바꿈
                 nearObject.GetComponent<BoxCollider>().enabled = false;
                 nearObject.GetComponent<MeshRenderer>().enabled = false;
+                nearObject = null;
             }
             else if(nearObject.tag == "Food") //From HealthBar.cs
             {
@@ -280,6 +286,69 @@ public class PlayerMovement : NetworkBehaviour
         //여의주가 있는 영역을 벗어나면 여의주 없애기
         if (other.tag == "Bead")
             nearObject = null;
+    }
+
+    //이미호로 바뀌는 함수
+    private void ChangeModel()
+    {
+        if (_uiManager.beadCount >= 2 && !isAnimal)
+        {
+            if (currentModel != originalModel)
+            {
+                Destroy(currentModel);
+            }
+
+            GameObject newModel = Instantiate(animalModel, transform.position, transform.rotation);
+
+            newModel.transform.SetParent(transform);
+            currentModel = newModel;
+            isAnimal = true;
+
+            if (originalModel != null)
+            {
+                Renderer[] renderers = originalModel.GetComponentsInChildren<Renderer>();
+                foreach (var renderer in renderers)
+                {
+                    renderer.enabled = false;
+                }
+            }
+
+            Renderer[] newModelRenderers = newModel.GetComponentsInChildren<Renderer>();
+            foreach (var renderer in newModelRenderers)
+            {
+                renderer.enabled = true;  
+                Debug.Log(renderer.name + " is now enabled: " + renderer.enabled);
+            }
+        }
+    }
+
+    //생명의 샘에 닿으면 모습을 바꿈
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "Lake")
+        {
+            ChangeModel();
+        }
+    }
+
+    //모델 바꾸는 함수
+    public void RevertToOriginalModel()
+    {
+        if (isAnimal)
+        {
+            Destroy(currentModel);
+
+            if (originalModel != null)
+            {
+                Renderer[] renderers = originalModel.GetComponentsInChildren<Renderer>();
+                foreach (var renderer in renderers)
+                {
+                    renderer.enabled = true;
+                }
+            }
+
+            isAnimal = false;
+        }
     }
 
 }
