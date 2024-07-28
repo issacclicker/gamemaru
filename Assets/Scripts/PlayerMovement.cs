@@ -46,7 +46,7 @@ public class PlayerMovement : NetworkBehaviour
 
 
     public GameObject animalModel;//이미호
-    private GameObject currentModel; 
+    public GameObject currentModel; 
     private GameObject originalModel;
     private bool isAnimal = false; 
 
