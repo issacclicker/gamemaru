@@ -26,31 +26,30 @@ public class PlayerMovement : NetworkBehaviour
     public float smoothness = 10f;
 
     //Player State
-    public string playerState = "";
+    [SerializeField]
+    public string playerState;
     //Tiger features(from Tiger_Controller.cs)
     private int huntFailures = 0;
     private bool isPenaltyActive = false;
     private int penaltyType = 0;
-    private HalfScreen halfScr; //from HalfScreen.cs
-
-    //Tiger UI(from Tiger_Controller.cs)
-    // public GameObject Heart1, Heart2,Heart3;
-    //체력 디버깅용
-    [SerializeField] 
-    public static int health;
+    
 
     //Fox features(from fox1.cs)
-    private int beadCount = 0;
     // public GameObject[] Bead;
     // public bool[] hasBeads; 
-    // public Text beadCountText;
     bool iDown;
     GameObject nearObject;
 
-    // void Awake()
-    // {
-    //     UpdateBeadCountText();
-    // }
+    GameObject UIManagerObject;
+
+    UIManager _uiManager; //UI관리
+    HealthBar _healthBar; //여우 체력바
+
+
+    public GameObject animalModel;//이미호
+    public GameObject currentModel; 
+    public GameObject originalModel;
+    public bool isAwaken = false; //이미호 인지 아닌지
 
 
 
@@ -60,24 +59,29 @@ public class PlayerMovement : NetworkBehaviour
         _animator = this.GetComponent<Animator>();
         _camera = Camera.main;
         _controller = this.GetComponent<CharacterController>();
-
         
+        //디버깅 용
+        if(IsHost){
+            playerState = "Tiger";
+        }else{
+            playerState = "Fox";
+        }
+
 
         if(!IsOwner){
             MainCamera.gameObject.SetActive(false);
+            return;
         }else{
             MainCamera.gameObject.SetActive(true);
         }
-
-        // playerState = "Fox"; //테스트를 위한 플레이어 상태 설정
         
+        UIManagerObject = GameObject.Find("UIManager");
+        _uiManager = UIManagerObject.GetComponent<UIManager>(); // UIManager 스크립트 가져오기
+        _healthBar = UIManagerObject.GetComponent<HealthBar>(); // HealthBar 스크립트 가져오기
 
-        if(playerState == "Tiger"){
-            // halfScr = FindObjectOfType<HalfScreen>();
-            health = 3;
-        }
-        
-
+        UIManagerObject.GetComponent<UIManager>().playerState = playerState;
+        _uiManager.UIEnable();
+        _healthBar.IsGameStarted = true;
 
     }
 
@@ -93,7 +97,12 @@ public class PlayerMovement : NetworkBehaviour
         if(playerState=="Fox")
         {
             iDown = Input.GetButtonDown("Interaction");
-            Interaction();
+            if(!isAwaken)
+            {
+                Interaction();
+            }
+            
+            
         }
         else if(playerState=="Tiger")
         {
@@ -104,7 +113,7 @@ public class PlayerMovement : NetworkBehaviour
             }
 
             //Tiger UI update
-            // UpdateHeartUI();
+            _uiManager.UpdateHeartUI();
         }
         else
         {
@@ -177,9 +186,9 @@ public class PlayerMovement : NetworkBehaviour
                 // 방향 반전
                 break;
             case 3:
-                if (halfScr != null)
+                if (_uiManager.halfScr != null)
                 {
-                    halfScr.ActivateHalfScreenPenalty();
+                    _uiManager.halfScr.ActivateHalfScreenPenalty();
                 }
                 break;
         }
@@ -188,15 +197,15 @@ public class PlayerMovement : NetworkBehaviour
 
     public void HuntFailure()
     {
-        if (health > 0)
+        if (_uiManager.health_tiger > 0)
         {
-            health = health - 1;
+            _uiManager.health_tiger = _uiManager.health_tiger - 1;
             Debug.Log("Hunt Fail!");
         }
 
-        // UpdateHeartUI();
+        _uiManager.UpdateHeartUI();
 
-        if (health == 0)
+        if (_uiManager.health_tiger == 0)
         {
             ApplyRandomPenalty();
             StartCoroutine(ResetHealthAfterDelay());
@@ -234,33 +243,25 @@ public class PlayerMovement : NetworkBehaviour
     {
         isPenaltyActive = false;
         penaltyType = 0;
-        if (halfScr != null)
+        if (_uiManager.halfScr != null)
         {
-            halfScr.DeactivateHalfScreenPenalty();
+            _uiManager.halfScr.DeactivateHalfScreenPenalty();
         }
         Debug.Log("Penalty removed.");
     }
 
-    //하트 UI 표시
-    // void UpdateHeartUI()
-    // {
-    //     Heart1.SetActive(health >= 1);
-    //     Heart2.SetActive(health >= 2);
-    //     Heart3.SetActive(health >= 3);
-    // }
+    
     IEnumerator ResetHealthAfterDelay()
     {
         yield return new WaitForSeconds(5);
-        health = 3;
-        // UpdateHeartUI();
+        _uiManager.health_tiger = 3;
+        _uiManager.UpdateHeartUI();
     }
 
 
+
     //Fox Interactions
-    // private void UpdateBeadCountText()
-    // {
-    //     beadCountText.text = "Number: " + beadCount;
-    // }
+    
     void Interaction()
     {
         //여의주 먹기
@@ -272,17 +273,26 @@ public class PlayerMovement : NetworkBehaviour
                 // int beadIndex = item.value;
                 // hasBeads[beadIndex] = true;
 
-                beadCount++;
-                // UpdateBeadCountText();
+                _uiManager.beadCount++;
+                _uiManager.UpdateBeadCountText();
 
-                Destroy(nearObject);
+                // Destroy(nearObject); //destroy 보다 이게 나을거 같아서 바꿈
+                nearObject.GetComponent<BoxCollider>().enabled = false;
+                nearObject.GetComponent<MeshRenderer>().enabled = false;
+                nearObject = null;
+            }
+            else if(nearObject.tag == "Food") //From HealthBar.cs
+            {
+                _healthBar.EatFood(5f);
+                nearObject.GetComponent<BoxCollider>().enabled = false;
+                nearObject.GetComponent<MeshRenderer>().enabled = false;
             }
         }
     }
     void OnTriggerStay(Collider other)
     {
         //닿은 여의주 저장
-        if (other.tag == "Bead")
+        if (other.tag == "Bead" || other.tag == "Food")
             nearObject = other.gameObject;
     }
 
@@ -291,6 +301,69 @@ public class PlayerMovement : NetworkBehaviour
         //여의주가 있는 영역을 벗어나면 여의주 없애기
         if (other.tag == "Bead")
             nearObject = null;
+    }
+
+    //이미호로 바뀌는 함수
+    private void ChangeModel()
+    {
+        if (_uiManager.beadCount >= 2 && !isAwaken && IsOwner)
+        {
+            if (currentModel != originalModel)
+            {
+                Destroy(currentModel);
+            }
+
+            GameObject newModel = Instantiate(animalModel, transform.position, transform.rotation);
+
+            newModel.transform.SetParent(transform);
+            currentModel = newModel;
+            isAwaken = true;
+
+            if (originalModel != null)
+            {
+                Renderer[] renderers = originalModel.GetComponentsInChildren<Renderer>();
+                foreach (var renderer in renderers)
+                {
+                    renderer.enabled = false;
+                }
+            }
+
+            Renderer[] newModelRenderers = newModel.GetComponentsInChildren<Renderer>();
+            foreach (var renderer in newModelRenderers)
+            {
+                renderer.enabled = true;  
+                Debug.Log(renderer.name + " is now enabled: " + renderer.enabled);
+            }
+        }
+    }
+
+    //생명의 샘에 닿으면 모습을 바꿈
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "Lake")
+        {
+            ChangeModel();
+        }
+    }
+
+    //모델 바꾸는 함수
+    public void RevertToOriginalModel()
+    {
+        if (isAwaken && IsOwner)
+        {
+            Destroy(currentModel);
+
+            if (originalModel != null)
+            {
+                Renderer[] renderers = originalModel.GetComponentsInChildren<Renderer>();
+                foreach (var renderer in renderers)
+                {
+                    renderer.enabled = true;
+                }
+            }
+
+            isAwaken = false;
+        }
     }
 
 }
