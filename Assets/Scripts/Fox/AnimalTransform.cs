@@ -1,36 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class AnimalTransform : MonoBehaviour
+public class AnimalTransform : NetworkBehaviour
 {
-    //ÇöÀç ¸ğµ¨¿¡¼­ ÀÌ¹ÌÁö¸¦ º¯°æÇÏ´Â ¹æ½ÄÀ¸·Î ±¸ÇöÇßÀ½
-    //xÅ°·Î µ¿¹° ÀÌ¹ÌÁö·Î º¯°æ -> ¿ø·¡ ÀÌ¹ÌÁö·Î µ¹¾Æ¿À±â
-    //Ã¼·Â ¼ÒÁø½Ã ¿ø·¡ ¸ğµ¨·Î µ¹¾Æ°¨. Ã¼·ÂÀÌ 0 º¸´Ù Å¬ ¶§¸¸ µĞ°© °¡´É. - testHealthBar ½ºÅ©¸³Æ®¿Í ¿¬°áµÇ¾î ÀÖÀ½
-    //ÇöÀç´Â 2°³ÀÇ ÀÌ¹ÌÁö¸¸ Àû¿ëµÇ¾î ÀÖÀ½
-    //¾Ö´Ï¸ŞÀÌ¼ÇÀº ¾ÆÁ÷ ³Ñ¾î¿Â°Ô ¾ø¾î¼­ Àû¿ë ¸ø ÇÔ
-    //Assets>AnimalTransform Æú´õ¿¡ ÀÌ¹ÌÁö ³Ö¾îµÒ
-    //*AnimalTransform script Àû¿ë ÈÄ Animal Models¿¡ ÀÌ¹ÌÁö ³Ö¾îµÎ¾î¾ß Á¦´ë·Î ÀÛµ¿ÇÔ
-    //*PlayerTestThirdPerson¿¡ Àû¿ëÇØ¼­ ±×·±Áö ¿ø·¡ÀÇ ÀÌ¹ÌÁö·Î µ¹¾Æ°¬À» ¶§ »ç¶÷°ú ÇÔ²² Å¥ºê°¡ Àû¿ëµÈ ÀÌ¹ÌÁö°¡ ¶ä
+    //í˜„ì¬ ëª¨ë¸ì—ì„œ ì´ë¯¸ì§€ë¥¼ ë³€ê²½í•˜ëŠ” ë°©ì‹ìœ¼ë¡œ êµ¬í˜„í–ˆìŒ
+    //xí‚¤ë¡œ ë™ë¬¼ ì´ë¯¸ì§€ë¡œ ë³€ê²½ -> ì›ë˜ ì´ë¯¸ì§€ë¡œ ëŒì•„ì˜¤ê¸°
+    //ì²´ë ¥ ì†Œì§„ì‹œ ì›ë˜ ëª¨ë¸ë¡œ ëŒì•„ê°. ì²´ë ¥ì´ 0 ë³´ë‹¤ í´ ë•Œë§Œ ë‘”ê°‘ ê°€ëŠ¥. - testHealthBar ìŠ¤í¬ë¦½íŠ¸ì™€ ì—°ê²°ë˜ì–´ ìˆìŒ
+    //í˜„ì¬ëŠ” 2ê°œì˜ ì´ë¯¸ì§€ë§Œ ì ìš©ë˜ì–´ ìˆìŒ
+    //ì• ë‹ˆë©”ì´ì…˜ì€ ì•„ì§ ë„˜ì–´ì˜¨ê²Œ ì—†ì–´ì„œ ì ìš© ëª» í•¨
+    //Assets>AnimalTransform í´ë”ì— ì´ë¯¸ì§€ ë„£ì–´ë‘ 
+    //*AnimalTransform script ì ìš© í›„ Animal Modelsì— ì´ë¯¸ì§€ ë„£ì–´ë‘ì–´ì•¼ ì œëŒ€ë¡œ ì‘ë™í•¨
+    //*PlayerTestThirdPersonì— ì ìš©í•´ì„œ ê·¸ëŸ°ì§€ ì›ë˜ì˜ ì´ë¯¸ì§€ë¡œ ëŒì•„ê°”ì„ ë•Œ ì‚¬ëŒê³¼ í•¨ê»˜ íë¸Œê°€ ì ìš©ëœ ì´ë¯¸ì§€ê°€ ëœ¸
+    public GameObject[] animalModels; // ë™ë¬¼ ëª¨ë¸ ë°°ì—´
+    // private GameObject currentModel; // í˜„ì¬ í™œì„±í™”ëœ ëª¨ë¸
+    // private GameObject originalModel; // ì›ë˜ ì‚¬ëŒ ëª¨ë¸
+    private bool isAnimal = false; // í˜„ì¬ ëª¨ë¸ì´ ë™ë¬¼ì¸ì§€ ì—¬ë¶€
 
-    public GameObject[] animalModels; // µ¿¹° ¸ğµ¨ ¹è¿­
-    // private GameObject currentModel; // ÇöÀç È°¼ºÈ­µÈ ¸ğµ¨
-    // private GameObject originalModel; // ¿ø·¡ »ç¶÷ ¸ğµ¨
-    private bool isAnimal = false; // ÇöÀç ¸ğµ¨ÀÌ µ¿¹°ÀÎÁö ¿©ºÎ
-
-    GameObject UIManagerObject; //UI°ü¸®
-    HealthBar _healthBar; //Ã¼·Â¹Ù
+    GameObject UIManagerObject; //UIë§¤ë‹ˆì €
+    HealthBar _healthBar; //ì²´ë ¥ë°”
     PlayerMovement _playerMovement;
     
 
     private void Start()
     {
+        
+
         UIManagerObject = GameObject.Find("UIManager");
         _healthBar = UIManagerObject.GetComponent<HealthBar>();
 
         _playerMovement = GetComponent<PlayerMovement>();
 
-        // ÇöÀç ¿ÀºêÁ§Æ®¸¦ ±âº» ¸ğµ¨·Î ¼³Á¤
+        // í˜„ì¬ ì˜¤ë¸Œì íŠ¸ë¥¼ ê¸°ë³¸ ëª¨ë¸ë¡œ ì„¤ì •
         _playerMovement.currentModel = gameObject;
         _playerMovement.originalModel = gameObject;
     }
@@ -38,12 +40,16 @@ public class AnimalTransform : MonoBehaviour
     private void Update()
     {
 
+        if(!IsOwner){
+            return;
+        }
 
-        if (_healthBar.health <0){
+
+        if (_healthBar.health <0 && IsOwner){
             RevertToOriginalModel();
         }
-        // XÅ°¸¦ ´©¸£¸é ¸ğµ¨ º¯°æ - ÃßÈÄ Å°´Â º¯°æ
-        if (Input.GetKeyDown(KeyCode.X) && !_playerMovement.isAwaken)
+        // Xí‚¤ë¥¼ ëˆ„ë¥´ë©´ ëª¨ë¸ ë³€ê²½ - ì¶”í›„ í‚¤ëŠ” ë³€ê²½
+        if (Input.GetKeyDown(KeyCode.X) && !_playerMovement.isAwaken && IsOwner)
         {
             ChangeModel();
         }
@@ -52,7 +58,7 @@ public class AnimalTransform : MonoBehaviour
 
     private void ChangeModel()
     {
-        // ¿ø·¡ ¸ğµ¨·Î º¯°æ
+        // ì›ë˜ ëª¨ë¸ë¡œ ë³€ê²½
         if (isAnimal)
         {
             Destroy(_playerMovement.currentModel);
@@ -67,12 +73,12 @@ public class AnimalTransform : MonoBehaviour
             }
 
             isAnimal = false;
-            Debug.Log("¿ø·¡ ¸ğµ¨·Î º¯°æ");
+            Debug.Log("ë³€ì‹ ");
         }
-        // µ¿¹° ¸ğµ¨·Î º¯°æ
+        // ë™ë¬¼ ëª¨ë¸ë¡œ ë³€ê²½
         else
         {
-            // µĞ°©ÀÌ °¡´ÉÇÑ »óÅÂÀÏ ¶§(Ã¼·ÂÀÌ 0º¸´Ù Å¬ ¶§)¸¸ µ¿¹° ¸ğµ¨·Î º¯°æ
+            // ë‘”ê°‘ì´ ê°€ëŠ¥í•œ ìƒíƒœì¼ ë•Œ(ì²´ë ¥ì´ 0ë³´ë‹¤ í´ ë•Œ)ë§Œ ë™ë¬¼ ëª¨ë¸ë¡œ ë³€ê²½
             
 
             if (_healthBar != null && _healthBar.health > 0)
@@ -82,11 +88,11 @@ public class AnimalTransform : MonoBehaviour
                     Destroy(_playerMovement.currentModel);
                 }
 
-                // ·£´ıÀ¸·Î µ¿¹° ¸ğµ¨
+                // ëœë¤ìœ¼ë¡œ ë™ë¬¼ ëª¨ë¸
                 int randomIndex = Random.Range(0, animalModels.Length);
                 GameObject newModel = Instantiate(animalModels[randomIndex], transform.position, transform.rotation);
 
-                // ¿ø·¡ ¸ğµ¨ ºñÈ°¼ºÈ­
+                // ì›ë˜ ëª¨ë¸ ë¹„í™œì„±í™”
                 if (_playerMovement.originalModel != null)
                 {
                     Renderer[] renderers = _playerMovement.originalModel.GetComponentsInChildren<Renderer>();
@@ -99,16 +105,16 @@ public class AnimalTransform : MonoBehaviour
                 newModel.transform.SetParent(transform);
                 _playerMovement.currentModel = newModel;
                 isAnimal = true;
-                Debug.Log("µ¿¹° ¸ğµ¨·Î º¯°æ");
+                Debug.Log("ë™ë¬¼ ëª¨ë¸ë¡œ ë³€ê²½");
             }
             else
             {
-                Debug.Log("Ã¼·Â ºÎÁ· µ¿¹° ¸ğµ¨·Î º¯°æ ºÒ°¡");
+                Debug.Log("ì²´ë ¥ ë¶€ì¡± ë™ë¬¼ ëª¨ë¸ë¡œ ë³€ê²½ ë¶ˆê°€");
             }
         }
     }
 
-    // ÀÏÁ¤ ½Ã°£ÀÌ °æ°úÇßÀ» ¶§ ¿ø·¡ ¸ğµ¨·Î µ¹¾Æ°¡±â
+    // ì¼ì • ì‹œê°„ì´ ê²½ê³¼í–ˆì„ ë•Œ ì›ë˜ ëª¨ë¸ë¡œ ëŒì•„ê°€ê¸°
     public void RevertToOriginalModel()
     {
         if (isAnimal && !_playerMovement.isAwaken)
@@ -125,7 +131,7 @@ public class AnimalTransform : MonoBehaviour
             }
 
             isAnimal = false;
-            Debug.Log("¿ø·¡ ¸ğµ¨·Î º¯°æ");
+            Debug.Log("ì›ë˜ ëª¨ë¸ë¡œ ë³€ê²½");
         }
     }
 }

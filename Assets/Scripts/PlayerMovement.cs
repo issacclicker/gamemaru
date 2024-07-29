@@ -26,7 +26,8 @@ public class PlayerMovement : NetworkBehaviour
     public float smoothness = 10f;
 
     //Player State
-    public string playerState = "";
+    [SerializeField]
+    public string playerState;
     //Tiger features(from Tiger_Controller.cs)
     private int huntFailures = 0;
     private bool isPenaltyActive = false;
@@ -59,9 +60,17 @@ public class PlayerMovement : NetworkBehaviour
         _camera = Camera.main;
         _controller = this.GetComponent<CharacterController>();
         
+        //디버깅 용
+        if(IsHost){
+            playerState = "Tiger";
+        }else{
+            playerState = "Fox";
+        }
+
 
         if(!IsOwner){
             MainCamera.gameObject.SetActive(false);
+            return;
         }else{
             MainCamera.gameObject.SetActive(true);
         }
@@ -88,7 +97,12 @@ public class PlayerMovement : NetworkBehaviour
         if(playerState=="Fox")
         {
             iDown = Input.GetButtonDown("Interaction");
-            Interaction();
+            if(!isAwaken)
+            {
+                Interaction();
+            }
+            
+            
         }
         else if(playerState=="Tiger")
         {
@@ -245,6 +259,7 @@ public class PlayerMovement : NetworkBehaviour
     }
 
 
+
     //Fox Interactions
     
     void Interaction()
@@ -291,7 +306,7 @@ public class PlayerMovement : NetworkBehaviour
     //이미호로 바뀌는 함수
     private void ChangeModel()
     {
-        if (_uiManager.beadCount >= 2 && !isAwaken)
+        if (_uiManager.beadCount >= 2 && !isAwaken && IsOwner)
         {
             if (currentModel != originalModel)
             {
@@ -334,7 +349,7 @@ public class PlayerMovement : NetworkBehaviour
     //모델 바꾸는 함수
     public void RevertToOriginalModel()
     {
-        if (isAwaken)
+        if (isAwaken && IsOwner)
         {
             Destroy(currentModel);
 

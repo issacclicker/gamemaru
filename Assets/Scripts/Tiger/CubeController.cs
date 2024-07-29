@@ -12,6 +12,8 @@ public class CubeController : NetworkBehaviour
     private bool isActive = false; 
     private Renderer renderer;
 
+    PlayerMovement _playerMovement;
+
     public bool IsActive
     {
         get { return isActive; }
@@ -21,6 +23,7 @@ public class CubeController : NetworkBehaviour
     {
         renderer = GetComponent<Renderer>();
         playerState = playerHead.GetComponent<PlayerMovement>().playerState;
+        _playerMovement = playerHead.GetComponent<PlayerMovement>();
         // if(playerState == "Tiger"){
         //     SetCubeActive(false);
         // }
@@ -35,7 +38,7 @@ public class CubeController : NetworkBehaviour
         }
 
 
-        if (Input.GetButtonDown("Interaction") && playerState == "Tiger")
+        if (Input.GetButtonDown("Interaction") && (playerState == "Tiger"||_playerMovement.isAwaken))
         {
             Debug.Log("Attack!");
             StartCoroutine(ActivateAndDeactivateCube());
@@ -71,12 +74,18 @@ public class CubeController : NetworkBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (isActive && collision.gameObject.CompareTag("NPC"))
+        if (isActive && playerState=="Tiger" && collision.gameObject.CompareTag("NPC"))
         {
             if (playerHead.GetComponent<PlayerMovement>() != null)
             {
                 playerHead.GetComponent<PlayerMovement>().HuntFailure();
             }
+        }
+        else if(isActive && _playerMovement.isAwaken && collision.gameObject.CompareTag("Player"))
+        {
+            // if(collision.gameObject.GetComponent<PlayerMovement>().playerState == "Tiger")
+                Debug.Log("Fox Hunts!!!");
+            
         }
     }
 }
