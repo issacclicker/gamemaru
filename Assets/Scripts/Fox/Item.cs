@@ -21,6 +21,11 @@ public class Item : NetworkBehaviour
     void Update()
     {
 
+        if(!IsOwner)
+        {
+            return;
+        }
+
         if(!isActive.Value && meshRenderer.enabled)
         {
             meshRenderer.enabled = false;

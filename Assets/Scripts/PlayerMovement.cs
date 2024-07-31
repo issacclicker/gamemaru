@@ -268,6 +268,13 @@ public class PlayerMovement : NetworkBehaviour
     
     void Interaction()
     {
+
+        if(!IsOwner)
+        {
+            return;
+        }
+
+
         //여의주 먹기
         if(iDown && nearObject != null) //jdown 조건에서 잠깐 뺐음
         {

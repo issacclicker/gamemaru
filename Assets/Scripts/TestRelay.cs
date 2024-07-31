@@ -20,6 +20,7 @@ public class TestRelay : MonoBehaviour
     public GameObject[] UI_Objects;
 
     public GameObject TestCodeUI;
+    public GameObject inputField;
     private Text _testCodeUI;
     //joinCode 빼내기
     private string _joinCode;
@@ -69,6 +70,9 @@ public class TestRelay : MonoBehaviour
     }
 
     public async void JoinRelay(string joinCode){
+
+        joinCode = inputField.GetComponent<InputField>().text;
+
         try{
             Debug.Log("Joining : "+joinCode);
             JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
