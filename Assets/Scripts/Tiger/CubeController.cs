@@ -74,14 +74,18 @@ public class CubeController : NetworkBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (isActive && playerState=="Tiger" && collision.gameObject.CompareTag("NPC"))
+        if (isActive && playerState=="Tiger" && collision.gameObject.CompareTag("NPC")) //호랑이가 NPC 사냥
         {
             if (playerHead.GetComponent<PlayerMovement>() != null)
             {
                 playerHead.GetComponent<PlayerMovement>().HuntFailure();
             }
         }
-        else if(isActive && _playerMovement.isAwaken && collision.gameObject.CompareTag("Player"))
+        else if(isActive && playerState == "Tiger" && collision.gameObject.CompareTag("Player")) //호랑이가 여우 사냥
+        {
+            Debug.Log("Tiger Hunts!");
+        }
+        else if(isActive && _playerMovement.isAwaken && collision.gameObject.CompareTag("Player")) //여우(이미호)가 호랑이 사냥
         {
             // if(collision.gameObject.GetComponent<PlayerMovement>().playerState == "Tiger")
                 Debug.Log("Fox Hunts!!!");

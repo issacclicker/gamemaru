@@ -62,9 +62,9 @@ public class PlayerMovement : NetworkBehaviour
         
         //디버깅 용
         if(IsHost){
-            playerState = "Tiger";
-        }else{
             playerState = "Fox";
+        }else{
+            playerState = "Tiger";
         }
 
 
