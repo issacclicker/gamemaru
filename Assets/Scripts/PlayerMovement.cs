@@ -61,11 +61,15 @@ public class PlayerMovement : NetworkBehaviour
         _controller = this.GetComponent<CharacterController>();
         
         //디버깅 용
-        if(IsHost){
-            playerState = "Fox";
-        }else{
-            playerState = "Tiger";
-        }
+        // if(IsHost){
+        //     playerState = "Fox";
+        // }else{
+        //     playerState = "Tiger";
+        // }
+        playerState = "Fox";
+        //////////////////////////
+
+        
 
 
         if(!IsOwner){
@@ -278,7 +282,8 @@ public class PlayerMovement : NetworkBehaviour
 
                 // Destroy(nearObject); //destroy 보다 이게 나을거 같아서 바꿈
                 nearObject.GetComponent<BoxCollider>().enabled = false;
-                nearObject.GetComponent<MeshRenderer>().enabled = false;
+                // nearObject.GetComponent<MeshRenderer>().enabled = false;
+                nearObject.GetComponent<Item>().isActive.Value = false;
                 nearObject = null;
             }
             else if(nearObject.tag == "Food") //From HealthBar.cs
