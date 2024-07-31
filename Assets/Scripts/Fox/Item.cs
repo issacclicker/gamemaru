@@ -26,13 +26,22 @@ public class Item : NetworkBehaviour
             return;
         }
 
-        if(!isActive.Value && meshRenderer.enabled)
+
+        // if(!isActive.Value && meshRenderer.enabled)
+        // {
+        //     meshRenderer.enabled = false;
+        //     Debug.Log("비활성화");
+        // }
+
+        if(!meshRenderer.enabled && isActive.Value)
         {
-            meshRenderer.enabled = false;
+            isActive.Value = false;
             Debug.Log("비활성화");
         }
 
-        
+        meshRenderer.enabled = isActive.Value;
+
+
     }
 
     
