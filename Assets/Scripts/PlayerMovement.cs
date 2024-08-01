@@ -148,7 +148,7 @@ public class PlayerMovement : NetworkBehaviour
         isGrounded = _controller.isGrounded;
 
         // 현재 플레이어가 지면에 닿아있지 않는 문제 확인
-        Debug.Log($"isGrounded: {isGrounded}");
+        //Debug.Log($"isGrounded: {isGrounded}");
 
         if (isGrounded && velocity.y < 0)
         {
@@ -188,10 +188,24 @@ public class PlayerMovement : NetworkBehaviour
     {
         finalSpeed = run ? runspeed : speed;
 
-        Vector3 forword = transform.TransformDirection(Vector3.forward);
+        if (isPenaltyActive && penaltyType == 1)
+        {
+            finalSpeed /= 2;
+        }
+
+        Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
-        Vector3 moveDirection = forword * Input.GetAxisRaw("Vertical") + right * Input.GetAxisRaw("Horizontal");
+        float verticalInput = Input.GetAxisRaw("Vertical");
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+
+        if (isPenaltyActive && penaltyType == 2)
+        {
+            verticalInput = -verticalInput;
+            horizontalInput = -horizontalInput;
+        }
+
+        Vector3 moveDirection = forward * verticalInput + right * horizontalInput;
 
         _controller.Move(moveDirection.normalized * finalSpeed * Time.deltaTime);
 
@@ -215,10 +229,10 @@ public class PlayerMovement : NetworkBehaviour
         switch (penaltyType)
         {
             case 1:
-                // 속도 감소
+                finalSpeed = run ? runspeed / 2 : speed / 2;
                 break;
             case 2:
-                // 방향 반전
+                // Reverse controls handled in InputMovement
                 break;
             case 3:
                 if (_uiManager.halfScr != null)
