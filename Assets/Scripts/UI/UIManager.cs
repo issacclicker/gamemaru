@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance;
     public HalfScreen halfScr; //호랑이 패널티 3
 
     public string playerState = ""; //호랑이인지 여우인지 구분
@@ -19,9 +21,13 @@ public class UIManager : MonoBehaviour
     public GameObject Heart1, Heart2, Heart3;
 
     //여우 UI 변수
-    public int beadCount; //여의주 갯수
     public Text beadCountText; //여의주 갯수 텍스트
     public GameObject HealthBar; //체력바
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     //변수 초기화, UI 비활성화
     void Start (){
@@ -30,7 +36,6 @@ public class UIManager : MonoBehaviour
         Heart3.SetActive(false);
         HealthBar.SetActive(false);
         health_tiger = 3;
-        beadCount = 0;
     }
 
     public void UIEnable(){ //호랑이와 여우 UI 구분
@@ -41,7 +46,7 @@ public class UIManager : MonoBehaviour
         else if(playerState=="Fox")
         {
             HealthBar.SetActive(true);
-            UpdateBeadCountText();
+            UpdateBeadCountText(PlayerNetworkStats.Instance.BeadCount);
         }
     }
 
@@ -56,8 +61,8 @@ public class UIManager : MonoBehaviour
     }
 
     //여의주 갯수 표시(여우)
-    public void UpdateBeadCountText()
+    public void UpdateBeadCountText(int value)
     {
-        beadCountText.text = "Number: " + beadCount;
+        beadCountText.text = "Number: " + value;
     }
 }

@@ -284,8 +284,7 @@ public class PlayerMovement : NetworkBehaviour
                 // int beadIndex = item.value;
                 // hasBeads[beadIndex] = true;
 
-                _uiManager.beadCount++;
-                _uiManager.UpdateBeadCountText();
+                PlayerNetworkStats.Instance.IncreaseBeadCountServerRpc(OwnerClientId);
 
                 // Destroy(nearObject); //destroy 보다 이게 나을거 같아서 바꿈
                 nearObject.GetComponent<BoxCollider>().enabled = false;
@@ -318,7 +317,7 @@ public class PlayerMovement : NetworkBehaviour
     //이미호로 바뀌는 함수
     private void ChangeModel()
     {
-        if (_uiManager.beadCount >= 2 && !isAwaken && IsOwner)
+        if (PlayerNetworkStats.Instance.BeadCount >= 2 && !isAwaken && IsOwner)
         {
             if (currentModel != originalModel)
             {
