@@ -287,8 +287,9 @@ public class PlayerMovement : NetworkBehaviour
                 PlayerNetworkStats.Instance.IncreaseBeadCountServerRpc(OwnerClientId);
 
                 // Destroy(nearObject); //destroy 보다 이게 나을거 같아서 바꿈
-                nearObject.GetComponent<BoxCollider>().enabled = false;
-                nearObject.GetComponent<MeshRenderer>().enabled = false;
+                // nearObject.GetComponent<BoxCollider>().enabled = false;
+                // nearObject.GetComponent<MeshRenderer>().enabled = false;
+                Debug.Log("여의주 먹음!");
                 nearObject = null;
                 
             }

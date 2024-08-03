@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3148325285718864355}
   - component: {fileID: 5310304797925663189}
   - component: {fileID: 4193506131300537623}
-  - component: {fileID: 8147113633191951505}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Bead
@@ -30,8 +29,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4919220932830677973}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.7976, y: 0.63, z: -7.6532993}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 2.5675, y: 2.5986, z: 3.3794653}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -120,8 +119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2194744749
-  InScenePlacedSourceGlobalObjectIdHash: 0
+  GlobalObjectIdHash: 461422368
+  InScenePlacedSourceGlobalObjectIdHash: 3565482427
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -141,19 +140,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d70f526b950c6124e9ee3f739e98f64d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8147113633191951505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4919220932830677973}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1be2dd9256c9ae4f987ee17ec3cdcd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  value: 5
-  isActive:
-    m_InternalValue: 1
