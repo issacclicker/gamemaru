@@ -284,8 +284,10 @@ public class PlayerMovement : NetworkBehaviour
                 PlayerNetworkStats.Instance.IncreaseBeadCountServerRpc(OwnerClientId);
 
 
-                Item.Instance.nearObject = nearObject;
-                Item.Instance.DestroyBeadServerRpc();
+                
+                // DestroyBeadServerRpc();
+                Debug.Log("IsClient"+!IsHost);
+                Debug.Log(nearObject);
 
 
                 Debug.Log("여의주 먹음!");
@@ -302,6 +304,7 @@ public class PlayerMovement : NetworkBehaviour
     }
     void OnTriggerStay(Collider other)
     {
+
         //닿은 여의주 저장
         if (other.tag == "Bead" || other.tag == "Food")
             nearObject = other.gameObject;
@@ -382,5 +385,7 @@ public class PlayerMovement : NetworkBehaviour
             isAwaken = false;
         }
     }
+
+    
 
 }

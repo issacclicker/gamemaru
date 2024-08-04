@@ -9,9 +9,6 @@ public class Item : NetworkBehaviour
     public static Item Instance;
 
     
-
-    public GameObject nearObject;
-
     [SerializeField] private GameObject Bead;
 
     [SerializeField] private Transform beadTransForm;
@@ -20,7 +17,7 @@ public class Item : NetworkBehaviour
     private void Awake()
     {
         Instance = this;
-        nearObject = null;
+        
     }
 
     void Start()
@@ -42,11 +39,7 @@ public class Item : NetworkBehaviour
         bd.GetComponent<NetworkObject>().Spawn();
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    public void DestroyBeadServerRpc()
-    {
-        nearObject.GetComponent<NetworkObject>().Despawn();
-    }
+    
 
 
 }
