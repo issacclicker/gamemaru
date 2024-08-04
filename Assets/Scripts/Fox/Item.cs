@@ -5,13 +5,29 @@ using Unity.Netcode;
 
 public class Item : NetworkBehaviour
 {
+
+    public static Item Instance;
+
+    
+
+    public GameObject nearObject;
+
     [SerializeField] private GameObject Bead;
 
     [SerializeField] private Transform beadTransForm;
 
+
+    private void Awake()
+    {
+        Instance = this;
+        nearObject = null;
+    }
+
     void Start()
     {
-        if(!IsOwner)
+        
+
+        if(!IsHost || !IsOwner)
         {
             return;
         }
@@ -25,4 +41,12 @@ public class Item : NetworkBehaviour
         GameObject bd = Instantiate(Bead, beadTransForm.position, beadTransForm.rotation);
         bd.GetComponent<NetworkObject>().Spawn();
     }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void DestroyBeadServerRpc()
+    {
+        nearObject.GetComponent<NetworkObject>().Despawn();
+    }
+
+
 }

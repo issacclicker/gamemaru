@@ -38,7 +38,7 @@ public class PlayerMovement : NetworkBehaviour
     // public GameObject[] Bead;
     // public bool[] hasBeads; 
     bool iDown;
-    GameObject nearObject;
+    [SerializeField]GameObject nearObject;
 
     GameObject UIManagerObject;
 
@@ -280,15 +280,14 @@ public class PlayerMovement : NetworkBehaviour
         {
             if(nearObject.tag == "Bead")
             {
-                // Item item = nearObject.GetComponent<Item>();
-                // int beadIndex = item.value;
-                // hasBeads[beadIndex] = true;
 
                 PlayerNetworkStats.Instance.IncreaseBeadCountServerRpc(OwnerClientId);
 
-                // Destroy(nearObject); //destroy 보다 이게 나을거 같아서 바꿈
-                // nearObject.GetComponent<BoxCollider>().enabled = false;
-                // nearObject.GetComponent<MeshRenderer>().enabled = false;
+
+                Item.Instance.nearObject = nearObject;
+                Item.Instance.DestroyBeadServerRpc();
+
+
                 Debug.Log("여의주 먹음!");
                 nearObject = null;
                 
@@ -310,6 +309,12 @@ public class PlayerMovement : NetworkBehaviour
 
     void OnTriggerExit(Collider other)
     {
+
+        if(!IsOwner)
+        {
+            return;
+        }
+
         //여의주가 있는 영역을 벗어나면 여의주 없애기
         if (other.tag == "Bead")
             nearObject = null;
