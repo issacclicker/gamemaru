@@ -325,6 +325,9 @@ PrefabInstance:
       addedObject: {fileID: 7924999580031319504}
     - targetCorrespondingSourceObject: {fileID: 100120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 8463035165112532161}
+    - targetCorrespondingSourceObject: {fileID: 100120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 2625723425514036059}
     - targetCorrespondingSourceObject: {fileID: 100120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       insertIndex: -1
@@ -363,7 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1291167419
+  GlobalObjectIdHash: 2609733160
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -502,6 +505,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TransitionStateInfoList: []
   m_Animator: {fileID: 3253949356767498871}
+--- !u!114 &8463035165112532161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3253949356774891535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e0cc9eec9f2d8d4ba0261dfb84642e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fox_model: {fileID: 919132149155446097, guid: ad7c5850353c363409015b870cb4d77a, type: 3}
+  tiger_model: {fileID: 100068, guid: 9f271cac34f8a384fbd96577f2846b24, type: 3}
 --- !u!114 &2625723425514036059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -517,6 +534,7 @@ MonoBehaviour:
   animalModels:
   - {fileID: 919132149155446097, guid: eb01aa77ca942c14cb6073117de53c41, type: 3}
   - {fileID: 919132149155446097, guid: 7f0cf2ca8898368498dd221cbefb1c19, type: 3}
+  isAnimal: 0
 --- !u!114 &6500552157715058294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -530,6 +548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 20
+  currentHealth: 0
 --- !u!1 &3253949356774894861 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100890, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}

@@ -16,7 +16,7 @@ public class AnimalTransform : MonoBehaviour
     public GameObject[] animalModels; // 동물 모델 배열
     private GameObject currentModel; // 현재 활성화된 모델
     private GameObject originalModel; // 원래 사람 모델
-    private bool isAnimal = false; // 현재 모델이 동물인지 여부
+    public bool isAnimal = false; // 현재 모델이 동물인지 여부
 
     private void Start()
     {
