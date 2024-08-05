@@ -42,9 +42,11 @@ public class Item : NetworkBehaviour
 
     
     [ServerRpc(RequireOwnership = false)]
-    public void DestroyBeadServerRpc()
+    public void DestroyBeadServerRpc(NetworkObjectReference target)
     {
-        nearObject.GetComponent<NetworkObject>().Despawn();
+        //nearObject.GetComponent<NetworkObject>().Despawn();
+        if (target.TryGet(out var obj))
+            obj.Despawn();
     }
 
 }
