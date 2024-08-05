@@ -5,7 +5,6 @@ using Unity.Netcode;
 
 public class PlayerStateSync : NetworkBehaviour
 {
-
     public static PlayerStateSync Instance;
     void Awake()
     {
@@ -16,5 +15,6 @@ public class PlayerStateSync : NetworkBehaviour
     public void SetTrueIsAwakenServerRpc()
     {
         PlayerMovement.Instance.isAwaken.Value = true;
+        Debug.Log("작동");
     }
 }
