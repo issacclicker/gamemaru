@@ -396,6 +396,7 @@ MonoBehaviour:
   run: 0
   smoothness: 10
   playerState: 
+  nearObject: {fileID: 0}
   animalModel: {fileID: 919132149155446097, guid: 27520bf6009bb064d8744d18ff6ee12e, type: 3}
   currentModel: {fileID: 3253949356774894863}
   originalModel: {fileID: 0}
@@ -537,8 +538,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1be2dd9256c9ae4f987ee17ec3cdcd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nearObject: {fileID: 0}
   Bead: {fileID: 4919220932830677973, guid: 203615d793fd13f41ab73c9573203dae, type: 3}
-  beadTransForm: {fileID: 7319528757254569673, guid: 203615d793fd13f41ab73c9573203dae, type: 3}
+  beadTransForm:
+  - {fileID: 7319528757254569673, guid: 203615d793fd13f41ab73c9573203dae, type: 3}
+  - {fileID: 7375570948873625387, guid: 762d86f560045074a88807ca2b854b92, type: 3}
+  - {fileID: 1126146824203454041, guid: 7beb478ee9f159849acfa0a387eb183f, type: 3}
+  - {fileID: 2600246247579103129, guid: 881a28e3374342c4a9c5362eec668456, type: 3}
+  - {fileID: 9068761321880600687, guid: a876df6960150764fa11850b0635ea72, type: 3}
+  - {fileID: 8111073045069211909, guid: 2b6d363518d5d414c981c638d0d4c8af, type: 3}
 --- !u!1 &3253949356774894861 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100890, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}

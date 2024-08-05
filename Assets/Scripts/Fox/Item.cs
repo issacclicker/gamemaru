@@ -12,7 +12,7 @@ public class Item : NetworkBehaviour
 
     [SerializeField] private GameObject Bead;
 
-    [SerializeField] private Transform beadTransForm;
+    [SerializeField] private Transform[] beadTransForm;
 
 
     private void Awake()
@@ -36,8 +36,14 @@ public class Item : NetworkBehaviour
     [ServerRpc]
     private void MakeBeadServerRpc()
     {
-        GameObject bd = Instantiate(Bead, beadTransForm.position, beadTransForm.rotation);
-        bd.GetComponent<NetworkObject>().Spawn();
+        for(int i=0;i<beadTransForm.Length;i++)
+        {
+            GameObject bd = Instantiate(Bead, beadTransForm[i].position, beadTransForm[i].rotation);
+            bd.GetComponent<NetworkObject>().Spawn();
+        }
+
+        // GameObject bd = Instantiate(Bead, beadTransForm.position, beadTransForm.rotation);
+        // bd.GetComponent<NetworkObject>().Spawn();
     }
 
     
