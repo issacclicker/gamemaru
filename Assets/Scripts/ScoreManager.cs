@@ -6,7 +6,7 @@ public class ScoreManager : NetworkBehaviour
 {
     private NetworkVariable<int> foxScore = new NetworkVariable<int>(0);
     private NetworkVariable<int> tigerScore = new NetworkVariable<int>(0);
-    public int winningScore = 1; // 일단 제대로 작동하는지 확인하기 위해 1점으로 설정
+    public int winningScore = 1; // 일단 제대로 작동하는지 확인하기 위해 1점 얻으면 이기는 것으로 함
 
     public void AddFoxScore(int points)
     {
