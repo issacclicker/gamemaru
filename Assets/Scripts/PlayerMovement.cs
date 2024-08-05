@@ -45,6 +45,7 @@ public class PlayerMovement : NetworkBehaviour
     UIManager _uiManager; //UI관리
     HealthBar _healthBar; //여우 체력바
 
+    public Tiger_roaring _tiger_roaring;
 
     public GameObject animalModel;//이미호
     public GameObject currentModel; 
@@ -110,6 +111,11 @@ public class PlayerMovement : NetworkBehaviour
             if (isPenaltyActive)
             {
                 ApplyPenalty();
+            }
+
+            if (Input.GetKey(KeyCode.R)&&!_tiger_roaring.SkillCoolingTime) 
+            {
+                _tiger_roaring.Roar();
             }
 
             //Tiger UI update
@@ -366,4 +372,6 @@ public class PlayerMovement : NetworkBehaviour
         }
     }
 
+
+    
 }
