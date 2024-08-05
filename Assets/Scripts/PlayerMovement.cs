@@ -53,6 +53,8 @@ public class PlayerMovement : NetworkBehaviour
     public GameObject originalModel;
     public bool isAwaken = false; //이미호 인지 아닌지
 
+    private ScoreManager scoreManager; //점수 관리
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,6 +71,8 @@ public class PlayerMovement : NetworkBehaviour
         _controller = GetComponent<CharacterController>();
 
         //디버깅 용
+    if (string.IsNullOrEmpty(playerState))
+    {
         if (IsHost)
         {
             playerState = "Tiger";
@@ -77,6 +81,8 @@ public class PlayerMovement : NetworkBehaviour
         {
             playerState = "Fox";
         }
+    }
+
 
         if (!IsOwner)
         {
@@ -95,6 +101,13 @@ public class PlayerMovement : NetworkBehaviour
         UIManagerObject.GetComponent<UIManager>().playerState = playerState;
         _uiManager.UIEnable();
         _healthBar.IsGameStarted = true;
+
+        scoreManager = GameObject.FindObjectOfType<ScoreManager>();
+
+        if (scoreManager == null)
+        {
+            Debug.LogError("ScoreManager instance not found in the scene.");
+        }
     }
 
     void Update()
@@ -391,6 +404,40 @@ public class PlayerMovement : NetworkBehaviour
         if (other.gameObject.name == "Lake")
         {
             ChangeModel();
+        }
+
+        if (other.gameObject.name == "Girl" && playerState == "Fox" && isAwaken && IsOwner)
+        {
+            AddScoreServerRpc("Fox", 1); // 여우가 소녀한테 닿으면 점수 1점 얻음
+            EndGame(); 
+        }
+    }
+
+    //게임 종료
+    private void EndGame()
+    {
+        if (scoreManager != null)
+        {
+            scoreManager.EndGame();
+        }
+    }
+
+    [ServerRpc]
+    private void AddScoreServerRpc(string playerType, int points)
+    {
+        if (scoreManager == null)
+        {
+            Debug.LogError("ScoreManager is not initialized.");
+            return;
+        }
+
+        if (playerType == "Fox")
+        {
+            scoreManager.AddFoxScore(points);
+        }
+        else if (playerType == "Tiger")
+        {
+            scoreManager.AddTigerScore(points);
         }
     }
 

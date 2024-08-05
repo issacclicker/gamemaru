@@ -9,6 +9,8 @@ public class HealthBar : MonoBehaviour
     public Image healthpoints; 
     public bool IsGameStarted = false;
 
+    private bool isGameEnded = false;//게임 종료
+
     private void Update()
     {
         
