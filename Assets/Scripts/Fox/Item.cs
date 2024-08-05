@@ -8,7 +8,8 @@ public class Item : NetworkBehaviour
 
     public static Item Instance;
 
-    
+    public GameObject nearObject;
+
     [SerializeField] private GameObject Bead;
 
     [SerializeField] private Transform beadTransForm;
@@ -40,6 +41,10 @@ public class Item : NetworkBehaviour
     }
 
     
-
+    [ServerRpc(RequireOwnership = false)]
+    public void DestroyBeadServerRpc()
+    {
+        nearObject.GetComponent<NetworkObject>().Despawn();
+    }
 
 }

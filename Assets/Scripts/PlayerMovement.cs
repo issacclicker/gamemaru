@@ -283,7 +283,8 @@ public class PlayerMovement : NetworkBehaviour
 
                 PlayerNetworkStats.Instance.IncreaseBeadCountServerRpc(OwnerClientId);
 
-
+                Item.Instance.nearObject = nearObject;
+                Item.Instance.DestroyBeadServerRpc();
                 
                 // DestroyBeadServerRpc();
                 Debug.Log("IsClient"+!IsHost);
