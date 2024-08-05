@@ -547,6 +547,10 @@ MonoBehaviour:
   - {fileID: 2600246247579103129, guid: 881a28e3374342c4a9c5362eec668456, type: 3}
   - {fileID: 9068761321880600687, guid: a876df6960150764fa11850b0635ea72, type: 3}
   - {fileID: 8111073045069211909, guid: 2b6d363518d5d414c981c638d0d4c8af, type: 3}
+  Food: {fileID: 4919220932830677973, guid: e2241283a97b76a4abcc2d4453806510, type: 3}
+  foodTransForm:
+  - {fileID: 8187124496121675323, guid: 0f61774499a218242a4ed75b5d9ae662, type: 3}
+  - {fileID: 5247737906794823978, guid: 7b9b2b348afebfd4f835f349509dde17, type: 3}
 --- !u!1 &3253949356774894861 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100890, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}

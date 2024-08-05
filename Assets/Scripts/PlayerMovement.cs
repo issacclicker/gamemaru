@@ -298,8 +298,7 @@ public class PlayerMovement : NetworkBehaviour
             else if(nearObject.tag == "Food") //From HealthBar.cs
             {
                 _healthBar.EatFood(5f);
-                nearObject.GetComponent<BoxCollider>().enabled = false;
-                nearObject.GetComponent<MeshRenderer>().enabled = false;
+                Item.Instance.DestroyBeadServerRpc(nearObject.GetComponent<NetworkObject>());
             }
         }
     }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5310304797925663189}
   - component: {fileID: 4193506131300537623}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: Bead
   m_TagString: Bead
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

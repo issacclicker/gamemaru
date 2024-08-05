@@ -3935,6 +3935,8 @@ MonoBehaviour:
   nearObject: {fileID: 0}
   Bead: {fileID: 0}
   beadTransForm: []
+  Food: {fileID: 0}
+  foodTransForm: []
 --- !u!114 &8136885931693374268
 MonoBehaviour:
   m_ObjectHideFlags: 0
