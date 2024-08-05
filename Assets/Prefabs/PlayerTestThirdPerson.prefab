@@ -333,6 +333,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       insertIndex: -1
       addedObject: {fileID: -5451274081857643235}
+    - targetCorrespondingSourceObject: {fileID: 100120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -961567335097105219}
+    - targetCorrespondingSourceObject: {fileID: 100120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7105325933736241123}
     - targetCorrespondingSourceObject: {fileID: 100888, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       insertIndex: -1
       addedObject: {fileID: 297211576156073177}
@@ -367,7 +373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1291167419
+  GlobalObjectIdHash: 2609733160
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -551,6 +557,31 @@ MonoBehaviour:
   foodTransForm:
   - {fileID: 8187124496121675323, guid: 0f61774499a218242a4ed75b5d9ae662, type: 3}
   - {fileID: 5247737906794823978, guid: 7b9b2b348afebfd4f835f349509dde17, type: 3}
+--- !u!114 &-961567335097105219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3253949356774891535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3adaf23faa2d734f9da6bcb89fed42f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerModels: []
+--- !u!114 &7105325933736241123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3253949356774891535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe252030a5723142924ee9577ee558d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3253949356774894861 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100890, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}

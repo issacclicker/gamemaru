@@ -38,7 +38,7 @@ public class CubeController : NetworkBehaviour
         }
 
 
-        if (Input.GetButtonDown("Interaction") && (playerState == "Tiger"||_playerMovement.isAwaken))
+        if (Input.GetButtonDown("Interaction") && (playerState == "Tiger"||_playerMovement.isAwaken.Value))
         {
             Debug.Log("Attack!");
             StartCoroutine(ActivateAndDeactivateCube());
@@ -85,7 +85,7 @@ public class CubeController : NetworkBehaviour
         {
             Debug.Log("Tiger Hunts!");
         }
-        else if(isActive && _playerMovement.isAwaken && collision.gameObject.CompareTag("Player")) //여우(이미호)가 호랑이 사냥
+        else if(isActive && _playerMovement.isAwaken.Value && collision.gameObject.CompareTag("Player")) //여우(이미호)가 호랑이 사냥
         {
             // if(collision.gameObject.GetComponent<PlayerMovement>().playerState == "Tiger")
                 Debug.Log("Fox Hunts!!!");

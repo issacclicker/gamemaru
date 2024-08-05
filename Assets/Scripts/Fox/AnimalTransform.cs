@@ -22,6 +22,7 @@ public class AnimalTransform : NetworkBehaviour
     HealthBar _healthBar; //체력바
     PlayerMovement _playerMovement;
     
+    
 
     private void Start()
     {
@@ -49,7 +50,7 @@ public class AnimalTransform : NetworkBehaviour
             RevertToOriginalModel();
         }
         // X키를 누르면 모델 변경 - 추후 키는 변경
-        if (Input.GetKeyDown(KeyCode.X) && !_playerMovement.isAwaken && _playerMovement.playerState == "Fox" && IsOwner)
+        if (Input.GetKeyDown(KeyCode.X) && !_playerMovement.isAwaken.Value && _playerMovement.playerState == "Fox" && IsOwner)
         {
             ChangeModel();
         }
@@ -62,6 +63,7 @@ public class AnimalTransform : NetworkBehaviour
         if (isAnimal)
         {
             Destroy(_playerMovement.currentModel);
+            
 
             if (_playerMovement.originalModel != null)
             {
@@ -86,9 +88,12 @@ public class AnimalTransform : NetworkBehaviour
                 if (_playerMovement.currentModel != null && _playerMovement.currentModel != _playerMovement.originalModel)
                 {
                     Destroy(_playerMovement.currentModel);
+                    // PlayerModelSync.Instance.DestroyModelServerRpc(_playerMovement.currentModel);
                 }
 
                 // 랜덤으로 동물 모델
+                // 1. 오리
+                // 2. 양
                 int randomIndex = Random.Range(0, animalModels.Length);
                 GameObject newModel = Instantiate(animalModels[randomIndex], transform.position, transform.rotation);
 
@@ -112,12 +117,15 @@ public class AnimalTransform : NetworkBehaviour
                 Debug.Log("체력 부족 동물 모델로 변경 불가");
             }
         }
+
+        
+
     }
 
     // 일정 시간이 경과했을 때 원래 모델로 돌아가기
     public void RevertToOriginalModel()
     {
-        if (isAnimal && !_playerMovement.isAwaken)
+        if (isAnimal && !_playerMovement.isAwaken.Value)
         {
             Destroy(_playerMovement.currentModel);
 

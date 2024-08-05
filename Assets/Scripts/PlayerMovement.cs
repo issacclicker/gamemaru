@@ -11,6 +11,8 @@ using UnityEngine.UI;
 public class PlayerMovement : NetworkBehaviour
 {
 
+    public static PlayerMovement Instance;
+
     //ThirdPerson Movement
     Animator _animator;
     Camera _camera;
@@ -49,8 +51,13 @@ public class PlayerMovement : NetworkBehaviour
     public GameObject animalModel;//이미호
     public GameObject currentModel; 
     public GameObject originalModel;
-    public bool isAwaken = false; //이미호 인지 아닌지
+    // public bool isAwaken = false; //이미호 인지 아닌지
+    public NetworkVariable<bool> isAwaken = new NetworkVariable<bool>();
 
+    void Awake()
+    {
+        Instance = this;
+    }
 
 
     // // Start is called before the first frame update
@@ -69,7 +76,7 @@ public class PlayerMovement : NetworkBehaviour
         playerState = "Fox";
         //////////////////////////
 
-        
+        isAwaken.Value = false;
 
 
         if(!IsOwner){
@@ -101,7 +108,7 @@ public class PlayerMovement : NetworkBehaviour
         if(playerState=="Fox")
         {
             iDown = Input.GetButtonDown("Interaction");
-            if(!isAwaken)
+            if(!isAwaken.Value)
             {
                 Interaction();
             }
@@ -326,7 +333,7 @@ public class PlayerMovement : NetworkBehaviour
     //이미호로 바뀌는 함수
     private void ChangeModel()
     {
-        if (PlayerNetworkStats.Instance.BeadCount >= 2 && !isAwaken && IsOwner)
+        if (PlayerNetworkStats.Instance.BeadCount >= 2 && !isAwaken.Value && IsOwner)
         {
             if (currentModel != originalModel)
             {
@@ -337,7 +344,9 @@ public class PlayerMovement : NetworkBehaviour
 
             newModel.transform.SetParent(transform);
             currentModel = newModel;
-            isAwaken = true;
+            // isAwaken.Value = true;
+            
+            PlayerStateSync.Instance.SetTrueIsAwakenServerRpc();
 
             if (originalModel != null)
             {
@@ -369,7 +378,7 @@ public class PlayerMovement : NetworkBehaviour
     //모델 바꾸는 함수
     public void RevertToOriginalModel()
     {
-        if (isAwaken && IsOwner)
+        if (isAwaken.Value && IsOwner)
         {
             Destroy(currentModel);
 
@@ -382,7 +391,7 @@ public class PlayerMovement : NetworkBehaviour
                 }
             }
 
-            isAwaken = false;
+            isAwaken.Value = false;
         }
     }
 
