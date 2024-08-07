@@ -14,15 +14,16 @@ public class AnimalTransform : NetworkBehaviour
     //*AnimalTransform script 적용 후 Animal Models에 이미지 넣어두어야 제대로 작동함
     //*PlayerTestThirdPerson에 적용해서 그런지 원래의 이미지로 돌아갔을 때 사람과 함께 큐브가 적용된 이미지가 뜸
     public GameObject[] animalModels; // 동물 모델 배열
-    // private GameObject currentModel; // 현재 활성화된 모델
-    // private GameObject originalModel; // 원래 사람 모델
+
+    public GameObject[] animalModelsForNetworks; // 동물 모델 NetworkObjects 적용된 Prefab
+
+    private GameObject currentModel; // 현재 활성화된 모델
+    private GameObject originalModel; // 원래 사람 모델
     private bool isAnimal = false; // 현재 모델이 동물인지 여부
 
     GameObject UIManagerObject; //UI매니저
     HealthBar _healthBar; //체력바
     PlayerMovement _playerMovement;
-    
-    
 
     private void Start()
     {
@@ -48,6 +49,7 @@ public class AnimalTransform : NetworkBehaviour
 
         if (_healthBar.health <0 && IsOwner){
             RevertToOriginalModel();
+            Debug.Log("원래 모델로 변경");
         }
         // X키를 누르면 모델 변경 - 추후 키는 변경
         if (Input.GetKeyDown(KeyCode.X) && !_playerMovement.isAwaken.Value && _playerMovement.playerState == "Fox" && IsOwner)
@@ -88,7 +90,6 @@ public class AnimalTransform : NetworkBehaviour
                 if (_playerMovement.currentModel != null && _playerMovement.currentModel != _playerMovement.originalModel)
                 {
                     Destroy(_playerMovement.currentModel);
-                    // PlayerModelSync.Instance.DestroyModelServerRpc(_playerMovement.currentModel);
                 }
 
                 // 랜덤으로 동물 모델
@@ -105,10 +106,21 @@ public class AnimalTransform : NetworkBehaviour
                     {
                         renderer.enabled = false;
                     }
+
+                    DisableForiegnModelServerRpc(this.gameObject);
+                    DisableForiegnModelClientRpc(this.gameObject);
                 }
 
-                newModel.transform.SetParent(transform);
+                // newModel.transform.SetParent(transform);
                 _playerMovement.currentModel = newModel;
+                NewModelSpawnServerRpc(this.gameObject,randomIndex);
+
+                
+
+                // skinnedMeshRenderer.sharedMesh = animalModelsMesh[0];
+                // skinnedMeshRenderer.rootBone = animalModelsRootBone[0].transform;
+
+
                 isAnimal = true;
                 Debug.Log("동물 모델로 변경");
             }
@@ -142,4 +154,59 @@ public class AnimalTransform : NetworkBehaviour
             Debug.Log("원래 모델로 변경");
         }
     }
+
+
+    [ServerRpc]
+    private void DisableForiegnModelServerRpc(NetworkObjectReference player)
+    {
+        if(player.TryGet(out var p))
+        {
+            p.transform.Find("DummyMesh").gameObject.GetComponent<SkinnedMeshRenderer>().enabled = false;
+            Debug.Log("서버 알피시");
+        }
+    }
+
+    [ClientRpc]
+    private void DisableForiegnModelClientRpc(NetworkObjectReference player)
+    {
+        if(player.TryGet(out var p))
+        {
+            p.transform.Find("DummyMesh").gameObject.GetComponent<SkinnedMeshRenderer>().enabled = false;
+            Debug.Log("클라이언트 알피시");
+        }
+    }
+
+
+    [ServerRpc]
+    private void NewModelSpawnServerRpc(NetworkObjectReference player,int num)
+    {
+        if(player.TryGet(out var p))
+        {
+            GameObject newMd = Instantiate(animalModelsForNetworks[num],p.GetComponent<Transform>().position,p.GetComponent<Transform>().rotation);
+            GameObject newMdApply = newMd;
+            
+            newMdApply.GetComponent<NetworkObject>().Spawn();
+            newMdApply.transform.SetParent(p.transform);
+
+            newMd.SetActive(false);
+            
+        }
+
+    }
+
+    // [ServerRpc]
+    // private void NewModelApplyServerRpc(NetworkObjectReference player, NetworkObjectReference newModel, int num)
+    // {
+    //     if(player.TryGet(out var p) && newModel.TryGet(out var md))
+    //     {
+    //         if(num==0) // 변신모델 duck1
+    //         {
+                
+    //             p.GetComponent<PlayerMovement>().currentModel = newMd.gameObject;
+    //             newMd.transform.SetParent(p.transform);
+    //         }
+    //         Debug.Log("서버 알피시 1");
+    //     }
+    // }
+
 }

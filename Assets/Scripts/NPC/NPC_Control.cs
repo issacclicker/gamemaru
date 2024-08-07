@@ -27,6 +27,13 @@ public class NPCController : NetworkBehaviour
         if (isMoving)
         {
             transform.Translate(randomDirection * speed * Time.deltaTime, Space.World);
+        
+            // Rotate to face the direction of movement
+            if (randomDirection != Vector3.zero)
+            {
+                Quaternion toRotation = Quaternion.LookRotation(randomDirection, Vector3.up);
+                transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, Time.deltaTime * 5f);
+            }
         }
     }
 
