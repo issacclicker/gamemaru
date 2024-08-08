@@ -35,7 +35,8 @@ public class AnimalTransform : NetworkBehaviour
         _playerMovement = GetComponent<PlayerMovement>();
 
         // 현재 오브젝트를 기본 모델로 설정
-        _playerMovement.currentModel = gameObject;
+        _playerMovement.currentModel = new NetworkVariable<NetworkObjectReference>();
+        _playerMovement.currentModel.Value = gameObject.GetComponent<NetworkObject>();
         _playerMovement.originalModel = gameObject;
     }
 
@@ -64,7 +65,8 @@ public class AnimalTransform : NetworkBehaviour
         // 원래 모델로 변경
         if (isAnimal)
         {
-            Destroy(_playerMovement.currentModel);
+            // 서버에서 삭제하도록 함.
+            //Destroy(_playerMovement.currentModel);
             
 
             if (_playerMovement.originalModel != null)
@@ -87,16 +89,16 @@ public class AnimalTransform : NetworkBehaviour
 
             if (_healthBar != null && _healthBar.health > 0)
             {
-                if (_playerMovement.currentModel != null && _playerMovement.currentModel != _playerMovement.originalModel)
-                {
-                    Destroy(_playerMovement.currentModel);
-                }
+                // if (_playerMovement.currentModel != null && _playerMovement.currentModel != _playerMovement.originalModel)
+                // {
+                //     Destroy(_playerMovement.currentModel);
+                // }
 
                 // 랜덤으로 동물 모델
                 // 1. 오리
                 // 2. 양
                 int randomIndex = Random.Range(0, animalModels.Length);
-                GameObject newModel = Instantiate(animalModels[randomIndex], transform.position, transform.rotation);
+                //GameObject newModel = Instantiate(animalModels[randomIndex], transform);
 
                 // 원래 모델 비활성화
                 if (_playerMovement.originalModel != null)
@@ -112,7 +114,7 @@ public class AnimalTransform : NetworkBehaviour
                 }
 
                 // newModel.transform.SetParent(transform);
-                _playerMovement.currentModel = newModel;
+                //_playerMovement.currentModel = newModel;
                 NewModelSpawnServerRpc(this.gameObject,randomIndex);
 
                 
@@ -139,7 +141,8 @@ public class AnimalTransform : NetworkBehaviour
     {
         if (isAnimal && !_playerMovement.isAwaken.Value)
         {
-            Destroy(_playerMovement.currentModel);
+            // 서버에서 수행해야 함.
+            //Destroy(_playerMovement.currentModel);
 
             if (_playerMovement.originalModel != null)
             {
@@ -182,14 +185,18 @@ public class AnimalTransform : NetworkBehaviour
     {
         if(player.TryGet(out var p))
         {
-            GameObject newMd = Instantiate(animalModelsForNetworks[num],p.GetComponent<Transform>().position,p.GetComponent<Transform>().rotation);
-            GameObject newMdApply = newMd;
-            
-            newMdApply.GetComponent<NetworkObject>().Spawn();
-            newMdApply.transform.SetParent(p.transform);
+            if (_playerMovement.currentModel.Value.TryGet(out var exist) && exist.gameObject != _playerMovement.originalModel)
+            {
+                exist.Despawn();
+                _playerMovement.currentModel.Value = default;
+            }
 
-            newMd.SetActive(false);
-            
+            GameObject newMd = Instantiate(animalModelsForNetworks[num]);
+
+            var networkObject = newMd.GetComponent<NetworkObject>();
+            networkObject.Spawn();
+            networkObject.TrySetParent(p, worldPositionStays: false);
+            _playerMovement.currentModel.Value = networkObject;
         }
 
     }

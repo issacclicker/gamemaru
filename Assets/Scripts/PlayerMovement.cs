@@ -56,7 +56,7 @@ public class PlayerMovement : NetworkBehaviour
 
 
     public GameObject animalModel;//이미호
-    public GameObject currentModel; 
+    public NetworkVariable<NetworkObjectReference> currentModel; 
     public GameObject originalModel;
     // public bool isAwaken = false; //이미호 인지 아닌지
     public NetworkVariable<bool> isAwaken = new NetworkVariable<bool>();
