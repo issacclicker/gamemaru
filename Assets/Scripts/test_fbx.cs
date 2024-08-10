@@ -87,3 +87,4 @@ public class test_fbx : MonoBehaviour
         Debug.Log(logMessage);
     }
 }
+ 
