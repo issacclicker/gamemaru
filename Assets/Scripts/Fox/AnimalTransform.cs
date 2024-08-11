@@ -39,9 +39,9 @@ public class AnimalTransform : NetworkBehaviour
         _playerMovement = GetComponent<PlayerMovement>();
 
         // 현재 오브젝트를 기본 모델로 설정
-        _playerMovement.currentModel = new NetworkVariable<NetworkObjectReference>();
-        _playerMovement.currentModel.Value = gameObject.GetComponent<NetworkObject>();
-        _playerMovement.originalModel = gameObject;
+        // _playerMovement.currentModel = new NetworkVariable<NetworkObjectReference>();
+        // _playerMovement.currentModel.Value = gameObject.GetComponent<NetworkObject>();
+        // _playerMovement.originalModel = gameObject;
     }
 
     private void Update()
@@ -53,7 +53,7 @@ public class AnimalTransform : NetworkBehaviour
 
 
         if (_healthBar.health <0 && IsOwner){
-            RevertToOriginalModel();
+            // RevertToOriginalModel();
             Debug.Log("원래 모델로 변경");
         }
         // X키를 누르면 모델 변경 - 추후 키는 변경
@@ -73,8 +73,8 @@ public class AnimalTransform : NetworkBehaviour
             //Destroy(_playerMovement.currentModel);
             
 
-            if (_playerMovement.originalModel != null)
-            {
+            // if (_playerMovement.originalModel != null)
+            
                 // Renderer[] renderers = _playerMovement.originalModel.GetComponentsInChildren<Renderer>();
                 // foreach (var renderer in renderers)
                 // {
@@ -84,7 +84,7 @@ public class AnimalTransform : NetworkBehaviour
 
                 AbleForiegnModelServerRpc(this.gameObject,"DummyMesh");
                 AbleForiegnModelClientRpc(this.gameObject,"DummyMesh");
-            }
+            
 
             NewModelDespawnServerRpc(this.gameObject,randomIndex_temp);
 
@@ -112,17 +112,11 @@ public class AnimalTransform : NetworkBehaviour
                 //GameObject newModel = Instantiate(animalModels[randomIndex], transform);
 
                 // 원래 모델 비활성화
-                if (_playerMovement.originalModel != null)
-                {
-                    Renderer[] renderers = _playerMovement.originalModel.GetComponentsInChildren<Renderer>();
-                    foreach (var renderer in renderers)
-                    {
-                        renderer.enabled = false;
-                    }
+                    this.transform.Find("DummyMesh").GetComponent<SkinnedMeshRenderer>().enabled = false;
 
                     DisableForiegnModelServerRpc(this.gameObject,"DummyMesh");
                     DisableForiegnModelClientRpc(this.gameObject,"DummyMesh");
-                }
+                
 
                 NewModelSpawnServerRpc(this.gameObject,randomIndex);
 
@@ -152,16 +146,16 @@ public class AnimalTransform : NetworkBehaviour
             // 서버에서 수행해야 함.
             //Destroy(_playerMovement.currentModel);
 
-            if (_playerMovement.originalModel != null)
-            {
-                Renderer[] renderers = _playerMovement.originalModel.GetComponentsInChildren<Renderer>();
-                foreach (var renderer in renderers)
-                {
-                    renderer.enabled = true;
-                }
-            }
+            // if (_playerMovement.originalModel != null)
+            // {
+            //     Renderer[] renderers = _playerMovement.originalModel.GetComponentsInChildren<Renderer>();
+            //     foreach (var renderer in renderers)
+            //     {
+            //         renderer.enabled = true;
+            //     }
+            // }
 
-            isAnimal = false;
+            // isAnimal = false;
             Debug.Log("원래 모델로 변경");
         }
     }
