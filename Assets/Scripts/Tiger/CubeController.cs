@@ -22,7 +22,7 @@ public class CubeController : NetworkBehaviour
     void Start()
     {
         renderer = GetComponent<Renderer>();
-        playerState = playerHead.GetComponent<PlayerMovement>().playerState;
+        playerState = playerHead.GetComponent<PlayerMovement>().playerState; //serverRpc로 고쳐야함.
         _playerMovement = playerHead.GetComponent<PlayerMovement>();
         // if(playerState == "Tiger"){
         //     SetCubeActive(false);

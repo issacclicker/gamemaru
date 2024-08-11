@@ -59,7 +59,7 @@ public class AnimalTransform : NetworkBehaviour
             Debug.Log("원래 모델로 변경");
         }
         // X키를 누르면 모델 변경 - 추후 키는 변경
-        if (Input.GetKeyDown(KeyCode.X) && !_playerMovement.isAwaken.Value && _playerMovement.playerState == "Fox" && IsOwner)
+        if (Input.GetKeyDown(KeyCode.X) && !_playerMovement.isAwaken.Value && PlayerMovement.Instance.playerState == "Fox" && IsOwner)
         {
             ChangeModel();
         }

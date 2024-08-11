@@ -86,17 +86,17 @@ public class PlayerMovement : NetworkBehaviour
         _camera = Camera.main;
         // _controller = this.GetComponent<CharacterController>();
          _controller = GetComponent<CharacterController>();
-        
+
         //디버깅 용
-        // if(IsHost){
-        //     playerState = "Fox";
-        // }else{
-        //     playerState = "Tiger";
-        // }
-        if(string.IsNullOrEmpty(playerState))
-        {
-            playerState = "Fox";
+        if(IsHost){
+            playerState = "Fox"; //ServerRpc로 바꿔야함
+        }else{
+            playerState = "Tiger"; //ServerRpc로 바꿔야함
         }
+        // if(string.IsNullOrEmpty(playerState))
+        // {
+        //     playerState = "Fox";
+        // }
         //////////////////////////
 
         isAwaken.Value = false;
@@ -469,7 +469,6 @@ public class PlayerMovement : NetworkBehaviour
         isAwaken.Value = value;
     }
 
-    
     
 
 }
