@@ -50,7 +50,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3237205757965180500}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -410,7 +410,6 @@ MonoBehaviour:
   playerState: 
   nearObject: {fileID: 0}
   animalModel: {fileID: 919132149155446097, guid: 27520bf6009bb064d8744d18ff6ee12e, type: 3}
-  currentModel: {fileID: 3253949356774894863}
   originalModel: {fileID: 0}
   isAwaken:
     m_InternalValue: 0
@@ -454,8 +453,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animalModels:
   - {fileID: 2910117659372101394, guid: ae8983f5771896549bd0891588017d3e, type: 3}
+  - {fileID: 5143966722407306107, guid: 9949510faecd67a43acb42be754b1c01, type: 3}
   animalModelsForNetworks:
   - {fileID: 2910117659372101394, guid: ae8983f5771896549bd0891588017d3e, type: 3}
+  - {fileID: 5143966722407306107, guid: 9949510faecd67a43acb42be754b1c01, type: 3}
+  animalModelsNames:
+  - duck1(Clone)
+  - sheep1(Clone)
 --- !u!114 &8637592993313646757
 MonoBehaviour:
   m_ObjectHideFlags: 0
