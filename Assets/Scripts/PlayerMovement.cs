@@ -58,7 +58,6 @@ public class PlayerMovement : NetworkBehaviour
     public GameObject animalModel;//이미호
     public NetworkVariable<NetworkObjectReference> currentModel; 
     public GameObject originalModel;
-    // public bool isAwaken = false; //이미호 인지 아닌지
     public NetworkVariable<bool> isAwaken = new NetworkVariable<bool>();
 
     private ScoreManager scoreManager;
@@ -414,35 +413,11 @@ public class PlayerMovement : NetworkBehaviour
     {
         if (PlayerNetworkStats.Instance.BeadCount >= 2 && !isAwaken.Value && IsOwner)
         {
-            Debug.Log("이미호 볏닌");
-            // if (currentModel != originalModel)
-            // {
-            //     Destroy(currentModel);
-            // }
-
-            // GameObject newModel = Instantiate(animalModel, transform.position, transform.rotation);
-
-            // newModel.transform.SetParent(transform);
-            // currentModel = newModel;
-            // // isAwaken.Value = true;
+            Set_isAwakenServerRpc(true);
             
-            // PlayerStateSync.Instance.SetTrueIsAwakenServerRpc();
-
-            // if (originalModel != null)
-            // {
-            //     Renderer[] renderers = originalModel.GetComponentsInChildren<Renderer>();
-            //     foreach (var renderer in renderers)
-            //     {
-            //         renderer.enabled = false;
-            //     }
-            // }
-
-            // Renderer[] newModelRenderers = newModel.GetComponentsInChildren<Renderer>();
-            // foreach (var renderer in newModelRenderers)
-            // {
-            //     renderer.enabled = true;  
-            //     Debug.Log(renderer.name + " is now enabled: " + renderer.enabled);
-            // }
+            GetComponent<AnimalTransform>().ChangeModelToSecFox();
+            
+            Debug.Log("이미호로 변신");
         }
     }
 
@@ -488,28 +463,13 @@ public class PlayerMovement : NetworkBehaviour
         }
     }
 
+    [ServerRpc]
+    private void Set_isAwakenServerRpc(bool value)
+    {
+        isAwaken.Value = value;
+    }
 
-
-    //모델 바꾸는 함수
-    // public void RevertToOriginalModel()
-    // {
-    //     if (isAwaken.Value && IsOwner)
-    //     {
-    //         Destroy(currentModel);
-
-    //         if (originalModel != null)
-    //         {
-    //             Renderer[] renderers = originalModel.GetComponentsInChildren<Renderer>();
-    //             foreach (var renderer in renderers)
-    //             {
-    //                 renderer.enabled = true;
-    //             }
-    //         }
-
-    //         isAwaken.Value = false;
-    //     }
-    // }
-
+    
     
 
 }

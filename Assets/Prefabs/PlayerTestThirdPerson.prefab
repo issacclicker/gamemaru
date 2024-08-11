@@ -377,7 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2609733160
+  GlobalObjectIdHash: 1291167419
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -457,6 +457,7 @@ MonoBehaviour:
   animalModelsForNetworks:
   - {fileID: 2910117659372101394, guid: ae8983f5771896549bd0891588017d3e, type: 3}
   - {fileID: 5143966722407306107, guid: 9949510faecd67a43acb42be754b1c01, type: 3}
+  animalModel_Sec_Fox: {fileID: 6418129869022611863, guid: fe080cfa1d00e5d4eae6394f4246e525, type: 3}
   animalModelsNames:
   - duck1(Clone)
   - sheep1(Clone)
