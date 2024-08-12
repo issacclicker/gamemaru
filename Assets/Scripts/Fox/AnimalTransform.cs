@@ -72,17 +72,6 @@ public class AnimalTransform : NetworkBehaviour
         // 원래 모델로 변경
         if (isAnimal)
         {
-            // 서버에서 삭제하도록 함.
-            //Destroy(_playerMovement.currentModel);
-            
-
-            // if (_playerMovement.originalModel != null)
-            
-                // Renderer[] renderers = _playerMovement.originalModel.GetComponentsInChildren<Renderer>();
-                // foreach (var renderer in renderers)
-                // {
-                //     renderer.enabled = true;
-                // }
                 this.transform.Find("DummyMesh").GetComponent<SkinnedMeshRenderer>().enabled = true; //DummyMesh 변경해야 할 수도.
 
                 AbleForiegnModelServerRpc(this.gameObject,"DummyMesh");

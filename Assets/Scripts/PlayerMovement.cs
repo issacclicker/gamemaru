@@ -469,6 +469,9 @@ public class PlayerMovement : NetworkBehaviour
         isAwaken.Value = value;
     }
 
-    
+    public void PlayerDie()
+    {
+        Debug.Log("Player die.!");
+    }
 
 }
