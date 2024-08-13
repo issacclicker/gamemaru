@@ -377,7 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1291167419
+  GlobalObjectIdHash: 2609733160
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -454,13 +454,22 @@ MonoBehaviour:
   animalModels:
   - {fileID: 2910117659372101394, guid: ae8983f5771896549bd0891588017d3e, type: 3}
   - {fileID: 5143966722407306107, guid: 9949510faecd67a43acb42be754b1c01, type: 3}
+  - {fileID: 7125292644456519386, guid: af8262b370455c84fa2517e130a911d4, type: 3}
+  - {fileID: 1201015059542302013, guid: 683df3fbc716a254cbccbed195836df5, type: 3}
+  - {fileID: 1158984366551649401, guid: b04bd75afbf81674a9dd983f6e786196, type: 3}
   animalModelsForNetworks:
   - {fileID: 2910117659372101394, guid: ae8983f5771896549bd0891588017d3e, type: 3}
   - {fileID: 5143966722407306107, guid: 9949510faecd67a43acb42be754b1c01, type: 3}
+  - {fileID: 7125292644456519386, guid: af8262b370455c84fa2517e130a911d4, type: 3}
+  - {fileID: 1201015059542302013, guid: 683df3fbc716a254cbccbed195836df5, type: 3}
+  - {fileID: 1158984366551649401, guid: b04bd75afbf81674a9dd983f6e786196, type: 3}
   animalModel_Sec_Fox: {fileID: 6418129869022611863, guid: fe080cfa1d00e5d4eae6394f4246e525, type: 3}
   animalModelsNames:
   - duck1(Clone)
   - sheep1(Clone)
+  - sheep2(Clone)
+  - cat1(Clone)
+  - capybara1(Clone)
 --- !u!114 &8637592993313646757
 MonoBehaviour:
   m_ObjectHideFlags: 0
