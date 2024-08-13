@@ -9,6 +9,7 @@ public class TimerTest : NetworkBehaviour
     private NetworkVariable<float> networkedElapsedTime = new NetworkVariable<float>();
 
     private float localElapsedTime = 0f;
+    private bool isGameEnded = false;
 
     private void Start()
     {
@@ -20,7 +21,7 @@ public class TimerTest : NetworkBehaviour
 
     private void Update()
     {
-        if (IsServer)
+        if (IsServer && !isGameEnded)
         {
             localElapsedTime += Time.deltaTime;
             networkedElapsedTime.Value = localElapsedTime;
@@ -28,5 +29,10 @@ public class TimerTest : NetworkBehaviour
 
         // 모든 클라이언트에서 동일한 시간 업데이트
         timerText.text = "Time: " + networkedElapsedTime.Value.ToString("F2") + "s";
+    }
+
+    public void EndGame()
+    {
+        isGameEnded = true;
     }
 }

@@ -50,7 +50,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3237205757965180500}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -245,6 +245,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 100888, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
+      propertyPath: m_TagString
+      value: PlayerMesh
+      objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       propertyPath: m_LocalPosition.x
       value: 12.9986315
@@ -330,6 +334,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7369406295660531789}
+    - targetCorrespondingSourceObject: {fileID: 100120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -5451274081857643235}
+    - targetCorrespondingSourceObject: {fileID: 100120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -961567335097105219}
+    - targetCorrespondingSourceObject: {fileID: 100120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7105325933736241123}
     - targetCorrespondingSourceObject: {fileID: 100888, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       insertIndex: -1
       addedObject: {fileID: 297211576156073177}
@@ -392,11 +405,14 @@ MonoBehaviour:
   toggleCameraRotation: 0
   run: 0
   smoothness: 10
+  jumpHeight: 1.5
+  gravity: -9.81
   playerState: 
+  nearObject: {fileID: 0}
   animalModel: {fileID: 919132149155446097, guid: 27520bf6009bb064d8744d18ff6ee12e, type: 3}
-  currentModel: {fileID: 3253949356774894863}
   originalModel: {fileID: 0}
-  isAwaken: 0
+  isAwaken:
+    m_InternalValue: 0
 --- !u!143 &6395637254529567614
 CharacterController:
   m_ObjectHideFlags: 0
@@ -436,8 +452,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animalModels:
-  - {fileID: 919132149155446097, guid: eb01aa77ca942c14cb6073117de53c41, type: 3}
-  - {fileID: 919132149155446097, guid: 7f0cf2ca8898368498dd221cbefb1c19, type: 3}
+  - {fileID: 2910117659372101394, guid: ae8983f5771896549bd0891588017d3e, type: 3}
+  - {fileID: 5143966722407306107, guid: 9949510faecd67a43acb42be754b1c01, type: 3}
+  - {fileID: 7125292644456519386, guid: af8262b370455c84fa2517e130a911d4, type: 3}
+  - {fileID: 1201015059542302013, guid: 683df3fbc716a254cbccbed195836df5, type: 3}
+  - {fileID: 1158984366551649401, guid: b04bd75afbf81674a9dd983f6e786196, type: 3}
+  animalModelsForNetworks:
+  - {fileID: 2910117659372101394, guid: ae8983f5771896549bd0891588017d3e, type: 3}
+  - {fileID: 5143966722407306107, guid: 9949510faecd67a43acb42be754b1c01, type: 3}
+  - {fileID: 7125292644456519386, guid: af8262b370455c84fa2517e130a911d4, type: 3}
+  - {fileID: 1201015059542302013, guid: 683df3fbc716a254cbccbed195836df5, type: 3}
+  - {fileID: 1158984366551649401, guid: b04bd75afbf81674a9dd983f6e786196, type: 3}
+  animalModel_Sec_Fox: {fileID: 6418129869022611863, guid: fe080cfa1d00e5d4eae6394f4246e525, type: 3}
+  animalModelsNames:
+  - duck1(Clone)
+  - sheep1(Clone)
+  - sheep2(Clone)
+  - cat1(Clone)
+  - capybara1(Clone)
 --- !u!114 &8637592993313646757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -520,6 +552,56 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-5451274081857643235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3253949356774891535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1be2dd9256c9ae4f987ee17ec3cdcd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nearObject: {fileID: 0}
+  Bead: {fileID: 4919220932830677973, guid: 203615d793fd13f41ab73c9573203dae, type: 3}
+  beadTransForm:
+  - {fileID: 7319528757254569673, guid: 203615d793fd13f41ab73c9573203dae, type: 3}
+  - {fileID: 7375570948873625387, guid: 762d86f560045074a88807ca2b854b92, type: 3}
+  - {fileID: 1126146824203454041, guid: 7beb478ee9f159849acfa0a387eb183f, type: 3}
+  - {fileID: 2600246247579103129, guid: 881a28e3374342c4a9c5362eec668456, type: 3}
+  - {fileID: 9068761321880600687, guid: a876df6960150764fa11850b0635ea72, type: 3}
+  - {fileID: 8111073045069211909, guid: 2b6d363518d5d414c981c638d0d4c8af, type: 3}
+  Food: {fileID: 4919220932830677973, guid: e2241283a97b76a4abcc2d4453806510, type: 3}
+  foodTransForm:
+  - {fileID: 8187124496121675323, guid: 0f61774499a218242a4ed75b5d9ae662, type: 3}
+  - {fileID: 5247737906794823978, guid: 7b9b2b348afebfd4f835f349509dde17, type: 3}
+--- !u!114 &-961567335097105219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3253949356774891535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3adaf23faa2d734f9da6bcb89fed42f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerModels: []
+--- !u!114 &7105325933736241123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3253949356774891535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe252030a5723142924ee9577ee558d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3253949356774894861 stripped

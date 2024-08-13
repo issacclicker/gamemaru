@@ -6,10 +6,11 @@ using UnityEngine.UI;
 
 //Every Player move Script Unite here;
 //모든 플레이어 움직임 관련코드 이걸로 통일
-//주석처리된 코드는 전부 주석 해제 해야함
 
 public class PlayerMovement : NetworkBehaviour
 {
+
+    public static PlayerMovement Instance;
 
     //ThirdPerson Movement
     Animator _animator;
@@ -25,6 +26,14 @@ public class PlayerMovement : NetworkBehaviour
     public bool run;
     public float smoothness = 10f;
 
+
+    public float jumpHeight = 1.5f;
+    public float gravity = -9.81f;
+    private Vector3 velocity;
+    private bool isGrounded;
+
+
+
     //Player State
     [SerializeField]
     public string playerState;
@@ -38,7 +47,7 @@ public class PlayerMovement : NetworkBehaviour
     // public GameObject[] Bead;
     // public bool[] hasBeads; 
     bool iDown;
-    GameObject nearObject;
+    [SerializeField]GameObject nearObject;
 
     GameObject UIManagerObject;
 
@@ -47,25 +56,50 @@ public class PlayerMovement : NetworkBehaviour
 
 
     public GameObject animalModel;//이미호
-    public GameObject currentModel; 
+    public NetworkVariable<NetworkObjectReference> currentModel; 
     public GameObject originalModel;
-    public bool isAwaken = false; //이미호 인지 아닌지
+    public NetworkVariable<bool> isAwaken = new NetworkVariable<bool>();
 
+    private ScoreManager scoreManager;
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
 
     // // Start is called before the first frame update
     void Start()
     {
-        _animator = this.GetComponent<Animator>();
+        // _animator = this.GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
+        if (_animator == null)
+        {     
+            Debug.LogError("Animator component is not found on the GameObject.");
+        }
+        else
+        {
+            Debug.Log("Animator component is found.");
+        }
+
+
         _camera = Camera.main;
-        _controller = this.GetComponent<CharacterController>();
-        
+        // _controller = this.GetComponent<CharacterController>();
+         _controller = GetComponent<CharacterController>();
+
         //디버깅 용
         if(IsHost){
-            playerState = "Tiger";
+            playerState = "Fox"; //ServerRpc로 바꿔야함
         }else{
-            playerState = "Fox";
+            playerState = "Tiger"; //ServerRpc로 바꿔야함
         }
+        // if(string.IsNullOrEmpty(playerState))
+        // {
+        //     playerState = "Fox";
+        // }
+        //////////////////////////
+
+        isAwaken.Value = false;
 
 
         if(!IsOwner){
@@ -83,6 +117,13 @@ public class PlayerMovement : NetworkBehaviour
         _uiManager.UIEnable();
         _healthBar.IsGameStarted = true;
 
+        scoreManager = GameObject.FindObjectOfType<ScoreManager>();
+
+        if(scoreManager == null)
+        {
+            Debug.LogError("ScoreManager instance not found in the scene.");
+        }
+
     }
 
     // Update is called once per frame
@@ -97,7 +138,7 @@ public class PlayerMovement : NetworkBehaviour
         if(playerState=="Fox")
         {
             iDown = Input.GetButtonDown("Interaction");
-            if(!isAwaken)
+            if(!isAwaken.Value)
             {
                 Interaction();
             }
@@ -139,8 +180,28 @@ public class PlayerMovement : NetworkBehaviour
         {
             run = false;
         }
+
+        isGrounded = _controller.isGrounded;
+
+        // 현재 플레이어가 지면에 닿아있지 않는 문제 확인
+        // Debug.Log($"isGrounded: {isGrounded}");  
+
+        if (isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (isGrounded)
+            {
+                Jump();
+            }
+        }
+
         InputMovement();
-        
+        velocity.y += gravity * Time.deltaTime;
+        _controller.Move(velocity * Time.deltaTime);
     }
 
     void LateUpdate()
@@ -150,7 +211,7 @@ public class PlayerMovement : NetworkBehaviour
             return;
         }
 
-        if (toggleCameraRotation != true)
+        if (!toggleCameraRotation)
         {
             Vector3 playerRotate = Vector3.Scale(_camera.transform.forward, new Vector3(1, 0, 1));
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerRotate), Time.deltaTime * smoothness);
@@ -160,17 +221,42 @@ public class PlayerMovement : NetworkBehaviour
 
     void InputMovement()
     {
-        finalSpeed = (run) ? runspeed : speed;
+        finalSpeed = run ? runspeed : speed;
 
-        Vector3 forword = transform.TransformDirection(Vector3.forward);
+        // Vector3 forword = transform.TransformDirection(Vector3.forward);
+        if (isPenaltyActive && penaltyType == 1)
+        {
+            finalSpeed /= 2;
+        }
+        Vector3 forward = transform.TransformDirection(Vector3.forward);
+
         Vector3 right = transform.TransformDirection(Vector3.right);
 
-        Vector3 moveDirection = forword * Input.GetAxisRaw("Vertical") + right * Input.GetAxisRaw("Horizontal");
+        float verticalInput = Input.GetAxisRaw("Vertical");
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+
+        if (isPenaltyActive && penaltyType == 2)
+        {
+            verticalInput = -verticalInput;
+            horizontalInput = -horizontalInput;
+        }
+
+        Vector3 moveDirection = forward * verticalInput + right * horizontalInput;
+        // Vector3 moveDirection = forword * Input.GetAxisRaw("Vertical") + right * Input.GetAxisRaw("Horizontal");
 
         _controller.Move(moveDirection.normalized * finalSpeed * Time.deltaTime);
 
-        float percent = ((run) ? 1 : 0.5f) * moveDirection.magnitude;
+        float percent = (run ? 1 : 0.5f) * moveDirection.magnitude;
         _animator.SetFloat("Blend",  percent,0.1f,Time.deltaTime);
+    }
+
+    void Jump()
+    {
+        if (isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            _animator.SetTrigger("Jump");
+        }
     }
 
 
@@ -180,12 +266,15 @@ public class PlayerMovement : NetworkBehaviour
         switch (penaltyType)
         {
             case 1:
-                // 속도 감소
+                //속도감소
+                finalSpeed = run ? runspeed / 2 : speed / 2;
                 break;
             case 2:
                 // 방향 반전
+                // Reverse controls handled in InputMovement
                 break;
             case 3:
+                //한쪽 가림
                 if (_uiManager.halfScr != null)
                 {
                     _uiManager.halfScr.ActivateHalfScreenPenalty();
@@ -264,33 +353,43 @@ public class PlayerMovement : NetworkBehaviour
     
     void Interaction()
     {
+
+        if(!IsOwner)
+        {
+            return;
+        }
+
+
         //여의주 먹기
         if(iDown && nearObject != null) //jdown 조건에서 잠깐 뺐음
         {
             if(nearObject.tag == "Bead")
             {
-                // Item item = nearObject.GetComponent<Item>();
-                // int beadIndex = item.value;
-                // hasBeads[beadIndex] = true;
 
-                _uiManager.beadCount++;
-                _uiManager.UpdateBeadCountText();
+                PlayerNetworkStats.Instance.IncreaseBeadCountServerRpc(OwnerClientId);
 
-                // Destroy(nearObject); //destroy 보다 이게 나을거 같아서 바꿈
-                nearObject.GetComponent<BoxCollider>().enabled = false;
-                nearObject.GetComponent<MeshRenderer>().enabled = false;
+                //Item.Instance.nearObject = nearObject;
+                Item.Instance.DestroyBeadServerRpc(nearObject.GetComponent<NetworkObject>());
+                
+                // DestroyBeadServerRpc();
+                Debug.Log("IsClient"+!IsHost);
+                Debug.Log(nearObject);
+
+
+                Debug.Log("여의주 먹음!");
                 nearObject = null;
+                
             }
             else if(nearObject.tag == "Food") //From HealthBar.cs
             {
                 _healthBar.EatFood(5f);
-                nearObject.GetComponent<BoxCollider>().enabled = false;
-                nearObject.GetComponent<MeshRenderer>().enabled = false;
+                Item.Instance.DestroyBeadServerRpc(nearObject.GetComponent<NetworkObject>());
             }
         }
     }
     void OnTriggerStay(Collider other)
     {
+
         //닿은 여의주 저장
         if (other.tag == "Bead" || other.tag == "Food")
             nearObject = other.gameObject;
@@ -298,6 +397,12 @@ public class PlayerMovement : NetworkBehaviour
 
     void OnTriggerExit(Collider other)
     {
+
+        if(!IsOwner)
+        {
+            return;
+        }
+
         //여의주가 있는 영역을 벗어나면 여의주 없애기
         if (other.tag == "Bead")
             nearObject = null;
@@ -306,34 +411,13 @@ public class PlayerMovement : NetworkBehaviour
     //이미호로 바뀌는 함수
     private void ChangeModel()
     {
-        if (_uiManager.beadCount >= 2 && !isAwaken && IsOwner)
+        if (PlayerNetworkStats.Instance.BeadCount >= 2 && !isAwaken.Value && IsOwner)
         {
-            if (currentModel != originalModel)
-            {
-                Destroy(currentModel);
-            }
-
-            GameObject newModel = Instantiate(animalModel, transform.position, transform.rotation);
-
-            newModel.transform.SetParent(transform);
-            currentModel = newModel;
-            isAwaken = true;
-
-            if (originalModel != null)
-            {
-                Renderer[] renderers = originalModel.GetComponentsInChildren<Renderer>();
-                foreach (var renderer in renderers)
-                {
-                    renderer.enabled = false;
-                }
-            }
-
-            Renderer[] newModelRenderers = newModel.GetComponentsInChildren<Renderer>();
-            foreach (var renderer in newModelRenderers)
-            {
-                renderer.enabled = true;  
-                Debug.Log(renderer.name + " is now enabled: " + renderer.enabled);
-            }
+            Set_isAwakenServerRpc(true);
+            
+            GetComponent<AnimalTransform>().ChangeModelToSecFox();
+            
+            Debug.Log("이미호로 변신");
         }
     }
 
@@ -344,26 +428,50 @@ public class PlayerMovement : NetworkBehaviour
         {
             ChangeModel();
         }
+
+        if (other.gameObject.name == "Girl" && playerState == "Fox" && isAwaken.Value && IsOwner)
+        {
+            AddScoreServerRpc("Fox", 1); // 여우가 소녀한테 닿으면 점수 1점 얻음
+            EndGame(); 
+        }
     }
 
-    //모델 바꾸는 함수
-    public void RevertToOriginalModel()
+    private void EndGame()
     {
-        if (isAwaken && IsOwner)
+        if (scoreManager != null)
         {
-            Destroy(currentModel);
-
-            if (originalModel != null)
-            {
-                Renderer[] renderers = originalModel.GetComponentsInChildren<Renderer>();
-                foreach (var renderer in renderers)
-                {
-                    renderer.enabled = true;
-                }
-            }
-
-            isAwaken = false;
+            scoreManager.EndGame();
         }
+    }
+    
+    [ServerRpc]
+    private void AddScoreServerRpc(string playerType, int points)
+    {
+        if (scoreManager == null)
+        {
+            Debug.LogError("ScoreManager is not initialized.");
+            return;
+        }
+
+        if (playerType == "Fox")
+        {
+            scoreManager.AddFoxScore(points);
+        }
+        else if (playerType == "Tiger")
+        {
+            scoreManager.AddTigerScore(points);
+        }
+    }
+
+    [ServerRpc]
+    private void Set_isAwakenServerRpc(bool value)
+    {
+        isAwaken.Value = value;
+    }
+
+    public void PlayerDie()
+    {
+        Debug.Log("Player die.!");
     }
 
 }

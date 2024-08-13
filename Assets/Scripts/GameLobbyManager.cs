@@ -17,4 +17,14 @@ public class GameLobbyManager : MonoBehaviour
         state = State.NotReady;
     }
 
+    public class JoinLobbyManager : MonoBehaviour
+{
+    public GameObject joinLobbyPanel; 
+
+    public void ShowJoinLobbyPanel()
+    {
+        joinLobbyPanel.SetActive(true);
+    }
+}
+
 }

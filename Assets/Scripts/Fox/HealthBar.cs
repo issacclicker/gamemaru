@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    public float health = 100; 
+    public float health = 10000; //원래 100
     public Image healthpoints; 
     public bool IsGameStarted = false;
 
+
+    private bool isGameEnded = false;//게임 종료
     private void Update()
     {
         

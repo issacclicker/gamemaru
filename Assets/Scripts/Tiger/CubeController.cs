@@ -22,7 +22,7 @@ public class CubeController : NetworkBehaviour
     void Start()
     {
         renderer = GetComponent<Renderer>();
-        playerState = playerHead.GetComponent<PlayerMovement>().playerState;
+        playerState = playerHead.GetComponent<PlayerMovement>().playerState; //serverRpc로 고쳐야함.
         _playerMovement = playerHead.GetComponent<PlayerMovement>();
         // if(playerState == "Tiger"){
         //     SetCubeActive(false);
@@ -38,7 +38,7 @@ public class CubeController : NetworkBehaviour
         }
 
 
-        if (Input.GetButtonDown("Interaction") && (playerState == "Tiger"||_playerMovement.isAwaken))
+        if (Input.GetButtonDown("Interaction") && (playerState == "Tiger"||_playerMovement.isAwaken.Value))
         {
             Debug.Log("Attack!");
             StartCoroutine(ActivateAndDeactivateCube());
@@ -74,18 +74,48 @@ public class CubeController : NetworkBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (isActive && playerState=="Tiger" && collision.gameObject.CompareTag("NPC"))
+        if (isActive && playerState=="Tiger" && collision.gameObject.CompareTag("NPC")) //호랑이가 NPC 사냥
         {
             if (playerHead.GetComponent<PlayerMovement>() != null)
             {
                 playerHead.GetComponent<PlayerMovement>().HuntFailure();
             }
         }
-        else if(isActive && _playerMovement.isAwaken && collision.gameObject.CompareTag("Player"))
+        else if(isActive && playerState == "Tiger" && collision.gameObject.CompareTag("Player")) //호랑이가 여우 사냥
         {
-            // if(collision.gameObject.GetComponent<PlayerMovement>().playerState == "Tiger")
-                Debug.Log("Fox Hunts!!!");
+            OnTigerHuntsServerRpc(collision.gameObject);
+        }
+        else if(isActive && PlayerMovement.Instance.isAwaken.Value && collision.gameObject.CompareTag("Player")) //여우(이미호)가 호랑이 사냥
+        {
+            OnSecFoxHuntsServerRpc(collision.gameObject);
             
+        }
+    }
+
+
+    [ServerRpc]
+    private void OnTigerHuntsServerRpc(NetworkObjectReference player)
+    {
+        if(player.TryGet(out var p))
+        {
+            Debug.Log("Tiger Hunts!");
+            if(!p.GetComponent<PlayerMovement>().isAwaken.Value)
+            {
+                p.GetComponent<PlayerMovement>().PlayerDie();
+            }
+            
+        }
+    }
+
+    [ServerRpc]
+    private void OnSecFoxHuntsServerRpc(NetworkObjectReference player)
+    {
+        if(player.TryGet(out var p))
+        {
+            Debug.Log("Sec_Fox Hunts!");
+
+            
+            p.GetComponent<PlayerMovement>().PlayerDie();
         }
     }
 }
