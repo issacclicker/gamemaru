@@ -32,7 +32,43 @@ public class CatAnimation : NetworkBehaviour
         if (currentState == CatState.Moving)
         {
             transform.Translate(randomDirection * speed * Time.deltaTime, Space.World);
+
+            // 회전
+            if (randomDirection != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(randomDirection);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+            }
+
+            // 애니메이션 상태 설정
+            if (speed > 0.75f) // 속도에 따라 판단
+            {
+                anim.SetBool("isRun", true);
+                anim.SetBool("isWalk", false);
+            }
+            else
+            {
+                anim.SetBool("isRun", false);
+                anim.SetBool("isWalk", true);
+            }
         }
+    }
+
+    IEnumerator MoveRoutine()
+    {
+        float moveDuration = Random.Range(1f, 10f);
+        speed = Random.Range(0.5f, maxSpeed);
+        currentState = CatState.Moving;
+
+        // 방향 변경
+        StartCoroutine(ChangeDirectionRoutine());
+
+        // 이동 지속 시간 동안 대기
+        yield return new WaitForSeconds(moveDuration);
+
+        anim.SetBool("isWalk", false);
+        anim.SetBool("isRun", false);
+        currentState = CatState.Idle;
     }
 
     IEnumerator ActivityRoutine()
@@ -48,23 +84,6 @@ public class CatAnimation : NetworkBehaviour
             // 랜덤한 시간 동안 먹이 먹기
             yield return StartCoroutine(EatRoutine());
         }
-    }
-
-    IEnumerator MoveRoutine()
-    {
-        float moveDuration = Random.Range(1f, 10f);
-        speed = Random.Range(0.5f, maxSpeed);
-        currentState = CatState.Moving;
-        anim.SetBool("isWalk", true); // 걷는 애니메이션 재생
-
-        // 방향 변경
-        StartCoroutine(ChangeDirectionRoutine());
-
-        // 이동 지속 시간 동안 대기
-        yield return new WaitForSeconds(moveDuration);
-
-        anim.SetBool("isWalk", false); // 애니메이션 정지
-        currentState = CatState.Idle;
     }
 
     IEnumerator WaitRoutine()
