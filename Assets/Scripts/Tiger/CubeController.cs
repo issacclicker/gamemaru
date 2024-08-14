@@ -74,6 +74,14 @@ public class CubeController : NetworkBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
+        if(collision.gameObject == this.transform.parent.gameObject)
+        {
+            Debug.Log("뭣");
+            return;
+        }
+
+        Debug.Log(collision.gameObject.tag);
+
         if (isActive && playerState=="Tiger" && collision.gameObject.CompareTag("NPC")) //호랑이가 NPC 사냥
         {
             if (playerHead.GetComponent<PlayerMovement>() != null)
@@ -85,7 +93,7 @@ public class CubeController : NetworkBehaviour
         {
             OnTigerHuntsServerRpc(collision.gameObject);
         }
-        else if(isActive && PlayerMovement.Instance.isAwaken.Value && collision.gameObject.CompareTag("Player")) //여우(이미호)가 호랑이 사냥
+        else if(isActive && _playerMovement.isAwaken.Value && collision.gameObject.CompareTag("Player")) //여우(이미호)가 호랑이 사냥
         {
             OnSecFoxHuntsServerRpc(collision.gameObject);
             
@@ -113,9 +121,16 @@ public class CubeController : NetworkBehaviour
         if(player.TryGet(out var p))
         {
             Debug.Log("Sec_Fox Hunts!");
+            Debug.Log(p.GetComponent<PlayerMovement>().playerStateSync.Value);
 
+
+            if(p.GetComponent<PlayerMovement>().playerStateSync.Value=="Tiger")
+            {
+                Debug.Log("Hunts Success!!");
+                p.GetComponent<PlayerMovement>().PlayerDie();
+            }
             
-            p.GetComponent<PlayerMovement>().PlayerDie();
+            
         }
     }
 }

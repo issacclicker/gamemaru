@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
+// using Unity.Collections.dll;
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.UI;
@@ -35,8 +37,10 @@ public class PlayerMovement : NetworkBehaviour
 
 
     //Player State
-    [SerializeField]
-    public string playerState;
+    [SerializeField] public string playerState;
+
+    [SerializeField] public NetworkVariable<FixedString128Bytes> playerStateSync = new NetworkVariable<FixedString128Bytes>(); //네트워크 동기화용
+
     //Tiger features(from Tiger_Controller.cs)
     private int huntFailures = 0;
     private bool isPenaltyActive = false;
@@ -54,10 +58,10 @@ public class PlayerMovement : NetworkBehaviour
     UIManager _uiManager; //UI관리
     HealthBar _healthBar; //여우 체력바
 
-
     public GameObject animalModel;//이미호
     public NetworkVariable<NetworkObjectReference> currentModel; 
     public GameObject originalModel;
+    
     public NetworkVariable<bool> isAwaken = new NetworkVariable<bool>();
 
     private ScoreManager scoreManager;
@@ -88,11 +92,19 @@ public class PlayerMovement : NetworkBehaviour
          _controller = GetComponent<CharacterController>();
 
         //디버깅 용
-        if(IsHost){
-            playerState = "Fox"; //ServerRpc로 바꿔야함
-        }else{
-            playerState = "Tiger"; //ServerRpc로 바꿔야함
+        if(IsOwner)
+        {
+            if(IsHost){
+                playerState = "Fox"; //ServerRpc로 바꿔야함
+                Set_playerStateSyncServerRpc("Fox");
+                
+            }else{
+                playerState = "Tiger"; //ServerRpc로 바꿔야함
+                Set_playerStateSyncServerRpc("Tiger");
+                
+            }  
         }
+
         // if(string.IsNullOrEmpty(playerState))
         // {
         //     playerState = "Fox";
@@ -468,6 +480,14 @@ public class PlayerMovement : NetworkBehaviour
     {
         isAwaken.Value = value;
     }
+
+    [ServerRpc]
+    private void Set_playerStateSyncServerRpc(FixedString128Bytes value)
+    {
+        playerStateSync.Value = value;
+    }
+
+    
 
     public void PlayerDie()
     {
