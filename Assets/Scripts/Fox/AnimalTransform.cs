@@ -72,6 +72,10 @@ public class AnimalTransform : NetworkBehaviour
         // 원래 모델로 변경
         if (isAnimal)
         {
+                //체력 닮기 비활성화
+                _healthBar.isAnimal = false;
+
+
                 this.transform.Find("DummyMesh").GetComponent<SkinnedMeshRenderer>().enabled = true; //DummyMesh 변경해야 할 수도.
 
                 AbleForiegnModelServerRpc(this.gameObject,"DummyMesh");
@@ -92,6 +96,8 @@ public class AnimalTransform : NetworkBehaviour
             if (_healthBar != null && _healthBar.health > 0)
             {
                 
+                //체력 닮기 활성화
+                _healthBar.isAnimal = true;
 
                 // 랜덤으로 동물 모델
                 // 1. 오리
@@ -135,6 +141,7 @@ public class AnimalTransform : NetworkBehaviour
             NewModelDespawnServerRpc(this.gameObject,randomIndex_temp);
 
             isAnimal = false;
+            _healthBar.isAnimal = false;
             Debug.Log("원래 모델로 변경");
         }
     }
