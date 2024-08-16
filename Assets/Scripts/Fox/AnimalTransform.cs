@@ -147,7 +147,7 @@ public class AnimalTransform : NetworkBehaviour
     }
 
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     private void DisableForiegnModelServerRpc(NetworkObjectReference player,string meshName) // 메시 비활성화
     {
         if(player.TryGet(out var p))
@@ -218,7 +218,7 @@ public class AnimalTransform : NetworkBehaviour
         }
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     private void SecondFoxModelSpawnServerRpc(NetworkObjectReference player)
     {
         if(player.TryGet(out var p))

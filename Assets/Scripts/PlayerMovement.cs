@@ -95,14 +95,16 @@ public class PlayerMovement : NetworkBehaviour
         if(IsOwner)
         {
             if(IsHost){
-                playerState = "Fox"; //ServerRpc로 바꿔야함
-                Set_playerStateSyncServerRpc("Fox");
-                
-            }else{
                 playerState = "Tiger"; //ServerRpc로 바꿔야함
                 Set_playerStateSyncServerRpc("Tiger");
                 
-            }  
+            }else{
+                playerState = "Fox"; //ServerRpc로 바꿔야함
+                Set_playerStateSyncServerRpc("Fox");
+                
+            }
+            // playerState = "Fox";  
+            // Set_playerStateSyncServerRpc("Fox");
         }
 
         // if(string.IsNullOrEmpty(playerState))
@@ -426,8 +428,11 @@ public class PlayerMovement : NetworkBehaviour
         if (PlayerNetworkStats.Instance.BeadCount >= 2 && !isAwaken.Value && IsOwner)
         {
             Set_isAwakenServerRpc(true);
+            Set_isAwakenClientRpc(true);
             
             GetComponent<AnimalTransform>().ChangeModelToSecFox();
+            // ChangeAllPlayerModelToSecFoxClientRpc();
+            ChangeAllPlayerModelToSecFoxServerRpc();
             
             Debug.Log("이미호로 변신");
         }
@@ -475,10 +480,16 @@ public class PlayerMovement : NetworkBehaviour
         }
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     private void Set_isAwakenServerRpc(bool value)
     {
         isAwaken.Value = value;
+    }
+
+    [ClientRpc]
+    private void Set_isAwakenClientRpc(bool value)
+    {
+        Set_isAwakenServerRpc(value);
     }
 
     [ServerRpc]
@@ -488,6 +499,36 @@ public class PlayerMovement : NetworkBehaviour
     }
 
     
+    // [ClientRpc]
+    // private void ChangeAllPlayerModelToSecFoxClientRpc()
+    // {
+    //     GetComponent<AnimalTransform>().ChangeModelToSecFox();
+    //     Debug.Log("클라알피시");
+    // }
+
+    [ServerRpc]
+    private void ChangeAllPlayerModelToSecFoxServerRpc()
+    {
+        //각 플레이어 정보 가져오기
+        foreach (var client in NetworkManager.Singleton.ConnectedClients)
+        {
+            NetworkObject playerNetworkObject = client.Value.PlayerObject;
+            if (playerNetworkObject != null)
+            {
+                GameObject playerGameObject = playerNetworkObject.gameObject;
+
+                //모델 바꾸는 명령어 실행
+
+                if(playerGameObject.GetComponent<PlayerMovement>().playerStateSync.Value == "Fox")
+                {
+                    playerGameObject.GetComponent<AnimalTransform>().ChangeModelToSecFox();
+                }
+
+                
+            }
+        }
+    }
+
 
     public void PlayerDie()
     {

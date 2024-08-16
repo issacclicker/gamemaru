@@ -3105,7 +3105,6 @@ GameObject:
   - component: {fileID: 4989181095680130653}
   - component: {fileID: 8136885931693374268}
   - component: {fileID: 649927566527112285}
-  - component: {fileID: 8136885931693374267}
   m_Layer: 0
   m_Name: Cube (7)
   m_TagString: Food
@@ -3355,23 +3354,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8136885931693374267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3081159189849235989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1be2dd9256c9ae4f987ee17ec3cdcd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nearObject: {fileID: 0}
-  Bead: {fileID: 0}
-  beadTransForm: []
-  Food: {fileID: 0}
-  foodTransForm: []
 --- !u!114 &8136885931693374268
 MonoBehaviour:
   m_ObjectHideFlags: 0

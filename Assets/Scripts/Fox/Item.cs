@@ -22,6 +22,12 @@ public class Item : NetworkBehaviour
     //음식이 소환될 위치
     [SerializeField] private Transform[] foodTransForm;
 
+    //개구멍
+    [SerializeField] private GameObject DogHole;
+
+    //개구멍이 소환될 위치
+    [SerializeField] private Transform[] dogHoleTransForm;
+
 
     private void Awake()
     {
@@ -54,6 +60,12 @@ public class Item : NetworkBehaviour
         {
             GameObject fd = Instantiate(Food, foodTransForm[i].position, foodTransForm[i].rotation);
             fd.GetComponent<NetworkObject>().Spawn();
+        }
+
+        for(int i=0;i<dogHoleTransForm.Length;i++)
+        {
+            GameObject dh = Instantiate(DogHole, dogHoleTransForm[i].position, dogHoleTransForm[i].rotation);
+            dh.GetComponent<NetworkObject>().Spawn();
         }
 
         // GameObject bd = Instantiate(Bead, beadTransForm.position, beadTransForm.rotation);
