@@ -62,6 +62,11 @@ public class PlayerMovement : NetworkBehaviour
 
     private ScoreManager scoreManager;
 
+    //player_animation
+    public float BlendValue { get; private set; }
+    private player_animation playerAnimation;
+
+
     void Awake()
     {
         Instance = this;
@@ -175,10 +180,12 @@ public class PlayerMovement : NetworkBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
             run = true;
+            _animator.SetBool("isRun", true);
         }
         else
         {
             run = false;
+            _animator.SetBool("isRun", false);
         }
 
         isGrounded = _controller.isGrounded;
@@ -248,6 +255,9 @@ public class PlayerMovement : NetworkBehaviour
 
         float percent = (run ? 1 : 0.5f) * moveDirection.magnitude;
         _animator.SetFloat("Blend",  percent,0.1f,Time.deltaTime);
+
+        //player_animation
+        BlendValue = percent;
     }
 
     void Jump()
@@ -256,6 +266,13 @@ public class PlayerMovement : NetworkBehaviour
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             _animator.SetTrigger("Jump");
+
+            //player_animation
+            player_animation playerAnimation = FindObjectOfType<player_animation>();
+            if (playerAnimation != null)
+            {
+                playerAnimation.PlayJumptAnimation();
+            }
         }
     }
 
@@ -384,6 +401,13 @@ public class PlayerMovement : NetworkBehaviour
             {
                 _healthBar.EatFood(5f);
                 Item.Instance.DestroyBeadServerRpc(nearObject.GetComponent<NetworkObject>());
+
+                //player_animation
+                player_animation playerAnimation = FindObjectOfType<player_animation>();
+                if (playerAnimation != null)
+                {
+                    playerAnimation.PlayEatAnimation();
+                }
             }
         }
     }
@@ -472,6 +496,13 @@ public class PlayerMovement : NetworkBehaviour
     public void PlayerDie()
     {
         Debug.Log("Player die.!");
+
+        //player_animation
+        player_animation playerAnimation = FindObjectOfType<player_animation>();
+        if (playerAnimation != null)
+        {
+            playerAnimation.PlayDieAnimation();
+        }
     }
 
 }

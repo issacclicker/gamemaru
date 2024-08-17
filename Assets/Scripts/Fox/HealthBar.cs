@@ -26,6 +26,8 @@ public class HealthBar : MonoBehaviour
             health += heal;
             health = Mathf.Min(health, 100);
             healthpoints.fillAmount = health / 100f;
+
+            Debug.Log(health);
         }
     }
 

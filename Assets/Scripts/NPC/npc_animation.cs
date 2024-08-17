@@ -9,16 +9,18 @@ public class npc_animation: NetworkBehaviour
 
     Animator anim;
 
-    public float maxSpeed = 1.25f; // ÃÖ´ë ¼Óµµ
+    public float maxSpeed = 1.25f; // ï¿½Ö´ï¿½ ï¿½Óµï¿½
     public float minDirectionChangeInterval = 2.5f;
     public float maxDirectionChangeInterval = 10f;
     private Vector3 randomDirection;
     private float speed;
     private Renderer rendererComponent;
 
+    public GameObject renderingObject;
+
     void Start()
     {
-        rendererComponent = GetComponent<Renderer>();
+        rendererComponent = renderingObject.GetComponent<Renderer>();
         anim = GetComponent<Animator>();
         if (rendererComponent == null)
         {
@@ -33,15 +35,15 @@ public class npc_animation: NetworkBehaviour
         {
             transform.Translate(randomDirection * speed * Time.deltaTime, Space.World);
 
-            // È¸Àü
+            // È¸ï¿½ï¿½
             if (randomDirection != Vector3.zero)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(randomDirection);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
             }
 
-            // ¾Ö´Ï¸ÞÀÌ¼Ç »óÅÂ ¼³Á¤
-            if (speed > 0.75f) // ¼Óµµ¿¡ µû¶ó ÆÇ´Ü
+            // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            if (speed > 0.75f) // ï¿½Óµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½
             {
                 anim.SetBool("isRun", true);
                 anim.SetBool("isWalk", false);
@@ -60,10 +62,10 @@ public class npc_animation: NetworkBehaviour
         speed = Random.Range(0.5f, maxSpeed);
         currentState = CatState.Moving;
 
-        // ¹æÇâ º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         StartCoroutine(ChangeDirectionRoutine());
 
-        // ÀÌµ¿ Áö¼Ó ½Ã°£ µ¿¾È ´ë±â
+        // ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         yield return new WaitForSeconds(moveDuration);
 
         anim.SetBool("isWalk", false);
@@ -75,13 +77,13 @@ public class npc_animation: NetworkBehaviour
     {
         while (true)
         {
-            // ·£´ýÇÑ ½Ã°£ µ¿¾È ÀÌµ¿
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
             yield return StartCoroutine(MoveRoutine());
 
-            // ·£´ýÇÑ ½Ã°£ µ¿¾È ½°
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
             yield return StartCoroutine(WaitRoutine());
 
-            // ·£´ýÇÑ ½Ã°£ µ¿¾È ¸ÔÀÌ ¸Ô±â
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô±ï¿½
             yield return StartCoroutine(EatRoutine());
         }
     }
@@ -91,7 +93,7 @@ public class npc_animation: NetworkBehaviour
         float waitDuration = Random.Range(1f, 10f);
         currentState = CatState.Idle;
 
-        // ½° Áö¼Ó ½Ã°£ µ¿¾È ´ë±â
+        // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         yield return new WaitForSeconds(waitDuration);
     }
 
@@ -99,22 +101,22 @@ public class npc_animation: NetworkBehaviour
     {
         float eatDuration = Random.Range(2f, 10f);
         currentState = CatState.Eating;
-        anim.SetBool("isEat", true); // ¸ÔÀÌ ¸Ô´Â ¾Ö´Ï¸ÞÀÌ¼Ç Àç»ý
+        anim.SetBool("isEat", true); // ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½
 
         yield return new WaitForSeconds(eatDuration);
 
-        anim.SetBool("isEat", false); // ¾Ö´Ï¸ÞÀÌ¼Ç Á¤Áö
-        currentState = CatState.Idle; // Çàµ¿ÀÌ ³¡³ª¸é Idle »óÅÂ·Î º¯°æ
+        anim.SetBool("isEat", false); // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
+        currentState = CatState.Idle; // ï¿½àµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Idle ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
     IEnumerator ChangeDirectionRoutine()
     {
         while (currentState == CatState.Moving)
         {
-            // ·£´ý ¹æÇâ
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             randomDirection = new Vector3(Random.Range(-1f, 1f), 0.0f, Random.Range(-1f, 1f)).normalized;
 
-            // ¹æÇâ º¯°æ °£°Ý
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             float interval = Random.Range(minDirectionChangeInterval, maxDirectionChangeInterval);
             yield return new WaitForSeconds(interval);
         }
@@ -124,10 +126,10 @@ public class npc_animation: NetworkBehaviour
     {
         if (collision.gameObject.CompareTag("Cube") || collision.gameObject.CompareTag("Player"))
         {
-            // Ãæµ¹ ½Ã ¸ØÃã
+            // ï¿½æµ¹ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             currentState = CatState.Dying;
 
-            // Á×´Â ¾Ö´Ï¸ÞÀÌ¼Ç Àç»ý
+            // ï¿½×´ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½
             anim.SetTrigger("doDie");
         }
     }
