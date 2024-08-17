@@ -107,6 +107,7 @@ public class PlayerMovement : NetworkBehaviour
             return;
         }else{
             MainCamera.gameObject.SetActive(true);
+            InGameUI.instance.InitPlayer(this);
         }
         
         UIManagerObject = GameObject.Find("UIManager");
