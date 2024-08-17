@@ -39,8 +39,6 @@ public class HealthBar : MonoBehaviour
             health -= damage;
             health = Mathf.Max(health, 0);
             healthpoints.fillAmount = health / 100f;
-
-            Debug.Log(health);
         }
     }
 }

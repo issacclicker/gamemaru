@@ -62,8 +62,10 @@ public class PlayerMovement : NetworkBehaviour
 
     private ScoreManager scoreManager;
 
-    //player_animation에서 blend 값 적용시키기 위해
+    //player_animation
     public float BlendValue { get; private set; }
+    private player_animation playerAnimation;
+
 
     void Awake()
     {
@@ -254,7 +256,7 @@ public class PlayerMovement : NetworkBehaviour
         float percent = (run ? 1 : 0.5f) * moveDirection.magnitude;
         _animator.SetFloat("Blend",  percent,0.1f,Time.deltaTime);
 
-        //player_animation에서 blend 값 적용시키기 위해
+        //player_animation
         BlendValue = percent;
     }
 
@@ -264,6 +266,13 @@ public class PlayerMovement : NetworkBehaviour
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             _animator.SetTrigger("Jump");
+
+            //player_animation
+            player_animation playerAnimation = FindObjectOfType<player_animation>();
+            if (playerAnimation != null)
+            {
+                playerAnimation.PlayJumptAnimation();
+            }
         }
     }
 
@@ -392,6 +401,13 @@ public class PlayerMovement : NetworkBehaviour
             {
                 _healthBar.EatFood(5f);
                 Item.Instance.DestroyBeadServerRpc(nearObject.GetComponent<NetworkObject>());
+
+                //player_animation
+                player_animation playerAnimation = FindObjectOfType<player_animation>();
+                if (playerAnimation != null)
+                {
+                    playerAnimation.PlayEatAnimation();
+                }
             }
         }
     }
@@ -480,6 +496,13 @@ public class PlayerMovement : NetworkBehaviour
     public void PlayerDie()
     {
         Debug.Log("Player die.!");
+
+        //player_animation
+        player_animation playerAnimation = FindObjectOfType<player_animation>();
+        if (playerAnimation != null)
+        {
+            playerAnimation.PlayDieAnimation();
+        }
     }
 
 }
