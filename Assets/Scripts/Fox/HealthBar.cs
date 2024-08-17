@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    public float health = 10000; //원래 100
+    public float health = 100; //원래 100
     public Image healthpoints; 
     public bool IsGameStarted = false;
-
-
     private bool isGameEnded = false;//게임 종료
+
+    public bool isAnimal = false; // 플레이어가 변신 상태인지 아닌지
+
     private void Update()
     {
         
@@ -26,15 +27,13 @@ public class HealthBar : MonoBehaviour
             health += heal;
             health = Mathf.Min(health, 100);
             healthpoints.fillAmount = health / 100f;
-
-            Debug.Log(health);
         }
     }
 
     
     public void PoisonZone(float damage)
     {
-        if (health > 0)
+        if (health > 0 && isAnimal)
         {
             health -= damage;
             health = Mathf.Max(health, 0);

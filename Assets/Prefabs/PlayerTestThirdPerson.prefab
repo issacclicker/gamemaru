@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3237205757965180500}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.108, z: 0.952}
+  m_LocalPosition: {x: 0, y: 1.108, z: 1.449}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -246,20 +246,28 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 100888, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100888, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       propertyPath: m_TagString
       value: PlayerMesh
       objectReference: {fileID: 0}
+    - target: {fileID: 100890, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.9986315
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.3125544
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -17.478802
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       propertyPath: m_LocalRotation.w
@@ -267,15 +275,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -343,6 +351,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7105325933736241123}
+    - targetCorrespondingSourceObject: {fileID: 100120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7703012335430525821}
     - targetCorrespondingSourceObject: {fileID: 100888, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       insertIndex: -1
       addedObject: {fileID: 297211576156073177}
@@ -408,6 +419,143 @@ MonoBehaviour:
   jumpHeight: 1.5
   gravity: -9.81
   playerState: 
+  playerStateSync:
+    m_InternalValue:
+      utf8LengthInBytes: 0
+      bytes:
+        offset0000:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        offset0016:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        offset0032:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        offset0048:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        offset0064:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        offset0080:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        offset0096:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        byte0112: 0
+        byte0113: 0
+        byte0114: 0
+        byte0115: 0
+        byte0116: 0
+        byte0117: 0
+        byte0118: 0
+        byte0119: 0
+        byte0120: 0
+        byte0121: 0
+        byte0122: 0
+        byte0123: 0
+        byte0124: 0
+        byte0125: 0
   nearObject: {fileID: 0}
   animalModel: {fileID: 919132149155446097, guid: 27520bf6009bb064d8744d18ff6ee12e, type: 3}
   originalModel: {fileID: 0}
@@ -451,19 +599,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de8a834697078e24cb9d0e1b559d7000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animalModels:
-  - {fileID: 5908685864431512274, guid: ffc430f9f1eb2f24eb41ef6e11963738, type: 3}
-  - {fileID: 4990482849642214827, guid: afddc1ad77b5c214a85e1d14fe6b1b80, type: 3}
-  - {fileID: 1380563811241207707, guid: c1c64c1129736f34b90d58877f96ab99, type: 3}
+  animalModelsForDefaultPlayer:
+  - {fileID: 1004432913087421350, guid: 3a1df2a1e5a3ddd4fbc945cec3284068, type: 3}
+  - {fileID: 6179463818957858485, guid: 06aaf8cf0d45bc1479779ebcf57352a3, type: 3}
+  - {fileID: 3653319091358126879, guid: ff56b9567e2fdbb428626c26ebc0e75e, type: 3}
+  animalModelsForDefaultPlayerNames:
+  - FoxNet(Clone)
+  - TigerNet(Clone)
+  - GhostNet(Clone)
   animalModelsForNetworks:
-  - {fileID: 5908685864431512274, guid: ffc430f9f1eb2f24eb41ef6e11963738, type: 3}
-  - {fileID: 4990482849642214827, guid: afddc1ad77b5c214a85e1d14fe6b1b80, type: 3}
-  - {fileID: 1380563811241207707, guid: c1c64c1129736f34b90d58877f96ab99, type: 3}
+  - {fileID: 2910117659372101394, guid: ae8983f5771896549bd0891588017d3e, type: 3}
+  - {fileID: 5143966722407306107, guid: 9949510faecd67a43acb42be754b1c01, type: 3}
+  - {fileID: 7125292644456519386, guid: af8262b370455c84fa2517e130a911d4, type: 3}
+  - {fileID: 1201015059542302013, guid: 683df3fbc716a254cbccbed195836df5, type: 3}
+  - {fileID: 1158984366551649401, guid: b04bd75afbf81674a9dd983f6e786196, type: 3}
   animalModel_Sec_Fox: {fileID: 6418129869022611863, guid: fe080cfa1d00e5d4eae6394f4246e525, type: 3}
   animalModelsNames:
-  - Capybara(Clone)
-  - Cat(Clone)
-  - Sheep(Clone)
+  - duck1(Clone)
+  - sheep1(Clone)
+  - sheep2(Clone)
+  - cat1(Clone)
+  - capybara1(Clone)
 --- !u!114 &8637592993313646757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -573,6 +729,12 @@ MonoBehaviour:
   foodTransForm:
   - {fileID: 8187124496121675323, guid: 0f61774499a218242a4ed75b5d9ae662, type: 3}
   - {fileID: 5247737906794823978, guid: 7b9b2b348afebfd4f835f349509dde17, type: 3}
+  DogHole: {fileID: 6336124780047759324, guid: 52f55c72ba8e7b341a840cd0cedb2be1, type: 3}
+  dogHoleTransForm:
+  - {fileID: 8104167876632763336, guid: 200120bfdb64f69438a29dacbf964e19, type: 3}
+  - {fileID: 7618300736350569894, guid: 060a2a1f37b2bda4b9b444957bebc414, type: 3}
+  - {fileID: 7562199417788405810, guid: 4c2fc8abfa1314b468841237d24ab7b3, type: 3}
+  - {fileID: 7882170162497974100, guid: 7ff313f02950b9949a6ffcef900af5b1, type: 3}
 --- !u!114 &-961567335097105219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -598,6 +760,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fe252030a5723142924ee9577ee558d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &7703012335430525821
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3253949356774891535}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2.0086453
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9945468, z: 0}
 --- !u!1 &3253949356774894861 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100890, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
