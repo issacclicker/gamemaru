@@ -1212,7 +1212,9 @@ MonoBehaviour:
   - {fileID: 2132951389}
   - {fileID: 6777299699405926812}
   - {fileID: 1214578292}
-  TestCodeUI: {fileID: 631795657}
+  - {fileID: 2055221734}
+  - {fileID: 855638335}
+  TestCodeUI: {fileID: 1847575896}
   inputField: {fileID: 855638335}
 --- !u!1 &427067309
 GameObject:
@@ -1437,7 +1439,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &559195763
 RectTransform:
   m_ObjectHideFlags: 0
