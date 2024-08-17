@@ -39,6 +39,8 @@ public class AnimalTransform : NetworkBehaviour
     HealthBar _healthBar; //체력바
     PlayerMovement _playerMovement;
 
+    int p_modelNum ; // 플레이어 모델 번호
+
     private void Start()
     {
         
@@ -54,10 +56,12 @@ public class AnimalTransform : NetworkBehaviour
         if(_playerMovement.playerStateSync.Value=="Fox")
         {
             PlayerNewModelSpawnServerRpc(this.gameObject,0);
+            p_modelNum = 0;
         }
         else if(_playerMovement.playerStateSync.Value=="Tiger")
         {
             PlayerNewModelSpawnServerRpc(this.gameObject,1);
+            p_modelNum = 1;
         }
 
         // 현재 오브젝트를 기본 모델로 설정
@@ -101,7 +105,7 @@ public class AnimalTransform : NetworkBehaviour
                 // AbleForiegnModelServerRpc(this.gameObject,"DummyMesh");
                 // AbleForiegnModelClientRpc(this.gameObject,"DummyMesh");
             
-
+            PlayerNewModelSpawnServerRpc(this.gameObject,p_modelNum);
             NewModelDespawnServerRpc(this.gameObject,randomIndex_temp);
 
             isAnimal = false;
@@ -132,7 +136,7 @@ public class AnimalTransform : NetworkBehaviour
                     // DisableForiegnModelServerRpc(this.gameObject,"DummyMesh");
                     // DisableForiegnModelClientRpc(this.gameObject,"DummyMesh");
                 
-
+                PlayerNewModelDespawnServerRpc(this.gameObject,p_modelNum);
                 NewModelSpawnServerRpc(this.gameObject,randomIndex);
 
                 isAnimal = true;
