@@ -67,7 +67,9 @@ public class PlayerMovement : NetworkBehaviour
     //player_animation
     public float BlendValue { get; private set; }
     private player_animation playerAnimation;
-    
+    //Tiger_animation
+    private Tiger_animation tigerAnimation;
+
     public NetworkVariable<bool> isAwaken = new NetworkVariable<bool>();
 
     private ScoreManager scoreManager;
@@ -109,8 +111,8 @@ public class PlayerMovement : NetworkBehaviour
             //     Set_playerStateSyncServerRpc("Fox");
                 
             // }
-            playerState = "Fox";  
-            Set_playerStateSyncServerRpc("Fox");
+            playerState = "Tiger";  
+            Set_playerStateSyncServerRpc("Tiger");
         }
 
         // if(string.IsNullOrEmpty(playerState))
