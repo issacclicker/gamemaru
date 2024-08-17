@@ -246,20 +246,28 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 100888, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100888, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       propertyPath: m_TagString
       value: PlayerMesh
       objectReference: {fileID: 0}
+    - target: {fileID: 100890, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.9986315
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.3125544
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -17.478802
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       propertyPath: m_LocalRotation.w
@@ -267,15 +275,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400120, guid: cea7b4908e889df4ea1487e9f97c3c67, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -591,12 +599,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de8a834697078e24cb9d0e1b559d7000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animalModels:
-  - {fileID: 2910117659372101394, guid: ae8983f5771896549bd0891588017d3e, type: 3}
-  - {fileID: 5143966722407306107, guid: 9949510faecd67a43acb42be754b1c01, type: 3}
-  - {fileID: 7125292644456519386, guid: af8262b370455c84fa2517e130a911d4, type: 3}
-  - {fileID: 1201015059542302013, guid: 683df3fbc716a254cbccbed195836df5, type: 3}
-  - {fileID: 1158984366551649401, guid: b04bd75afbf81674a9dd983f6e786196, type: 3}
+  animalModelsForDefaultPlayer:
+  - {fileID: 1004432913087421350, guid: 3a1df2a1e5a3ddd4fbc945cec3284068, type: 3}
+  - {fileID: 6179463818957858485, guid: 06aaf8cf0d45bc1479779ebcf57352a3, type: 3}
+  - {fileID: 3653319091358126879, guid: ff56b9567e2fdbb428626c26ebc0e75e, type: 3}
+  animalModelsForDefaultPlayerNames:
+  - FoxNet(Clone)
+  - TigerNet(Clone)
+  - GhostNet(Clone)
   animalModelsForNetworks:
   - {fileID: 2910117659372101394, guid: ae8983f5771896549bd0891588017d3e, type: 3}
   - {fileID: 5143966722407306107, guid: 9949510faecd67a43acb42be754b1c01, type: 3}

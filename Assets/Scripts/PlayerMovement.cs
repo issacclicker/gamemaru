@@ -35,6 +35,8 @@ public class PlayerMovement : NetworkBehaviour
     private bool isGrounded;
 
 
+    private bool isGhost=false;
+
 
     //Player State
     [SerializeField] public string playerState;
@@ -94,17 +96,17 @@ public class PlayerMovement : NetworkBehaviour
         //디버깅 용
         if(IsOwner)
         {
-            if(IsHost){
-                playerState = "Tiger"; //ServerRpc로 바꿔야함
-                Set_playerStateSyncServerRpc("Tiger");
+            // if(IsHost){
+            //     playerState = "Tiger"; //ServerRpc로 바꿔야함
+            //     Set_playerStateSyncServerRpc("Tiger");
                 
-            }else{
-                playerState = "Fox"; //ServerRpc로 바꿔야함
-                Set_playerStateSyncServerRpc("Fox");
+            // }else{
+            //     playerState = "Fox"; //ServerRpc로 바꿔야함
+            //     Set_playerStateSyncServerRpc("Fox");
                 
-            }
-            // playerState = "Fox";  
-            // Set_playerStateSyncServerRpc("Fox");
+            // }
+            playerState = "Fox";  
+            Set_playerStateSyncServerRpc("Fox");
         }
 
         // if(string.IsNullOrEmpty(playerState))
@@ -176,6 +178,14 @@ public class PlayerMovement : NetworkBehaviour
         }
 
 
+        //유령 테스트
+        if(Input.GetKey(KeyCode.G)&&!isGhost)
+        {
+            isGhost = true;
+            PlayerDie();
+        }
+
+
 
         //Thrid Person Movement
         if (Input.GetKey(KeyCode.LeftAlt))
@@ -225,7 +235,7 @@ public class PlayerMovement : NetworkBehaviour
             return;
         }
 
-        if (!toggleCameraRotation)
+        if (!toggleCameraRotation && _camera.enabled)
         {
             Vector3 playerRotate = Vector3.Scale(_camera.transform.forward, new Vector3(1, 0, 1));
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerRotate), Time.deltaTime * smoothness);
@@ -530,9 +540,24 @@ public class PlayerMovement : NetworkBehaviour
     }
 
 
+    //플레이어 죽음처리
     public void PlayerDie()
     {
         Debug.Log("Player die.!");
+
+        _camera.enabled = false;
+        _camera.gameObject.GetComponent<AudioListener>().enabled = false; 
+
+        if(playerStateSync.Value == "Fox")
+        {
+            GetComponent<AnimalTransform>().PlayerNewModelDespawnServerRpc(this.gameObject,0);
+        }
+        else if(playerStateSync.Value == "Tiger")
+        {
+            GetComponent<AnimalTransform>().PlayerNewModelDespawnServerRpc(this.gameObject,1);
+        }
+
+        GetComponent<AnimalTransform>().PlayerNewModelSpawnServerRpc(this.gameObject,2);
     }
 
 }

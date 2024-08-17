@@ -29,7 +29,7 @@ public class DogHole : NetworkBehaviour
 
     IEnumerator ExitTime() 
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1.5f);
         if(!isInside)
         {
             yield break;

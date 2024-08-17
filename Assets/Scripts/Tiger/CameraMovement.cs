@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
-public class NewBehaviourScript : NetworkBehaviour
+public class CameraMovement : NetworkBehaviour
 {
     public Transform objectTofollow;
     public float followSpeed = 10f;

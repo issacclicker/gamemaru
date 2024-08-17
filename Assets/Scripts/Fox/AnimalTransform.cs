@@ -13,7 +13,15 @@ public class AnimalTransform : NetworkBehaviour
     //Assets>AnimalTransform 폴더에 이미지 넣어둠
     //*AnimalTransform script 적용 후 Animal Models에 이미지 넣어두어야 제대로 작동함
     //*PlayerTestThirdPerson에 적용해서 그런지 원래의 이미지로 돌아갔을 때 사람과 함께 큐브가 적용된 이미지가 뜸
-    public GameObject[] animalModels; // 동물 모델 배열
+
+    // 동물 기몬 모델(여우,호랑이,고스트) 배열
+    // 0 - fox
+    // 1 - tiger
+    // 2 - ghost
+    public GameObject[] animalModelsForDefaultPlayer; // 동물 기몬 모델(여우,호랑이,고스트) 배열
+
+    public string[] animalModelsForDefaultPlayerNames; // 동물 기몬 모델(여우,호랑이,고스트) 이름 배열
+
 
     public GameObject[] animalModelsForNetworks; // 동물 모델 NetworkObjects 적용된 Prefab
 
@@ -39,6 +47,18 @@ public class AnimalTransform : NetworkBehaviour
         _healthBar = UIManagerObject.GetComponent<HealthBar>();
 
         _playerMovement = GetComponent<PlayerMovement>();
+
+        DisableForiegnModelServerRpc(this.gameObject,"DummyMesh");
+        DisableForiegnModelClientRpc(this.gameObject,"DummyMesh");
+
+        if(_playerMovement.playerStateSync.Value=="Fox")
+        {
+            PlayerNewModelSpawnServerRpc(this.gameObject,0);
+        }
+        else if(_playerMovement.playerStateSync.Value=="Tiger")
+        {
+            PlayerNewModelSpawnServerRpc(this.gameObject,1);
+        }
 
         // 현재 오브젝트를 기본 모델로 설정
         // _playerMovement.currentModel = new NetworkVariable<NetworkObjectReference>();
@@ -76,10 +96,10 @@ public class AnimalTransform : NetworkBehaviour
                 _healthBar.isAnimal = false;
 
 
-                this.transform.Find("DummyMesh").GetComponent<SkinnedMeshRenderer>().enabled = true; //DummyMesh 변경해야 할 수도.
+                // this.transform.Find("DummyMesh").GetComponent<SkinnedMeshRenderer>().enabled = true; //DummyMesh 변경해야 할 수도.
 
-                AbleForiegnModelServerRpc(this.gameObject,"DummyMesh");
-                AbleForiegnModelClientRpc(this.gameObject,"DummyMesh");
+                // AbleForiegnModelServerRpc(this.gameObject,"DummyMesh");
+                // AbleForiegnModelClientRpc(this.gameObject,"DummyMesh");
             
 
             NewModelDespawnServerRpc(this.gameObject,randomIndex_temp);
@@ -102,15 +122,15 @@ public class AnimalTransform : NetworkBehaviour
                 // 랜덤으로 동물 모델
                 // 1. 오리
                 // 2. 양
-                int randomIndex = Random.Range(0, animalModels.Length);
+                int randomIndex = Random.Range(0, animalModelsForNetworks.Length);
                 randomIndex_temp = randomIndex;
                 
 
                 // 원래 모델 비활성화
-                    this.transform.Find("DummyMesh").GetComponent<SkinnedMeshRenderer>().enabled = false;
+                    // this.transform.Find("DummyMesh").GetComponent<SkinnedMeshRenderer>().enabled = false;
 
-                    DisableForiegnModelServerRpc(this.gameObject,"DummyMesh");
-                    DisableForiegnModelClientRpc(this.gameObject,"DummyMesh");
+                    // DisableForiegnModelServerRpc(this.gameObject,"DummyMesh");
+                    // DisableForiegnModelClientRpc(this.gameObject,"DummyMesh");
                 
 
                 NewModelSpawnServerRpc(this.gameObject,randomIndex);
@@ -133,10 +153,10 @@ public class AnimalTransform : NetworkBehaviour
     {
         if (isAnimal && !_playerMovement.isAwaken.Value)
         {
-            this.transform.Find("DummyMesh").GetComponent<SkinnedMeshRenderer>().enabled = true; //DummyMesh 변경해야 할 수도.
+            // this.transform.Find("DummyMesh").GetComponent<SkinnedMeshRenderer>().enabled = true; //DummyMesh 변경해야 할 수도.
 
-            AbleForiegnModelServerRpc(this.gameObject,"DummyMesh");
-            AbleForiegnModelClientRpc(this.gameObject,"DummyMesh");
+            // AbleForiegnModelServerRpc(this.gameObject,"DummyMesh");
+            // AbleForiegnModelClientRpc(this.gameObject,"DummyMesh");
 
             NewModelDespawnServerRpc(this.gameObject,randomIndex_temp);
 
@@ -186,6 +206,33 @@ public class AnimalTransform : NetworkBehaviour
             Debug.Log("서버 알피시");
         }
     }
+
+    [ServerRpc (RequireOwnership = false)]
+    public void PlayerNewModelSpawnServerRpc(NetworkObjectReference player,int num)
+    {
+        if(player.TryGet(out var p))
+        {
+            GameObject newMd = Instantiate(animalModelsForDefaultPlayer[num]);
+
+            var networkObject = newMd.GetComponent<NetworkObject>();
+            networkObject.Spawn();
+            networkObject.TrySetParent(p, worldPositionStays: false);
+            // _playerMovement.currentModel.Value = networkObject;
+        }
+
+    }
+
+    [ServerRpc (RequireOwnership = false)]
+    public void PlayerNewModelDespawnServerRpc(NetworkObjectReference player,int num)
+    {
+        if(player.TryGet(out var p))
+        {
+            p.transform.Find(animalModelsForDefaultPlayerNames[num]).gameObject.GetComponent<NetworkObject>().Despawn();
+        }
+
+    }
+
+
 
 
     [ServerRpc]
@@ -240,10 +287,10 @@ public class AnimalTransform : NetworkBehaviour
     public void ChangeModelToSecFox()
     {
         // 원래 모델 비활성화
-                    this.transform.Find("DummyMesh").GetComponent<SkinnedMeshRenderer>().enabled = false;
+                    // this.transform.Find("DummyMesh").GetComponent<SkinnedMeshRenderer>().enabled = false;
 
-                    DisableForiegnModelServerRpc(this.gameObject,"DummyMesh");
-                    DisableForiegnModelClientRpc(this.gameObject,"DummyMesh");
+                    // DisableForiegnModelServerRpc(this.gameObject,"DummyMesh");
+                    // DisableForiegnModelClientRpc(this.gameObject,"DummyMesh");
 
             //항상 가장 마지막에 이미호 모델 넣어야함.
             SecondFoxModelSpawnServerRpc(this.gameObject);

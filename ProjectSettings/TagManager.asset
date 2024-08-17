@@ -8,6 +8,7 @@ TagManager:
   - NPC
   - Food
   - PlayerMesh
+  - GhostManager
   layers:
   - Default
   - TransparentFX
