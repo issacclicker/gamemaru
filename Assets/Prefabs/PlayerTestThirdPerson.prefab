@@ -452,15 +452,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animalModels:
-  - {fileID: 2910117659372101394, guid: ae8983f5771896549bd0891588017d3e, type: 3}
-  - {fileID: 5143966722407306107, guid: 9949510faecd67a43acb42be754b1c01, type: 3}
+  - {fileID: 5908685864431512274, guid: ffc430f9f1eb2f24eb41ef6e11963738, type: 3}
+  - {fileID: 4990482849642214827, guid: afddc1ad77b5c214a85e1d14fe6b1b80, type: 3}
+  - {fileID: 1380563811241207707, guid: c1c64c1129736f34b90d58877f96ab99, type: 3}
   animalModelsForNetworks:
-  - {fileID: 2910117659372101394, guid: ae8983f5771896549bd0891588017d3e, type: 3}
-  - {fileID: 5143966722407306107, guid: 9949510faecd67a43acb42be754b1c01, type: 3}
+  - {fileID: 5908685864431512274, guid: ffc430f9f1eb2f24eb41ef6e11963738, type: 3}
+  - {fileID: 4990482849642214827, guid: afddc1ad77b5c214a85e1d14fe6b1b80, type: 3}
+  - {fileID: 1380563811241207707, guid: c1c64c1129736f34b90d58877f96ab99, type: 3}
   animalModel_Sec_Fox: {fileID: 6418129869022611863, guid: fe080cfa1d00e5d4eae6394f4246e525, type: 3}
   animalModelsNames:
-  - duck1(Clone)
-  - sheep1(Clone)
+  - Capybara(Clone)
+  - Cat(Clone)
+  - Sheep(Clone)
 --- !u!114 &8637592993313646757
 MonoBehaviour:
   m_ObjectHideFlags: 0

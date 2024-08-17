@@ -62,6 +62,9 @@ public class PlayerMovement : NetworkBehaviour
 
     private ScoreManager scoreManager;
 
+    //player_animation에서 blend 값 적용시키기 위해
+    public float BlendValue { get; private set; }
+
     void Awake()
     {
         Instance = this;
@@ -175,10 +178,12 @@ public class PlayerMovement : NetworkBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
             run = true;
+            _animator.SetBool("isRun", true);
         }
         else
         {
             run = false;
+            _animator.SetBool("isRun", false);
         }
 
         isGrounded = _controller.isGrounded;
@@ -248,6 +253,9 @@ public class PlayerMovement : NetworkBehaviour
 
         float percent = (run ? 1 : 0.5f) * moveDirection.magnitude;
         _animator.SetFloat("Blend",  percent,0.1f,Time.deltaTime);
+
+        //player_animation에서 blend 값 적용시키기 위해
+        BlendValue = percent;
     }
 
     void Jump()
