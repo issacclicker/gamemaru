@@ -608,7 +608,7 @@ MonoBehaviour:
   - TigerNet(Clone)
   - GhostNet(Clone)
   animalModelsForNetworks:
-  - {fileID: 2910117659372101394, guid: ae8983f5771896549bd0891588017d3e, type: 3}
+  - {fileID: 5908685864431512274, guid: ffc430f9f1eb2f24eb41ef6e11963738, type: 3}
   - {fileID: 5143966722407306107, guid: 9949510faecd67a43acb42be754b1c01, type: 3}
   - {fileID: 7125292644456519386, guid: af8262b370455c84fa2517e130a911d4, type: 3}
   - {fileID: 1201015059542302013, guid: 683df3fbc716a254cbccbed195836df5, type: 3}
@@ -729,12 +729,6 @@ MonoBehaviour:
   foodTransForm:
   - {fileID: 8187124496121675323, guid: 0f61774499a218242a4ed75b5d9ae662, type: 3}
   - {fileID: 5247737906794823978, guid: 7b9b2b348afebfd4f835f349509dde17, type: 3}
-  DogHole: {fileID: 6336124780047759324, guid: 52f55c72ba8e7b341a840cd0cedb2be1, type: 3}
-  dogHoleTransForm:
-  - {fileID: 8104167876632763336, guid: 200120bfdb64f69438a29dacbf964e19, type: 3}
-  - {fileID: 7618300736350569894, guid: 060a2a1f37b2bda4b9b444957bebc414, type: 3}
-  - {fileID: 7562199417788405810, guid: 4c2fc8abfa1314b468841237d24ab7b3, type: 3}
-  - {fileID: 7882170162497974100, guid: 7ff313f02950b9949a6ffcef900af5b1, type: 3}
 --- !u!114 &-961567335097105219
 MonoBehaviour:
   m_ObjectHideFlags: 0
