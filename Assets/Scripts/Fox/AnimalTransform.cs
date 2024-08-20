@@ -48,8 +48,8 @@ public class AnimalTransform : NetworkBehaviour
 
         _playerMovement = GetComponent<PlayerMovement>();
 
-        DisableForiegnModelServerRpc(this.gameObject,"DummyMesh");
-        DisableForiegnModelClientRpc(this.gameObject,"DummyMesh");
+        // DisableForiegnModelServerRpc(this.gameObject,"DummyMesh");
+        // DisableForiegnModelClientRpc(this.gameObject,"DummyMesh");
 
         if(_playerMovement.playerStateSync.Value=="Fox")
         {
@@ -95,13 +95,6 @@ public class AnimalTransform : NetworkBehaviour
                 //체력 닮기 비활성화
                 _healthBar.isAnimal = false;
 
-
-                // this.transform.Find("DummyMesh").GetComponent<SkinnedMeshRenderer>().enabled = true; //DummyMesh 변경해야 할 수도.
-
-                // AbleForiegnModelServerRpc(this.gameObject,"DummyMesh");
-                // AbleForiegnModelClientRpc(this.gameObject,"DummyMesh");
-            
-
             NewModelDespawnServerRpc(this.gameObject,randomIndex_temp);
 
             isAnimal = false;
@@ -124,14 +117,6 @@ public class AnimalTransform : NetworkBehaviour
                 // 2. 양
                 int randomIndex = Random.Range(0, animalModelsForNetworks.Length);
                 randomIndex_temp = randomIndex;
-                
-
-                // 원래 모델 비활성화
-                    // this.transform.Find("DummyMesh").GetComponent<SkinnedMeshRenderer>().enabled = false;
-
-                    // DisableForiegnModelServerRpc(this.gameObject,"DummyMesh");
-                    // DisableForiegnModelClientRpc(this.gameObject,"DummyMesh");
-                
 
                 NewModelSpawnServerRpc(this.gameObject,randomIndex);
 
