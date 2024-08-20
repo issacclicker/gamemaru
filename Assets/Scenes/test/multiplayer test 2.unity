@@ -469,7 +469,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 388073166}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TestRelay, Assembly-CSharp
         m_MethodName: StartGame
         m_Mode: 1
@@ -777,9 +777,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 388073166}
-        m_TargetAssemblyTypeName: TestRelay, Assembly-CSharp
-        m_MethodName: JoinLobbyByCode
+      - m_Target: {fileID: 388073168}
+        m_TargetAssemblyTypeName: TestRelay2, Assembly-CSharp
+        m_MethodName: JoinRelay
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1169,7 +1169,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 388073167}
-  - component: {fileID: 388073166}
   - component: {fileID: 388073168}
   m_Layer: 0
   m_Name: testRelay
@@ -1178,30 +1177,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &388073166
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 388073165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f23fecdc57951247a13b689636a27d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waitingRoomPanel: {fileID: 1135650547}
-  startGameButton: {fileID: 165996606}
-  lobbyCodeText: {fileID: 1487560128}
-  lobbyCodeInputField: {fileID: 855638337}
-  joinButton: {fileID: 190894787}
-  createButton: {fileID: 1316234873}
-  listLobbiesButton: {fileID: 559195764}
-  playerCountText: {fileID: 1828863468}
-  lobbyListPanel: {fileID: 997734625}
-  lobbyListItemPrefab: {fileID: 356014825601397183, guid: 73dc663f0ad664a48a00f200be457b87, type: 3}
-  lobbyListContent: {fileID: 787798024}
-  startGameButtonObject: {fileID: 165996604}
 --- !u!4 &388073167
 Transform:
   m_ObjectHideFlags: 0
@@ -1237,7 +1212,8 @@ MonoBehaviour:
   - {fileID: 2132951389}
   - {fileID: 6777299699405926812}
   - {fileID: 1214578292}
-  TestCodeUI: {fileID: 631795657}
+  - {fileID: 2055221734}
+  TestCodeUI: {fileID: 1847575896}
   inputField: {fileID: 855638335}
 --- !u!1 &427067309
 GameObject:
@@ -1527,7 +1503,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 388073166}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TestRelay, Assembly-CSharp
         m_MethodName: ListLobbies
         m_Mode: 1
@@ -3449,9 +3425,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 388073166}
-        m_TargetAssemblyTypeName: TestingLobby, Assembly-CSharp
-        m_MethodName: CreateLobby
+      - m_Target: {fileID: 388073168}
+        m_TargetAssemblyTypeName: TestRelay2, Assembly-CSharp
+        m_MethodName: CreateRelay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

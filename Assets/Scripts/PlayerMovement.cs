@@ -72,6 +72,11 @@ public class PlayerMovement : NetworkBehaviour
 
     private ScoreManager scoreManager;
 
+    ////점프 바뀐 부분 1
+    private int jumpCount = 0; //더블 점프 방지
+    public int maxJumpCount = 2; 
+    ////
+
     void Awake()
     {
         Instance = this;
@@ -214,25 +219,26 @@ public class PlayerMovement : NetworkBehaviour
         isGrounded = _controller.isGrounded;
 
         // 현재 플레이어가 지면에 닿아있지 않는 문제 확인
-        // Debug.Log($"isGrounded: {isGrounded}");  
+        Debug.Log($"isGrounded: {isGrounded}");  
 
-        if (isGrounded && velocity.y < 0)
+
+        ////점프 바뀐 부분 2
+        if (velocity.y < 0 && jumpCount > 0)
         {
-            velocity.y = -2f;
+            jumpCount = 0; // 점프 횟수 리셋
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && jumpCount < 1)
         {
-            if (isGrounded)
-            {
-                Jump();
-            }
+            Jump();
+            jumpCount++;
         }
+        ////
 
         InputMovement();
         velocity.y += gravity * Time.deltaTime;
         _controller.Move(velocity * Time.deltaTime);
-    }
+}
 
     void LateUpdate()
     {
@@ -285,18 +291,17 @@ public class PlayerMovement : NetworkBehaviour
 
     void Jump()
     {
-        if (isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            _animator.SetTrigger("Jump");
+        ////점프 바뀐 부분 3 (if문 삭제)
+        velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        _animator.SetTrigger("Jump");
 
-            //player_animation
-            player_animation playerAnimation = FindObjectOfType<player_animation>();
-            if (playerAnimation != null)
-            {
-                playerAnimation.PlayJumptAnimation();
-            }
+        //player_animation
+        player_animation playerAnimation = FindObjectOfType<player_animation>();
+        if (playerAnimation != null)
+        {
+            playerAnimation.PlayJumptAnimation();
         }
+        ////
     }
 
 
