@@ -78,6 +78,7 @@ public class PlayerMovement : NetworkBehaviour
     }
 
 
+
     // // Start is called before the first frame update
     void Start()
     {
@@ -97,18 +98,18 @@ public class PlayerMovement : NetworkBehaviour
         // _controller = this.GetComponent<CharacterController>();
          _controller = GetComponent<CharacterController>();
 
-        //디버깅 용
+        // //디버깅 용
         if(IsOwner)
         {
-            // if(IsHost){
-            //     playerState = "Tiger"; //ServerRpc로 바꿔야함
-            //     Set_playerStateSyncServerRpc("Tiger");
+        //     // if(IsHost){
+        //     //     playerState = "Tiger"; //ServerRpc로 바꿔야함
+        //     //     Set_playerStateSyncServerRpc("Tiger");
                 
-            // }else{
-            //     playerState = "Fox"; //ServerRpc로 바꿔야함
-            //     Set_playerStateSyncServerRpc("Fox");
+        //     // }else{
+        //     //     playerState = "Fox"; //ServerRpc로 바꿔야함
+        //     //     Set_playerStateSyncServerRpc("Fox");
                 
-            // }
+        //     // }
             playerState = "Fox";  
             Set_playerStateSyncServerRpc("Fox");
         }

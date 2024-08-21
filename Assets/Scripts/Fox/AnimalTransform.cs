@@ -41,7 +41,10 @@ public class AnimalTransform : NetworkBehaviour
 
     private void Start()
     {
-        
+        if(!IsOwner)
+        {
+            return;
+        }
 
         UIManagerObject = GameObject.Find("UIManager");
         _healthBar = UIManagerObject.GetComponent<HealthBar>();
@@ -59,11 +62,23 @@ public class AnimalTransform : NetworkBehaviour
         {
             PlayerNewModelSpawnServerRpc(this.gameObject,1);
         }
+        else
+        {
+            if(_playerMovement.playerState == "Fox")
+            {
+                PlayerNewModelSpawnServerRpc(this.gameObject,0);
+            }
+            else if(_playerMovement.playerState == "Tiger")
+            {
+                PlayerNewModelSpawnServerRpc(this.gameObject,1);
+            }
+        }
 
         // 현재 오브젝트를 기본 모델로 설정
         // _playerMovement.currentModel = new NetworkVariable<NetworkObjectReference>();
         // _playerMovement.currentModel.Value = gameObject.GetComponent<NetworkObject>();
         // _playerMovement.originalModel = gameObject;
+
     }
 
     private void Update()
