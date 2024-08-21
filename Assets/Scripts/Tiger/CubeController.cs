@@ -74,6 +74,9 @@ public class CubeController : NetworkBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
+
+        Debug.Log(collision.gameObject.tag);
+
         if (isActive && playerState=="Tiger" && collision.gameObject.CompareTag("NPC")) //호랑이가 NPC 사냥
         {
             if (playerHead.GetComponent<PlayerMovement>() != null)
