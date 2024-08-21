@@ -16,7 +16,7 @@ public class PlayerMovement : NetworkBehaviour
 
     //ThirdPerson Movement
     Animator _animator;
-    Camera _camera;
+    [SerializeField]Camera _camera;
     [SerializeField]
     GameObject MainCamera;
     CharacterController _controller;
@@ -187,7 +187,7 @@ public class PlayerMovement : NetworkBehaviour
         if(Input.GetKey(KeyCode.G)&&!isGhost)
         {
             isGhost = true;
-            PlayerDie();
+            PlayerDieServerRpc(this.gameObject);
         }
 
 
@@ -242,7 +242,7 @@ public class PlayerMovement : NetworkBehaviour
             return;
         }
 
-        if (!toggleCameraRotation && _camera.enabled)
+        if (!toggleCameraRotation && enabled)
         {
             Vector3 playerRotate = Vector3.Scale(_camera.transform.forward, new Vector3(1, 0, 1));
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerRotate), Time.deltaTime * smoothness);
@@ -565,6 +565,7 @@ public class PlayerMovement : NetworkBehaviour
 
 
     //플레이어 죽음처리
+    //현재 전부다 같이 죽는 버그가 있음 -> ServerRpc로 죽은 사람만 실행하게 변경.
     public void PlayerDie()
     {
 
@@ -587,14 +588,31 @@ public class PlayerMovement : NetworkBehaviour
 
         if(playerStateSync.Value == "Fox")
         {
+            Debug.Log("여우 지움");
             GetComponent<AnimalTransform>().PlayerNewModelDespawnServerRpc(this.gameObject,0);
         }
         else if(playerStateSync.Value == "Tiger")
         {
+            Debug.Log("호랑이 지움");
             GetComponent<AnimalTransform>().PlayerNewModelDespawnServerRpc(this.gameObject,1);
+        }
+        else
+        {
+            Debug.Log("이상한거 지움");
         }
 
         GetComponent<AnimalTransform>().PlayerNewModelSpawnServerRpc(this.gameObject,2);
+        Debug.Log("소환");
     }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void PlayerDieServerRpc(NetworkObjectReference player)
+    {
+        if(player.TryGet(out var p))
+        {
+            p.gameObject.GetComponent<PlayerMovement>().PlayerDie();
+        }
+    }
+
 
 }
