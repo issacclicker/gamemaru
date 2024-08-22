@@ -35,7 +35,7 @@ public class PlayerMovement : NetworkBehaviour
     private bool isGrounded;
 
 
-    private bool isGhost=false;
+    [SerializeField]private bool isGhost=false;
 
 
     //Player State
@@ -187,6 +187,7 @@ public class PlayerMovement : NetworkBehaviour
         if(Input.GetKey(KeyCode.G)&&!isGhost)
         {
             isGhost = true;
+            Debug.Log("현재상태(클라) : " + isGhost);
             PlayerDieServerRpc(this.gameObject);
         }
 
@@ -578,8 +579,14 @@ public class PlayerMovement : NetworkBehaviour
             playerAnimation.PlayDieAnimation();
         }
 
-        _camera.enabled = false;
-        _camera.gameObject.GetComponent<AudioListener>().enabled = false; 
+
+        if(IsOwner)
+        {
+            _camera.enabled = false;
+            _camera.gameObject.GetComponent<AudioListener>().enabled = false; 
+        }
+        // _camera.enabled = false;
+        // _camera.gameObject.GetComponent<AudioListener>().enabled = false; 
 
         
     }
@@ -587,6 +594,7 @@ public class PlayerMovement : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void PlayerDieServerRpc(NetworkObjectReference player)
     {
+
         if(player.TryGet(out var p) == false)
         {
             return;
