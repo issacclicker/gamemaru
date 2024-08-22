@@ -270,11 +270,18 @@ public class AnimalTransform : NetworkBehaviour
     {
         if(player.TryGet(out var p))
         {
-            if (_playerMovement.currentModel.Value.TryGet(out var exist))
-                {
-                    exist.Despawn();
+
+            if(p.transform.Find("FoxNet(Clone)")==null)
+            {
+                Debug.Log("모델없ㅇ므!!!!!!!!!!!!!!!!!!!!");
+                return;
+            }
+
+            if (p.transform.Find("FoxNet(Clone)").GetComponent<NetworkObject>()!=null)
+            {
+                    p.transform.Find("FoxNet(Clone)").GetComponent<NetworkObject>().Despawn();
                     // _playerMovement.currentModel.Value = default;
-                }
+            }
 
                 GameObject newMd = Instantiate(animalModel_Sec_Fox);
 

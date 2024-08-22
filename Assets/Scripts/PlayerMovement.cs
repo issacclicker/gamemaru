@@ -101,17 +101,17 @@ public class PlayerMovement : NetworkBehaviour
         // //디버깅 용
         if(IsOwner)
         {
-            if(IsHost){
-                playerState = "Tiger"; //ServerRpc로 바꿔야함
-                Set_playerStateSyncServerRpc("Tiger");
+            // if(IsHost){
+            //     playerState = "Tiger"; //ServerRpc로 바꿔야함
+            //     Set_playerStateSyncServerRpc("Tiger");
                 
-            }else{
-                playerState = "Fox"; //ServerRpc로 바꿔야함
-                Set_playerStateSyncServerRpc("Fox");
+            // }else{
+            //     playerState = "Fox"; //ServerRpc로 바꿔야함
+            //     Set_playerStateSyncServerRpc("Fox");
                 
-            }
-            // playerState = "Fox";  
-            // Set_playerStateSyncServerRpc("Fox");
+            // }
+            playerState = "Fox";  
+            Set_playerStateSyncServerRpc("Fox");
         }
 
         // if(string.IsNullOrEmpty(playerState))
@@ -554,7 +554,7 @@ public class PlayerMovement : NetworkBehaviour
 
                 //모델 바꾸는 명령어 실행
 
-                if(playerGameObject.GetComponent<PlayerMovement>().playerStateSync.Value == "Fox")
+                if(playerGameObject.GetComponent<PlayerMovement>().playerStateSync.Value == "Fox" && !IsHost)
                 {
                     playerGameObject.GetComponent<AnimalTransform>().ChangeModelToSecFox();
                 }
