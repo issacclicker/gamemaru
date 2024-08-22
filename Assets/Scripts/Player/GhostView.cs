@@ -21,6 +21,15 @@ public class GhostView : NetworkBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        if (IsOwner == false)
+        {
+            camera.SetActive(false);
+        }
+    }
+
     void Update()
     {
         // 플레이어 이동
