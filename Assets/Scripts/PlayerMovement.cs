@@ -566,15 +566,10 @@ public class PlayerMovement : NetworkBehaviour
 
     //플레이어 죽음처리
     //현재 전부다 같이 죽는 버그가 있음 -> ServerRpc로 죽은 사람만 실행하게 변경.
-    public void PlayerDie()
+    [ClientRpc]
+    public void PlayerDieClientRpc()
     {
-
-        if(!IsOwner)
-        {
-            return;
-        }
-
-        Debug.Log("Player die.!");
+        Debug.Log($"Player die! : {OwnerClientId}, {name}");
 
         //player_animation
         player_animation playerAnimation = FindObjectOfType<player_animation>();
@@ -586,33 +581,40 @@ public class PlayerMovement : NetworkBehaviour
         _camera.enabled = false;
         _camera.gameObject.GetComponent<AudioListener>().enabled = false; 
 
-        if(playerStateSync.Value == "Fox")
+        
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void PlayerDieServerRpc(NetworkObjectReference player)
+    {
+        if(player.TryGet(out var p) == false)
+        {
+            return;
+        }
+
+        ProcessDieOnServer(p.GetComponent<PlayerMovement>());
+    }
+
+    public static void ProcessDieOnServer(PlayerMovement player)
+    {
+        player.PlayerDieClientRpc();
+        
+        if(player.playerStateSync.Value == "Fox")
         {
             Debug.Log("여우 지움");
-            GetComponent<AnimalTransform>().PlayerNewModelDespawnServerRpc(this.gameObject,0);
+            player.GetComponent<AnimalTransform>().PlayerNewModelDespawnServerRpc(player.gameObject,0);
         }
-        else if(playerStateSync.Value == "Tiger")
+        else if(player.playerStateSync.Value == "Tiger")
         {
             Debug.Log("호랑이 지움");
-            GetComponent<AnimalTransform>().PlayerNewModelDespawnServerRpc(this.gameObject,1);
+            player.GetComponent<AnimalTransform>().PlayerNewModelDespawnServerRpc(player.gameObject,1);
         }
         else
         {
             Debug.Log("이상한거 지움");
         }
 
-        GetComponent<AnimalTransform>().PlayerNewModelSpawnServerRpc(this.gameObject,2);
+        player.GetComponent<AnimalTransform>().PlayerNewModelSpawnServerRpc(player.gameObject,2);
         Debug.Log("소환");
     }
-
-    [ServerRpc(RequireOwnership = false)]
-    private void PlayerDieServerRpc(NetworkObjectReference player)
-    {
-        if(player.TryGet(out var p))
-        {
-            p.gameObject.GetComponent<PlayerMovement>().PlayerDie();
-        }
-    }
-
-
 }

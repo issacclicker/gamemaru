@@ -215,7 +215,7 @@ public class AnimalTransform : NetworkBehaviour
             GameObject newMd = Instantiate(animalModelsForDefaultPlayer[num]);
 
             var networkObject = newMd.GetComponent<NetworkObject>();
-            networkObject.Spawn();
+            networkObject.SpawnWithOwnership(p.OwnerClientId);
             networkObject.TrySetParent(p, worldPositionStays: false);
             // _playerMovement.currentModel.Value = networkObject;
         }
