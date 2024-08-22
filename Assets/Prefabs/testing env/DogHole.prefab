@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6081194082513372942}
   m_Layer: 0
   m_Name: DogHole
-  m_TagString: Untagged
+  m_TagString: DogHole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3743942710
+  GlobalObjectIdHash: 920561970
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6336124780047759324}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e53c7b567f23d54b9e1abce74d6c472, type: 3}
+  m_Script: {fileID: 11500000, guid: 551723f08a605c648bba24b37f52c2a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!65 &6081194082513372942

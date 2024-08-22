@@ -617,10 +617,6 @@ public class PlayerMovement : NetworkBehaviour
             Debug.Log("호랑이 지움");
             player.GetComponent<AnimalTransform>().PlayerNewModelDespawnServerRpc(player.gameObject,1);
         }
-        else
-        {
-            Debug.Log("이상한거 지움");
-        }
 
         player.GetComponent<AnimalTransform>().PlayerNewModelSpawnServerRpc(player.gameObject,2);
         Debug.Log("소환");
