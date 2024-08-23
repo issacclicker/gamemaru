@@ -111,8 +111,8 @@ public class PlayerMovement : NetworkBehaviour
             //     Set_playerStateSyncServerRpc("Fox");
                 
             // }
-            playerState = "Tiger";  
-            Set_playerStateSyncServerRpc("Tiger");
+            playerState = "Fox";  
+            Set_playerStateSyncServerRpc("Fox");
         }
 
         // if(string.IsNullOrEmpty(playerState))
@@ -298,6 +298,13 @@ public class PlayerMovement : NetworkBehaviour
             if (playerAnimation != null)
             {
                 playerAnimation.PlayJumpAnimation();
+            }
+
+            //Tiger_animation
+            Tiger_animation tigerAnimation = FindObjectOfType<Tiger_animation>();
+            if (tigerAnimation != null)
+            {
+                tigerAnimation.PlayJumpAnimation();
             }
         }
     }

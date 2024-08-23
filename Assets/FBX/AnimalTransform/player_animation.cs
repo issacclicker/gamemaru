@@ -37,7 +37,7 @@ public class player_animation : MonoBehaviour
     public void PlayEatAnimation()
     {
         Debug.Log("Eat animation triggered");
-        _animator.SetTrigger("Eat");
+        _animator.Play("Eat");
     }
 
     public void StopEatAnimation()
@@ -50,7 +50,7 @@ public class player_animation : MonoBehaviour
     public void PlayJumpAnimation()
     {
         Debug.Log("Jump animation triggered");
-        _animator.SetTrigger("Jump");
+        _animator.Play("Jump");
     }
 
     public void StopJumpAnimation()

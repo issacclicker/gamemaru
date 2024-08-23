@@ -36,7 +36,7 @@ public class Tiger_animation : MonoBehaviour
     public void PlayJumpAnimation()
     {
         Debug.Log("Jump animation triggered");
-        _animator.SetTrigger("Jump");
+        _animator.Play("Jump");
     }
 
     public void StopJumpAnimation()
@@ -49,7 +49,7 @@ public class Tiger_animation : MonoBehaviour
     public void PlayAttackAnimation()
     {
         Debug.Log("Attack animation triggered");
-        _animator.SetTrigger("Attack");
+        _animator.Play("Attack");
     }
 
     public void StopAttackAnimation()
@@ -62,7 +62,7 @@ public class Tiger_animation : MonoBehaviour
     public void PlayRoarAnimation()
     {
         Debug.Log("Roar animation triggered");
-        _animator.SetTrigger("Roar");
+        _animator.Play("Roar");
     }
 
     public void StopRoarAnimation()
