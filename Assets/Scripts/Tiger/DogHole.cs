@@ -2,17 +2,54 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
-// using Unity.VisualScripting;
 
 public class DogHole : NetworkBehaviour
 {
+    public static List<DogHole> allHoles = new List<DogHole>();
 
-    bool isInside = false;
+    private bool isInside = false;
 
-    private void OnTriggerEnter(Collider other) {
-        if(other.gameObject.CompareTag("Player") && other.gameObject.GetComponent<PlayerMovement>().playerStateSync.Value=="Tiger")
+    [SerializeField]
+    private MeshRenderer meshRenderer;
+    [SerializeField]
+    private Collider holeCollider;
+
+    private void Awake()
+    {
+        if (meshRenderer == null)
+            meshRenderer = GetComponent<MeshRenderer>();
+
+        if (holeCollider == null)
+            holeCollider = GetComponent<Collider>();
+
+        allHoles.Add(this);
+        DisableHole();
+    }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy(); 
+        allHoles.Remove(this);
+    }
+
+    public void EnableHole()
+    {
+        meshRenderer.enabled = true;
+        holeCollider.enabled = true;
+    }
+
+    public void DisableHole()
+    {
+        meshRenderer.enabled = false;
+        holeCollider.enabled = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("OnTriggerEnter: " + other.gameObject.name);
+        if (other.CompareTag("Player") && other.GetComponent<PlayerMovement>().playerStateSync.Value == "Tiger")
         {
-            Debug.Log("탈출~시작");
+            Debug.Log("탈출 시작");
             isInside = true;
             StartCoroutine(ExitTime());
         }
@@ -20,28 +57,20 @@ public class DogHole : NetworkBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.CompareTag("Player") && other.gameObject.GetComponent<PlayerMovement>().playerStateSync.Value=="Tiger")
+        Debug.Log("OnTriggerExit: " + other.gameObject.name);
+        if (other.CompareTag("Player") && other.GetComponent<PlayerMovement>().playerStateSync.Value == "Tiger")
         {
-            Debug.Log("탈출~실패~");
+            Debug.Log("탈출 실패");
             isInside = false;
         }
     }
 
-    IEnumerator ExitTime() 
+    private IEnumerator ExitTime()
     {
-        yield return new WaitForSeconds(1.5f);
-        if(!isInside)
+        yield return new WaitForSeconds(3f);
+        if (isInside)
         {
-            yield break;
-        }
-        isExitSuccess();
-    }
-
-    private void isExitSuccess()
-    {
-        if(isInside)
-        {
-            Debug.Log("성공!");
+            Debug.Log("탈출 성공!");
         }
     }
 }

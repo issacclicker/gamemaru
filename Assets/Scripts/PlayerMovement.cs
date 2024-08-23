@@ -110,8 +110,10 @@ public class PlayerMovement : NetworkBehaviour
             //     Set_playerStateSyncServerRpc("Fox");
                 
             // }
-            playerState = "Fox";  
-            Set_playerStateSyncServerRpc("Fox");
+            playerState = "Tiger";  
+            Set_playerStateSyncServerRpc("Tiger");
+            // playerState = "Fox";  
+            // Set_playerStateSyncServerRpc("Fox");
         }
 
         // if(string.IsNullOrEmpty(playerState))
@@ -144,7 +146,6 @@ public class PlayerMovement : NetworkBehaviour
         {
             Debug.LogError("ScoreManager instance not found in the scene.");
         }
-
     }
 
     // Update is called once per frame
@@ -202,16 +203,16 @@ public class PlayerMovement : NetworkBehaviour
         {
             toggleCameraRotation = false; // �ѷ����� ��Ȱ��ȭ
         }
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            run = true;
-            _animator.SetBool("isRun", true);
-        }
-        else
-        {
-            run = false;
-            _animator.SetBool("isRun", false);
-        }
+        // if (Input.GetKey(KeyCode.LeftShift))
+        // {
+        //     run = true;
+        //     _animator.SetBool("isRun", true);
+        // }
+        // else
+        // {
+        //     run = false;
+        //     _animator.SetBool("isRun", false);
+        // }
 
         isGrounded = _controller.isGrounded;
 
@@ -458,20 +459,20 @@ public class PlayerMovement : NetworkBehaviour
     }
 
     //이미호로 바뀌는 함수
-    private void ChangeModel()
+private void ChangeModel()
+{
+    if (PlayerNetworkStats.Instance.BeadCount >= 2 && !isAwaken.Value && IsOwner)
     {
-        if (PlayerNetworkStats.Instance.BeadCount >= 2 && !isAwaken.Value && IsOwner)
-        {
-            Set_isAwakenServerRpc(true);
-            Set_isAwakenClientRpc(true);
-            
-            GetComponent<AnimalTransform>().ChangeModelToSecFox();
-            // ChangeAllPlayerModelToSecFoxClientRpc();
-            ChangeAllPlayerModelToSecFoxServerRpc();
-            
-            Debug.Log("이미호로 변신");
-        }
+        Set_isAwakenServerRpc(true);
+        Set_isAwakenClientRpc(true);
+        
+        GetComponent<AnimalTransform>().ChangeModelToSecFox();
+        ChangeAllPlayerModelToSecFoxServerRpc();
+        
+        Debug.Log("이미호로 변신");
+        ActivateFarthestDogHoleServerRpc();
     }
+}
 
     //생명의 샘에 닿으면 모습을 바꿈
     void OnTriggerEnter(Collider other)
@@ -487,6 +488,50 @@ public class PlayerMovement : NetworkBehaviour
             EndGame(); 
         }
     }
+    [ServerRpc]
+private void ActivateFarthestDogHoleServerRpc()
+{
+    if (!IsServer) return;
+
+    Vector3 tigerPosition = Vector3.zero;
+    foreach (var client in NetworkManager.Singleton.ConnectedClients)
+    {
+        var player = client.Value.PlayerObject.GetComponent<PlayerMovement>();
+        if (player.playerStateSync.Value == "Tiger")
+        {
+            tigerPosition = player.transform.position;
+            break;
+        }
+    }
+
+    DogHole farthestHole = null;
+    float maxDistance = float.MinValue;
+
+    foreach (var hole in DogHole.allHoles)
+    {
+        float distance = Vector3.Distance(hole.transform.position, tigerPosition);
+        if (distance > maxDistance)
+        {
+            maxDistance = distance;
+            farthestHole = hole;
+        }
+    }
+
+    if (farthestHole != null)
+    {
+        farthestHole.EnableHole();
+        ActivateDogHoleClientRpc(farthestHole.gameObject);
+    }
+}
+
+[ClientRpc]
+private void ActivateDogHoleClientRpc(NetworkObjectReference holeRef)
+{
+    if (holeRef.TryGet(out NetworkObject holeObject))
+    {
+        holeObject.GetComponent<DogHole>().EnableHole();
+    }
+}
 
     private void EndGame()
     {
