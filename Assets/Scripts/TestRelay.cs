@@ -261,32 +261,26 @@ public async void ListLobbies()
             }
         };
 
-        // 로비를 가져올 때 재시도 로직 적용
         QueryResponse queryResponse = await ExecuteWithRetryAsync(
             () => Lobbies.Instance.QueryLobbiesAsync(queryLobbiesOptions)
         );
 
         Debug.Log("Lobbies found: " + queryResponse.Results.Count);
 
-        // 로비 리스트를 UI에 표시
         foreach (Lobby lobby in queryResponse.Results)
         {
             Debug.Log("Lobby Code: " + lobby.LobbyCode + " " + lobby.MaxPlayers + " " + (lobby.Data.ContainsKey("Gamemode") ? lobby.Data["Gamemode"].Value : "No Gamemode"));
 
-            // Prefab을 인스턴스화
             GameObject item = Instantiate(lobbyListItemPrefab, lobbyListContent);
             
-            // 텍스트와 버튼 컴포넌트를 찾기
             Text[] texts = item.GetComponentsInChildren<Text>();
             Button joinButton = item.GetComponentInChildren<Button>();
 
             if (texts.Length > 0)
             {
-                // 로비 코드를 텍스트로 설정
                 texts[0].text = lobby.LobbyCode; 
                 if (texts.Length > 1)
                 {
-                    // 플레이어 수 설정
                     texts[1].text = $"{lobby.Players.Count}/{lobby.MaxPlayers}";
                 }
             }
@@ -294,7 +288,7 @@ public async void ListLobbies()
             if (joinButton != null)
             {
                 string lobbyCode = lobby.LobbyCode;
-                joinButton.onClick.RemoveAllListeners(); // 기존 리스너 제거
+                joinButton.onClick.RemoveAllListeners(); 
                 joinButton.onClick.AddListener(() => JoinLobbyByCode(lobbyCode));
             }
         }
@@ -316,15 +310,15 @@ private async Task<T> ExecuteWithRetryAsync<T>(Func<Task<T>> func, int retryCoun
             }
             catch (LobbyServiceException e)
             {
-                if (i == retryCount - 1) // 마지막 재시도에서 실패 시 에러를 던짐
+                if (i == retryCount - 1) 
                 {
                     throw;
                 }
                 Debug.LogWarning($"Retry {i + 1} failed. Exception: {e.Message}");
-                await Task.Delay(2000); // 재시도 간의 대기 시간 (2초)
+                await Task.Delay(2000); 
             }
         }
-        return default; // 반환값이 있는 경우 기본값 반환
+        return default; 
     }
     public async void QuickJoinLobby()
     {
