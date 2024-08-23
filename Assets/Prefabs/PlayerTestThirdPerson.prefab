@@ -388,7 +388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1291167419
+  GlobalObjectIdHash: 2609733160
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -561,6 +561,7 @@ MonoBehaviour:
   originalModel: {fileID: 0}
   isAwaken:
     m_InternalValue: 0
+  maxJumpCount: 2
 --- !u!143 &6395637254529567614
 CharacterController:
   m_ObjectHideFlags: 0
@@ -729,12 +730,6 @@ MonoBehaviour:
   foodTransForm:
   - {fileID: 8187124496121675323, guid: 0f61774499a218242a4ed75b5d9ae662, type: 3}
   - {fileID: 5247737906794823978, guid: 7b9b2b348afebfd4f835f349509dde17, type: 3}
-  DogHole: {fileID: 6336124780047759324, guid: 52f55c72ba8e7b341a840cd0cedb2be1, type: 3}
-  dogHoleTransForm:
-  - {fileID: 8104167876632763336, guid: 200120bfdb64f69438a29dacbf964e19, type: 3}
-  - {fileID: 7618300736350569894, guid: 060a2a1f37b2bda4b9b444957bebc414, type: 3}
-  - {fileID: 7562199417788405810, guid: 4c2fc8abfa1314b468841237d24ab7b3, type: 3}
-  - {fileID: 7882170162497974100, guid: 7ff313f02950b9949a6ffcef900af5b1, type: 3}
 --- !u!114 &-961567335097105219
 MonoBehaviour:
   m_ObjectHideFlags: 0

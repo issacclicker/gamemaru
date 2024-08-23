@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Lobbies;
@@ -7,48 +8,45 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
-using System.Threading.Tasks;
 
 public class TestRelay : MonoBehaviour
 {
     private Lobby hostLobby;
     private Lobby joinedLobby;
-    private float heartbeatTimer;
+    private float heartbeatTimer = 30f;
     private string playerName;
-    private float updateLobbyStatusTimer;
+    private float updateLobbyStatusTimer = 5f;
 
     // UI 요소
     public GameObject waitingRoomPanel;
     public Button startGameButton;
     public Text lobbyCodeText;
-    public InputField lobbyCodeInputField; // 로비 코드 입력 필드
-    public Button joinButton; // Join 버튼
-    public Button createButton; // Create 버튼
-    public Button listLobbiesButton; // 로비 목록 버튼
+    public InputField lobbyCodeInputField;
+    public Button joinButton;
+    public Button createButton;
+    public Button listLobbiesButton;
     public Text playerCountText;
-    public GameObject lobbyListPanel; // 로비 목록
+    public GameObject lobbyListPanel;
     private bool isCreatingLobby = false;
     [SerializeField] private GameObject lobbyListItemPrefab;
     [SerializeField] private Transform lobbyListContent;
 
-    
     private async void Start()
     {
         await UnityServices.InitializeAsync();
+        await AuthenticationService.Instance.SignInAnonymouslyAsync();
         AuthenticationService.Instance.SignedIn += () =>
         {
             Debug.Log("Signed in " + AuthenticationService.Instance.PlayerId);
         };
-        await AuthenticationService.Instance.SignInAnonymouslyAsync();
 
         playerName = "Player" + UnityEngine.Random.Range(10, 99);
         Debug.Log("플레이어 : " + playerName);
 
         if (createButton != null)
-    {
-        createButton.onClick.RemoveAllListeners();
-        createButton.onClick.AddListener(CreateLobby);
-    }
+        {
+            createButton.onClick.AddListener(CreateLobby);
+        }
         if (joinButton != null)
         {
             joinButton.onClick.AddListener(OnJoinButtonClick);
@@ -57,16 +55,12 @@ public class TestRelay : MonoBehaviour
         {
             listLobbiesButton.onClick.AddListener(ListLobbies);
         }
-        if (lobbyListItemPrefab == null)
-    {
-        Debug.LogError("lobbyListItemPrefab is not assigned in the Inspector.");
+        if (lobbyListItemPrefab == null || lobbyListContent == null)
+        {
+            Debug.LogError("Lobby UI elements are not assigned.");
+        }
     }
 
-    if (lobbyListContent == null)
-    {
-        Debug.LogError("lobbyListContent is not assigned in the Inspector.");
-    }
-    }
     private void Update()
     {
         HandleLobbyHeartbeat();
@@ -76,8 +70,8 @@ public class TestRelay : MonoBehaviour
             updateLobbyStatusTimer = 5f; 
             UpdateLobbyStatusAsync(); 
         }
-        
     }
+
     private async void UpdateLobbyStatusAsync()
     {
         try
@@ -89,8 +83,8 @@ public class TestRelay : MonoBehaviour
                 SceneManager.LoadScene("Multiplayer Test 1");
             }
 
-            UpdatePlayerCount();   
-            UpdateStartGameButton(); 
+            UpdatePlayerCount();
+            UpdateStartGameButton();
         }
         catch (LobbyServiceException e)
         {
@@ -113,7 +107,7 @@ public class TestRelay : MonoBehaviour
         if (hostLobby != null)
         {
             heartbeatTimer -= Time.deltaTime;
-            if (heartbeatTimer < 0f)
+            if (heartbeatTimer <= 0f)
             {
                 heartbeatTimer = 30f;
                 try
@@ -128,7 +122,8 @@ public class TestRelay : MonoBehaviour
         }
     }
 
-   public async void CreateLobby()
+    // 로비 만들기
+    public async void CreateLobby()
     {
         if (isCreatingLobby) return;
 
@@ -144,7 +139,7 @@ public class TestRelay : MonoBehaviour
         try
         {
             string lobbyName = "MyLobby";
-            int maxPlayers = 4;  //일단 최대 인원 4명으로 설정
+            int maxPlayers = 4;  // 최대 4명으로 일단 설정해놓음
 
             var player = GetPlayer();
             if (player == null)
@@ -179,22 +174,13 @@ public class TestRelay : MonoBehaviour
             {
                 lobbyCodeText.text = "Join Code: " + lobby.LobbyCode;
             }
-            else
-            {
-                Debug.LogError("lobbyCodeText is not assigned.");
-            }
 
             if (waitingRoomPanel != null)
             {
                 waitingRoomPanel.SetActive(true);
             }
-            else
-            {
-                Debug.LogError("waitingRoomPanel is not assigned.");
-            }
 
             UpdatePlayerCount();
-
             UpdateStartGameButton();
         }
         catch (LobbyServiceException e)
@@ -203,11 +189,12 @@ public class TestRelay : MonoBehaviour
         }
         finally
         {
-            isCreatingLobby = false; 
+            isCreatingLobby = false;
         }
     }
 
-   public async void JoinLobbyByCode(string lobbyCode)
+    //코드 입력해서 들어가기
+    public async void JoinLobbyByCode(string lobbyCode)
     {
         try
         {
@@ -215,7 +202,7 @@ public class TestRelay : MonoBehaviour
             {
                 Player = GetPlayer()
             };
-            Lobby lobby = await Lobbies.Instance.JoinLobbyByCodeAsync(lobbyCode, joinLobbyByCodeOptions);
+            Lobby lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode, joinLobbyByCodeOptions);
             joinedLobby = lobby;
 
             Debug.Log("Joined Lobby Code: " + lobbyCode);
@@ -223,84 +210,84 @@ public class TestRelay : MonoBehaviour
             lobbyCodeText.text = "Join Code: " + lobbyCode;
 
             UpdatePlayerCount();
-
             UpdateStartGameButton();
         }
         catch (LobbyServiceException e)
-        {   
-            Debug.Log(e);
+        {
+            Debug.LogError("Failed to join lobby: " + e);
         }
     }
 
-public async void ListLobbies()
-{
-    if (lobbyListPanel == null || lobbyListContent == null || lobbyListItemPrefab == null)
+    public async void ListLobbies()
     {
-        Debug.LogError("Lobby UI elements are not assigned.");
-        return;
-    }
-
-    // 기존 목록을 지우기
-    foreach (Transform child in lobbyListContent)
-    {
-        Destroy(child.gameObject);
-    }
-
-    try
-    {
-        QueryLobbiesOptions queryLobbiesOptions = new QueryLobbiesOptions
+        if (lobbyListPanel == null || lobbyListContent == null || lobbyListItemPrefab == null)
         {
-            Count = 25,
-            Filters = new List<QueryFilter>
-            {
-                new QueryFilter(QueryFilter.FieldOptions.AvailableSlots, "0", QueryFilter.OpOptions.GT)
-            },
-            Order = new List<QueryOrder>
-            {
-                new QueryOrder(false, QueryOrder.FieldOptions.Created)
-            }
-        };
+            Debug.LogError("Lobby UI elements are not assigned.");
+            return;
+        }
 
-        QueryResponse queryResponse = await ExecuteWithRetryAsync(
-            () => Lobbies.Instance.QueryLobbiesAsync(queryLobbiesOptions)
-        );
-
-        Debug.Log("Lobbies found: " + queryResponse.Results.Count);
-
-        foreach (Lobby lobby in queryResponse.Results)
+        // 기존 목록을 지우기
+        foreach (Transform child in lobbyListContent)
         {
-            Debug.Log("Lobby Code: " + lobby.LobbyCode + " " + lobby.MaxPlayers + " " + (lobby.Data.ContainsKey("Gamemode") ? lobby.Data["Gamemode"].Value : "No Gamemode"));
+            Destroy(child.gameObject);
+        }
 
-            GameObject item = Instantiate(lobbyListItemPrefab, lobbyListContent);
-            
-            Text[] texts = item.GetComponentsInChildren<Text>();
-            Button joinButton = item.GetComponentInChildren<Button>();
-
-            if (texts.Length > 0)
+        try
+        {
+            QueryLobbiesOptions queryLobbiesOptions = new QueryLobbiesOptions
             {
-                texts[0].text = lobby.LobbyCode; 
-                if (texts.Length > 1)
+                Count = 25,
+                Filters = new List<QueryFilter>
                 {
-                    texts[1].text = $"{lobby.Players.Count}/{lobby.MaxPlayers}";
+                    new QueryFilter(QueryFilter.FieldOptions.AvailableSlots, "0", QueryFilter.OpOptions.GT)
+                },
+                Order = new List<QueryOrder>
+                {
+                    new QueryOrder(false, QueryOrder.FieldOptions.Created)
+                }
+            };
+
+            QueryResponse queryResponse = await ExecuteWithRetryAsync(
+                () => LobbyService.Instance.QueryLobbiesAsync(queryLobbiesOptions)
+            );
+
+            Debug.Log("Lobbies found: " + queryResponse.Results.Count);
+
+            foreach (Lobby lobby in queryResponse.Results)
+            {
+                Debug.Log("Lobby Code: " + lobby.LobbyCode + " " + lobby.MaxPlayers + " " + (lobby.Data.ContainsKey("Gamemode") ? lobby.Data["Gamemode"].Value : "No Gamemode"));
+
+                GameObject item = Instantiate(lobbyListItemPrefab, lobbyListContent);
+                
+                Text[] texts = item.GetComponentsInChildren<Text>();
+                Button joinButton = item.GetComponentInChildren<Button>();
+
+                if (texts.Length > 0)
+                {
+                    texts[0].text = lobby.LobbyCode; 
+                    if (texts.Length > 1)
+                    {
+                        texts[1].text = $"{lobby.Players.Count}/{lobby.MaxPlayers}";
+                    }
+                }
+
+                if (joinButton != null)
+                {
+                    string lobbyCode = lobby.LobbyCode;
+                    joinButton.onClick.RemoveAllListeners(); 
+                    joinButton.onClick.AddListener(() => JoinLobbyByCode(lobbyCode));
                 }
             }
 
-            if (joinButton != null)
-            {
-                string lobbyCode = lobby.LobbyCode;
-                joinButton.onClick.RemoveAllListeners(); 
-                joinButton.onClick.AddListener(() => JoinLobbyByCode(lobbyCode));
-            }
+            lobbyListPanel.SetActive(true);
         }
+        catch (LobbyServiceException e)
+        {
+            Debug.LogError("Error querying lobbies: " + e);
+        }
+    }
 
-        lobbyListPanel.SetActive(true);
-    }
-    catch (LobbyServiceException e)
-    {
-        Debug.LogError("Error querying lobbies: " + e);
-    }
-}
-private async Task<T> ExecuteWithRetryAsync<T>(Func<Task<T>> func, int retryCount = 3)
+    private async Task<T> ExecuteWithRetryAsync<T>(Func<Task<T>> func, int retryCount = 3)
     {
         for (int i = 0; i < retryCount; i++)
         {
@@ -320,6 +307,7 @@ private async Task<T> ExecuteWithRetryAsync<T>(Func<Task<T>> func, int retryCoun
         }
         return default; 
     }
+
     public async void QuickJoinLobby()
     {
         try
@@ -332,13 +320,13 @@ private async Task<T> ExecuteWithRetryAsync<T>(Func<Task<T>> func, int retryCoun
         }
         catch (LobbyServiceException e)
         {
-            Debug.Log(e);
+            Debug.LogError("Failed to quick join lobby: " + e);
         }
     }
 
-    private Player GetPlayer()
+    private Unity.Services.Lobbies.Models.Player GetPlayer()
     {
-        return new Player
+        return new Unity.Services.Lobbies.Models.Player
         {
             Data = new Dictionary<string, PlayerDataObject>
             {
@@ -354,8 +342,10 @@ private async Task<T> ExecuteWithRetryAsync<T>(Func<Task<T>> func, int retryCoun
 
     public void PrintPlayers(Lobby lobby)
     {
-        Debug.Log("Players in Lobby " + lobby.Name + " " + lobby.Data["Gamemode"].Value);
-        foreach (Player player in lobby.Players)
+        if (lobby == null) return;
+
+        Debug.Log("Players in Lobby " + lobby.Name + " " + (lobby.Data.ContainsKey("Gamemode") ? lobby.Data["Gamemode"].Value : "No Gamemode"));
+        foreach (Unity.Services.Lobbies.Models.Player player in lobby.Players)
         {
             Debug.Log(player.Id + " " + player.Data["PlayerName"].Value);
         }
@@ -363,9 +353,11 @@ private async Task<T> ExecuteWithRetryAsync<T>(Func<Task<T>> func, int retryCoun
 
     public async void UpdateLobbyGameMode(string gameMode)
     {
+        if (hostLobby == null) return;
+
         try
         {
-            hostLobby = await Lobbies.Instance.UpdateLobbyAsync(hostLobby.Id, new UpdateLobbyOptions
+            hostLobby = await LobbyService.Instance.UpdateLobbyAsync(hostLobby.Id, new UpdateLobbyOptions
             {
                 Data = new Dictionary<string, DataObject>
                 {
@@ -378,13 +370,11 @@ private async Task<T> ExecuteWithRetryAsync<T>(Func<Task<T>> func, int retryCoun
         }
         catch (LobbyServiceException e)
         {
-            Debug.Log(e);
+            Debug.LogError("Failed to update lobby game mode: " + e);
         }
     }
 
-    public GameObject startGameButtonObject; 
-
-    private void UpdateStartGameButton()
+    public void UpdateStartGameButton()
     {
         if (startGameButton == null)
         {
@@ -394,43 +384,41 @@ private async Task<T> ExecuteWithRetryAsync<T>(Func<Task<T>> func, int retryCoun
 
         if (hostLobby == null || joinedLobby == null)
         {
-            Debug.LogError("hostLobby or joinedLobby is not assigned.");
             startGameButton.gameObject.SetActive(false);
             return;
         }
 
         bool isHost = AuthenticationService.Instance.PlayerId == hostLobby.HostId;
-        bool enoughPlayers = joinedLobby.Players.Count >= 2; //2명 이상일 때 start game 버튼 나옴
+        bool enoughPlayers = joinedLobby.Players.Count >= 2; 
 
         startGameButton.gameObject.SetActive(isHost && enoughPlayers);
     }
 
-
-
-    public async void StartGame()
+public async void StartGame()
+{
+    if (hostLobby != null)
     {
-        if (hostLobby != null)
+        try
         {
-            try
+            await LobbyService.Instance.UpdateLobbyAsync(hostLobby.Id, new UpdateLobbyOptions
             {
-                await Lobbies.Instance.UpdateLobbyAsync(hostLobby.Id, new UpdateLobbyOptions
+                Data = new Dictionary<string, DataObject>
                 {
-                    Data = new Dictionary<string, DataObject>
-                    {
-                        { "GameStarted", new DataObject(DataObject.VisibilityOptions.Public, "true") }
-                    }
-                });
+                    { "GameStarted", new DataObject(DataObject.VisibilityOptions.Public, "true") }
+                }
+            });
 
-                SceneManager.LoadScene("Multiplayer Test 1");
-
-                Debug.Log("게임이 시작되었습니다.");
-            }
-            catch (LobbyServiceException e)
+            if (GameStateManager.Instance != null)
             {
-                Debug.Log(e);
+                GameStateManager.Instance.AssignRolesAndStartGame();
             }
         }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }
     }
+}
 
     public void OnJoinButtonClick()
     {
