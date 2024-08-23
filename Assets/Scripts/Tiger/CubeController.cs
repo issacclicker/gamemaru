@@ -1,4 +1,4 @@
-using UnityEngine;
+ using UnityEngine;
 using System.Collections;
 using Unity.Netcode;
 
@@ -11,6 +11,7 @@ public class CubeController : NetworkBehaviour
     private string playerState; 
     private bool isActive = false; 
     private Renderer renderer;
+    private Tiger_animation tigerAnimation;
 
     PlayerMovement _playerMovement;
 
@@ -41,6 +42,7 @@ public class CubeController : NetworkBehaviour
         if (Input.GetButtonDown("Interaction") && (playerState == "Tiger"||_playerMovement.isAwaken.Value))
         {
             Debug.Log("Attack!");
+
             StartCoroutine(ActivateAndDeactivateCube());
         }
     }
@@ -50,6 +52,14 @@ public class CubeController : NetworkBehaviour
         if (!isActive)
         {
             isActive = true;
+
+            //Tiger_animation
+            Tiger_animation tigerAnimation = FindObjectOfType<Tiger_animation>();
+            if (tigerAnimation != null)
+            {
+                tigerAnimation.PlayAttackAnimation();
+            }
+
             SetCubeActive(true);
 
             yield return new WaitForSeconds(2f);

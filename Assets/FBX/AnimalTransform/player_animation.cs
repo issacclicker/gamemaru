@@ -47,7 +47,7 @@ public class player_animation : MonoBehaviour
     }
 
     // Jump 애니메이션 트리거
-    public void PlayJumptAnimation()
+    public void PlayJumpAnimation()
     {
         Debug.Log("Jump animation triggered");
         _animator.SetTrigger("Jump");

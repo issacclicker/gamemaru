@@ -111,8 +111,8 @@ public class PlayerMovement : NetworkBehaviour
             //     Set_playerStateSyncServerRpc("Fox");
                 
             // }
-            playerState = "Fox";  
-            Set_playerStateSyncServerRpc("Fox");
+            playerState = "Tiger";  
+            Set_playerStateSyncServerRpc("Tiger");
         }
 
         // if(string.IsNullOrEmpty(playerState))
@@ -279,6 +279,7 @@ public class PlayerMovement : NetworkBehaviour
         _controller.Move(moveDirection.normalized * finalSpeed * Time.deltaTime);
 
         float percent = (run ? 1 : 0.5f) * moveDirection.magnitude;
+
         _animator.SetFloat("Blend",  percent,0.1f,Time.deltaTime);
 
         //player_animation
@@ -296,7 +297,7 @@ public class PlayerMovement : NetworkBehaviour
             player_animation playerAnimation = FindObjectOfType<player_animation>();
             if (playerAnimation != null)
             {
-                playerAnimation.PlayJumptAnimation();
+                playerAnimation.PlayJumpAnimation();
             }
         }
     }

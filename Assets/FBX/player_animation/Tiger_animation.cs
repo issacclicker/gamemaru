@@ -21,7 +21,7 @@ public class Tiger_animation : MonoBehaviour
             _animator.SetFloat("Blend", blendValue);
 
             AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-            if (stateInfo.IsName("Jump")|| stateInfo.IsName("Attack"))
+            if (stateInfo.IsName("Jump")|| stateInfo.IsName("Attack") || stateInfo.IsName("Roar"))
             {
                 _animator.SetFloat("Blend", 0);
             }
@@ -33,7 +33,7 @@ public class Tiger_animation : MonoBehaviour
     }
 
     // Jump 애니메이션 트리거
-    public void PlayJumptAnimation()
+    public void PlayJumpAnimation()
     {
         Debug.Log("Jump animation triggered");
         _animator.SetTrigger("Jump");
@@ -54,7 +54,20 @@ public class Tiger_animation : MonoBehaviour
 
     public void StopAttackAnimation()
     {
-        // Jump 애니메이션이 끝난 후 Blend 애니메이션으로 돌아가도록 설정
+        // Attack 애니메이션이 끝난 후 Blend 애니메이션으로 돌아가도록 설정
+        _animator.SetFloat("Blend", playerMovement.BlendValue);
+    }
+
+    // Roar 애니메이션 트리거
+    public void PlayRoarAnimation()
+    {
+        Debug.Log("Roar animation triggered");
+        _animator.SetTrigger("Roar");
+    }
+
+    public void StopRoarAnimation()
+    {
+        // Roar 애니메이션이 끝난 후 Blend 애니메이션으로 돌아가도록 설정
         _animator.SetFloat("Blend", playerMovement.BlendValue);
     }
 }
