@@ -63,6 +63,17 @@ public class AnimalTransform : NetworkBehaviour
             PlayerNewModelSpawnServerRpc(this.gameObject, 1);
             p_modelNum = 1;
         }
+        else
+        {
+            if (_playerMovement.playerState == "Fox")
+            {
+                PlayerNewModelSpawnServerRpc(this.gameObject, 0);
+            }
+            else if (_playerMovement.playerState == "Tiger")
+            {
+                PlayerNewModelSpawnServerRpc(this.gameObject, 1);
+            }
+        }
 
         // 현재 오브젝트를 기본 모델로 설정
         // _playerMovement.currentModel = new NetworkVariable<NetworkObjectReference>();
@@ -107,7 +118,6 @@ public class AnimalTransform : NetworkBehaviour
             // AbleForiegnModelServerRpc(this.gameObject,"DummyMesh");
             // AbleForiegnModelClientRpc(this.gameObject,"DummyMesh");
 
-            PlayerNewModelSpawnServerRpc(this.gameObject, p_modelNum);
             NewModelDespawnServerRpc(this.gameObject, randomIndex_temp);
 
             isAnimal = false;
@@ -138,7 +148,6 @@ public class AnimalTransform : NetworkBehaviour
                 // DisableForiegnModelServerRpc(this.gameObject,"DummyMesh");
                 // DisableForiegnModelClientRpc(this.gameObject,"DummyMesh");
 
-                PlayerNewModelDespawnServerRpc(this.gameObject, p_modelNum);
                 NewModelSpawnServerRpc(this.gameObject, randomIndex);
 
                 isAnimal = true;
@@ -149,9 +158,6 @@ public class AnimalTransform : NetworkBehaviour
                 Debug.Log("체력 부족 동물 모델로 변경 불가");
             }
         }
-
-
-
     }
 
     // 일정 시간이 경과했을 때 원래 모델로 돌아가기
