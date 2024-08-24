@@ -1227,8 +1227,6 @@ MonoBehaviour:
   - {fileID: 1214578292}
   - {fileID: 2055221734}
   - {fileID: 855638335}
-  UI_waiting_room:
-  - {fileID: 1135650547}
   TestCodeUI: {fileID: 1847575896}
   inputField: {fileID: 855638335}
 --- !u!1 &427067309
@@ -2731,6 +2729,10 @@ MonoBehaviour:
   Heart3: {fileID: 1547113527}
   beadCountText: {fileID: 1214578294}
   HealthBar: {fileID: 6777299699405926812}
+  LobbyUIs:
+  - {fileID: 1135650547}
+  - {fileID: 165996604}
+  IsGameStarted: 0
 --- !u!4 &1035629945
 Transform:
   m_ObjectHideFlags: 0

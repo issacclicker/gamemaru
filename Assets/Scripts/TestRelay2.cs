@@ -19,9 +19,6 @@ public class TestRelay2 : MonoBehaviour
     //비활성화 시킬 UI
     public GameObject[] UI_Objects;
 
-    //활성화 시킬 UI
-    public GameObject[] UI_waiting_room;
-
     public GameObject TestCodeUI;
     public GameObject inputField;
     private Text _testCodeUI;
@@ -90,7 +87,7 @@ public class TestRelay2 : MonoBehaviour
             );
 
             DisableUIObjects();
-            AbleUIObjects();
+            
 
             NetworkManager.Singleton.StartClient();
         }catch(RelayServiceException e){
@@ -112,10 +109,4 @@ public class TestRelay2 : MonoBehaviour
         }
     }
 
-    private void AbleUIObjects()
-    {
-        for(int i = 0;i<UI_waiting_room.Length;i++){
-            UI_waiting_room[i].SetActive(true);
-        }
-    }
 }

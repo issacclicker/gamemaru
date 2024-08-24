@@ -73,9 +73,6 @@ public class PlayerMovement : NetworkBehaviour
     private ScoreManager scoreManager;
 
 
-    //웨이팅 룸 UI
-    public bool isGameStart = false; // 게임 시작함?
-
     void Awake()
     {
         Instance = this;
