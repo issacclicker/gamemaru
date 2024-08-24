@@ -43,6 +43,9 @@ public class PlayerMovement : NetworkBehaviour
 
     [SerializeField] public NetworkVariable<FixedString128Bytes> playerStateSync = new NetworkVariable<FixedString128Bytes>(); //네트워크 동기화용
 
+    [SerializeField] private Material newSkyboxMaterial;//하늘
+    [SerializeField] private GameObject spotLight;//빛
+    
     //Tiger features(from Tiger_Controller.cs)
     private int huntFailures = 0;
     private bool isPenaltyActive = false;
@@ -101,19 +104,19 @@ public class PlayerMovement : NetworkBehaviour
         // //디버깅 용
         if(IsOwner)
         {
-            if(IsHost){
-                playerState = "Tiger"; //ServerRpc로 바꿔야함
-                Set_playerStateSyncServerRpc("Tiger");
+            // if(IsHost){
+            //     playerState = "Tiger"; //ServerRpc로 바꿔야함
+            //     Set_playerStateSyncServerRpc("Tiger");
                 
-            }else{
-                playerState = "Fox"; //ServerRpc로 바꿔야함
-                Set_playerStateSyncServerRpc("Fox");
+            // }else{
+            //     playerState = "Fox"; //ServerRpc로 바꿔야함
+            //     Set_playerStateSyncServerRpc("Fox");
                 
-            }
+            // }
             // playerState = "Tiger";  
             // Set_playerStateSyncServerRpc("Tiger");
-            // playerState = "Fox";  
-            // Set_playerStateSyncServerRpc("Fox");
+            playerState = "Fox";  
+            Set_playerStateSyncServerRpc("Fox");
         }
 
         // if(string.IsNullOrEmpty(playerState))
@@ -203,16 +206,16 @@ public class PlayerMovement : NetworkBehaviour
         {
             toggleCameraRotation = false; // �ѷ����� ��Ȱ��ȭ
         }
-        // if (Input.GetKey(KeyCode.LeftShift))
-        // {
-        //     run = true;
-        //     _animator.SetBool("isRun", true);
-        // }
-        // else
-        // {
-        //     run = false;
-        //     _animator.SetBool("isRun", false);
-        // }
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            run = true;
+            _animator.SetBool("isRun", true);
+        }
+        else
+        {
+            run = false;
+            _animator.SetBool("isRun", false);
+        }
 
         isGrounded = _controller.isGrounded;
 
@@ -459,20 +462,47 @@ public class PlayerMovement : NetworkBehaviour
     }
 
     //이미호로 바뀌는 함수
-private void ChangeModel()
-{
-    if (PlayerNetworkStats.Instance.BeadCount >= 2 && !isAwaken.Value && IsOwner)
+
+    private void ChangeModel()
     {
-        Set_isAwakenServerRpc(true);
-        Set_isAwakenClientRpc(true);
-        
-        GetComponent<AnimalTransform>().ChangeModelToSecFox();
-        ChangeAllPlayerModelToSecFoxServerRpc();
-        
-        Debug.Log("이미호로 변신");
-        ActivateFarthestDogHoleServerRpc();
+        if (PlayerNetworkStats.Instance.BeadCount >= 2 && !isAwaken.Value && IsOwner)
+        {
+            Set_isAwakenServerRpc(true);
+            Set_isAwakenClientRpc(true);
+
+            GetComponent<AnimalTransform>().ChangeModelToSecFox();
+            ChangeAllPlayerModelToSecFoxServerRpc();
+
+            Debug.Log("이미호로 변신");
+
+            // 이미호로 변신 시 모든 빛 끄고, Spot Light만 켜기
+            ToggleLights(false); // 모든 빛을 끔
+            ActivatePlayerSpotLight(true); // Spot Light 켜기
+
+            // 이미호로 변신 시 스카이박스 변경
+            ChangeSkybox();
+
+            SetPlayerLightActiveServerRpc(true); // 서버에서 모든 클라이언트로 조명 동기화
+            
+            ActivateFarthestDogHoleServerRpc();
+        }
     }
-}
+
+    private void ChangeSkybox()
+    {
+        // 스카이박스를 변경합니다.
+        if (newSkyboxMaterial != null)
+        {
+            RenderSettings.skybox = newSkyboxMaterial;
+            // 스카이박스의 변경 사항을 즉시 적용합니다.
+            DynamicGI.UpdateEnvironment();
+        }
+        else
+        {
+            Debug.LogWarning("새 스카이박스 Material이 할당되지 않았습니다.");
+        }
+    }
+
 
     //생명의 샘에 닿으면 모습을 바꿈
     void OnTriggerEnter(Collider other)
@@ -480,6 +510,7 @@ private void ChangeModel()
         if (other.gameObject.name == "Lake")
         {
             ChangeModel();
+            ToggleLights(true);
         }
 
         if (other.gameObject.name == "Girl" && playerState == "Fox" && isAwaken.Value && IsOwner)
@@ -488,8 +519,43 @@ private void ChangeModel()
             EndGame(); 
         }
     }
+
+
+    private void ToggleLights(bool activatePlayerLight)
+    {
+        Light[] allLights = FindObjectsOfType<Light>();
+
+        foreach (Light light in allLights)
+        {
+            // 플레이어의 Spot Light만 켜고 나머지 모든 빛은 꺼짐
+            bool isPlayerSpotLight = light.gameObject == spotLight;
+            light.enabled = isPlayerSpotLight && activatePlayerLight;
+        }
+
+        SyncLightStateClientRpc(activatePlayerLight);
+    }
+
+    private void ActivatePlayerSpotLight(bool isActive)
+    {
+        if (spotLight != null)
+        {
+            spotLight.SetActive(isActive);
+        }
+    }
+
+    [ClientRpc]
+    private void SyncLightStateClientRpc(bool activatePlayerLight)
+    {
+        ToggleLights(activatePlayerLight);
+    }
+
     [ServerRpc]
-private void ActivateFarthestDogHoleServerRpc()
+    private void SetPlayerLightActiveServerRpc(bool isActive)
+    {
+        SyncLightStateClientRpc(isActive);
+    }
+    [ServerRpc]
+    private void ActivateFarthestDogHoleServerRpc()
 {
     if (!IsServer) return;
 
@@ -503,7 +569,6 @@ private void ActivateFarthestDogHoleServerRpc()
             break;
         }
     }
-
     DogHole farthestHole = null;
     float maxDistance = float.MinValue;
 
