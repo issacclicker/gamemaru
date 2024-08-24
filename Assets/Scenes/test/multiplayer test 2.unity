@@ -1391,6 +1391,7 @@ MonoBehaviour:
   LobbyUI:
   - {fileID: 1135650547}
   - {fileID: 1828863466}
+  - {fileID: 165996604}
   Tiger_Client_ID: 0
 --- !u!114 &449277989
 MonoBehaviour:
