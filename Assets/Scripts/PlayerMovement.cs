@@ -463,97 +463,94 @@ public class PlayerMovement : NetworkBehaviour
 
     //이미호로 바뀌는 함수
 
-    private void ChangeModel()
+private void ChangeModel()
+{
+    if (PlayerNetworkStats.Instance.BeadCount >= 2 && !isAwaken.Value && IsOwner)
     {
-        if (PlayerNetworkStats.Instance.BeadCount >= 2 && !isAwaken.Value && IsOwner)
-        {
-            Set_isAwakenServerRpc(true);
-            Set_isAwakenClientRpc(true);
+        Set_isAwakenServerRpc(true);
 
-            GetComponent<AnimalTransform>().ChangeModelToSecFox();
-            ChangeAllPlayerModelToSecFoxServerRpc();
+        GetComponent<AnimalTransform>().ChangeModelToSecFox();
+        ChangeAllPlayerModelToSecFoxServerRpc();
 
-            Debug.Log("이미호로 변신");
+        Debug.Log("이미호로 변신");
 
-            // 이미호로 변신 시 모든 빛 끄고, Spot Light만 켜기
-            ToggleLights(false); // 모든 빛을 끔
-            ActivatePlayerSpotLight(true); // Spot Light 켜기
+        // 이미호로 변신 시 모든 빛 끄고, Spot Light만 켜기
+        ToggleLights(false); // 모든 빛을 끔
+        ActivatePlayerSpotLight(true); // Spot Light 켜기
 
-            // 이미호로 변신 시 스카이박스 변경
-            ChangeSkybox();
+        // 이미호로 변신 시 스카이박스 변경
+        ChangeSkybox();
 
-            SetPlayerLightActiveServerRpc(true); // 서버에서 모든 클라이언트로 조명 동기화
-            
-            ActivateFarthestDogHoleServerRpc();
-        }
+        SetPlayerLightActiveServerRpc(true); // 서버에서 모든 클라이언트로 조명 동기화
+        
+        ActivateFarthestDogHoleServerRpc();
+    }
+}
+
+private void ChangeSkybox()
+{
+    // 스카이박스를 변경합니다.
+    if (newSkyboxMaterial != null)
+    {
+        RenderSettings.skybox = newSkyboxMaterial;
+        // 스카이박스의 변경 사항을 즉시 적용합니다.
+        DynamicGI.UpdateEnvironment();
+    }
+    else
+    {
+        Debug.LogWarning("새 스카이박스 Material이 할당되지 않았습니다.");
+    }
+}
+
+// 생명의 샘에 닿으면 모습을 바꿈
+void OnTriggerEnter(Collider other)
+{
+    if (other.gameObject.name == "Lake")
+    {
+        ChangeModel();
+        // ToggleLights를 OnTriggerEnter에서 직접 호출하지 않습니다.
     }
 
-    private void ChangeSkybox()
+    if (other.gameObject.name == "Girl" && playerState == "Fox" && isAwaken.Value && IsOwner)
     {
-        // 스카이박스를 변경합니다.
-        if (newSkyboxMaterial != null)
-        {
-            RenderSettings.skybox = newSkyboxMaterial;
-            // 스카이박스의 변경 사항을 즉시 적용합니다.
-            DynamicGI.UpdateEnvironment();
-        }
-        else
-        {
-            Debug.LogWarning("새 스카이박스 Material이 할당되지 않았습니다.");
-        }
+        AddScoreServerRpc("Fox", 1); // 여우가 소녀한테 닿으면 점수 1점 얻음
+        EndGame(); 
     }
+}
 
+private void ToggleLights(bool activatePlayerLight)
+{
+    Light[] allLights = FindObjectsOfType<Light>();
 
-    //생명의 샘에 닿으면 모습을 바꿈
-    void OnTriggerEnter(Collider other)
+    foreach (Light light in allLights)
     {
-        if (other.gameObject.name == "Lake")
-        {
-            ChangeModel();
-            ToggleLights(true);
-        }
-
-        if (other.gameObject.name == "Girl" && playerState == "Fox" && isAwaken.Value && IsOwner)
-        {
-            AddScoreServerRpc("Fox", 1); // 여우가 소녀한테 닿으면 점수 1점 얻음
-            EndGame(); 
-        }
+        // 플레이어의 Spot Light만 켜고 나머지 모든 빛은 꺼짐
+        bool isPlayerSpotLight = light.gameObject == spotLight;
+        light.enabled = isPlayerSpotLight && activatePlayerLight;
     }
+}
 
-
-    private void ToggleLights(bool activatePlayerLight)
+private void ActivatePlayerSpotLight(bool isActive)
+{
+    if (spotLight != null)
     {
-        Light[] allLights = FindObjectsOfType<Light>();
-
-        foreach (Light light in allLights)
-        {
-            // 플레이어의 Spot Light만 켜고 나머지 모든 빛은 꺼짐
-            bool isPlayerSpotLight = light.gameObject == spotLight;
-            light.enabled = isPlayerSpotLight && activatePlayerLight;
-        }
-
-        SyncLightStateClientRpc(activatePlayerLight);
+        spotLight.SetActive(isActive);
     }
+}
 
-    private void ActivatePlayerSpotLight(bool isActive)
-    {
-        if (spotLight != null)
-        {
-            spotLight.SetActive(isActive);
-        }
-    }
+[ClientRpc]
+private void SyncLightStateClientRpc(bool activatePlayerLight)
+{
+    // 클라이언트에서는 ToggleLights를 호출하지 않습니다.
+    // 서버에서 모든 클라이언트에게 조명 상태를 동기화합니다.
+    ToggleLights(activatePlayerLight);
+}
 
-    [ClientRpc]
-    private void SyncLightStateClientRpc(bool activatePlayerLight)
-    {
-        ToggleLights(activatePlayerLight);
-    }
-
-    [ServerRpc]
-    private void SetPlayerLightActiveServerRpc(bool isActive)
-    {
-        SyncLightStateClientRpc(isActive);
-    }
+[ServerRpc]
+private void SetPlayerLightActiveServerRpc(bool isActive)
+{
+    SyncLightStateClientRpc(isActive);
+}
     [ServerRpc]
     private void ActivateFarthestDogHoleServerRpc()
 {
