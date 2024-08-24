@@ -18,6 +18,9 @@ public class UIManager : MonoBehaviour
     public int health_tiger; //호랑이 체력
     public GameObject Heart1, Heart2, Heart3;
 
+    public GameObject Tiger_Skills_UI;
+    public GameObject Fox_Skills_UI;
+
     //여우 UI 변수
     public int beadCount; //여의주 갯수
     public Text beadCountText; //여의주 갯수 텍스트
@@ -34,15 +37,21 @@ public class UIManager : MonoBehaviour
     }
 
     public void UIEnable(){ //호랑이와 여우 UI 구분
+        
         if(playerState=="Tiger")
         {
             UpdateHeartUI();
+            Tiger_Skills_UI.SetActive(true);
+            Fox_Skills_UI.SetActive(false);
         }
         else if(playerState=="Fox")
         {
             HealthBar.SetActive(true);
             UpdateBeadCountText();
+            Tiger_Skills_UI.SetActive(false);
+            Fox_Skills_UI.SetActive(true);
         }
+
     }
 
     

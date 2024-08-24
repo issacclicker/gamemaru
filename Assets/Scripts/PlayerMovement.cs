@@ -18,6 +18,7 @@ public class PlayerMovement : NetworkBehaviour
     GameObject MainCamera;
     CharacterController _controller;
 
+
     public float speed = 5f;
     public float runspeed = 8f;
     public float finalSpeed;
@@ -63,9 +64,9 @@ public class PlayerMovement : NetworkBehaviour
         
         //디버깅 용
         //if(IsHost){
-          //  playerState = "Tiger";
+           playerState = "Tiger";
         //}else{
-            playerState = "Fox";
+           // playerState = "Fox";
         //}
 
 
@@ -83,6 +84,9 @@ public class PlayerMovement : NetworkBehaviour
         UIManagerObject.GetComponent<UIManager>().playerState = playerState;
         _uiManager.UIEnable();
         _healthBar.IsGameStarted = true;
+
+
+        
 
     }
 
@@ -103,8 +107,10 @@ public class PlayerMovement : NetworkBehaviour
                 Interaction();
             }
             
+
+
         }
-        else if(playerState=="Tiger")
+        else if(playerState == "Tiger")
         {
             //Tiger Penalty(from Tiger_Controller.cs)
             if (isPenaltyActive)
