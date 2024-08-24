@@ -88,6 +88,7 @@ MonoBehaviour:
   smoothness: 10
   jumpHeight: 1.5
   gravity: -9.81
+  isGhost: 0
   playerState: 
   playerStateSync:
     m_InternalValue:
@@ -387,10 +388,10 @@ MonoBehaviour:
   - {fileID: 5247737906794823978, guid: 7b9b2b348afebfd4f835f349509dde17, type: 3}
   DogHole: {fileID: 6336124780047759324, guid: 52f55c72ba8e7b341a840cd0cedb2be1, type: 3}
   dogHoleTransForm:
-  - {fileID: 8104167876632763336, guid: 200120bfdb64f69438a29dacbf964e19, type: 3}
-  - {fileID: 7618300736350569894, guid: 060a2a1f37b2bda4b9b444957bebc414, type: 3}
-  - {fileID: 7562199417788405810, guid: 4c2fc8abfa1314b468841237d24ab7b3, type: 3}
-  - {fileID: 7882170162497974100, guid: 7ff313f02950b9949a6ffcef900af5b1, type: 3}
+  - {fileID: 2426177212952509125, guid: 771f1444eb5399344b4f29d84b85c967, type: 3}
+  - {fileID: 3484244974046545024, guid: cbd7be85ce1c3654e9d283cdc4915ecc, type: 3}
+  - {fileID: 8667358753672989614, guid: 032f12e4aa82a3349982986cae6deca3, type: 3}
+  - {fileID: 5995618919258248691, guid: 3911c501d866a0c469640d46da2a16ec, type: 3}
 --- !u!114 &8106065598953404180
 MonoBehaviour:
   m_ObjectHideFlags: 0
