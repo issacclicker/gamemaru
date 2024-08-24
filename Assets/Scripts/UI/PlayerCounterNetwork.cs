@@ -15,7 +15,7 @@ public class PlayerCounterNetwork : NetworkBehaviour
         _text = GetComponent<Text>();
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership=false)]
     public void ChangePlayerCountTextServerRpc()
     {
         playerCount.Value += 1;

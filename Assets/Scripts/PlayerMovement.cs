@@ -146,6 +146,7 @@ public class PlayerMovement : NetworkBehaviour
         if(IsOwner)
         {
             _uiManager.PlayerCounterText.GetComponent<PlayerCounterNetwork>().ChangePlayerCountTextServerRpc();
+            Debug.Log("시정요청");
         }
 
 

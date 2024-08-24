@@ -26,13 +26,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/test/multiplayer test.unity
     guid: a64fa478ebedae7458a25cb52db72342
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/test/multiplayer test 1.unity
     guid: a22311853a4ff434c81bfdbb15c5eefd
   - enabled: 0
     path: Assets/Scenes/test/WaitingRoomScene.unity
     guid: 8dfc68184eead7e4591f94be60bfd4e8
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/test/multiplayer test 2.unity
     guid: d0435a5e80a46214089dc64f5c0603fb
   m_configObjects: {}
