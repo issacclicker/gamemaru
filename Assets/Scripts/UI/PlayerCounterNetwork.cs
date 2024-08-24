@@ -8,6 +8,8 @@ public class PlayerCounterNetwork : NetworkBehaviour
 {
     private Text _text;
 
+    public GameObject _UIManager;
+
     private NetworkVariable<int> playerCount = new NetworkVariable<int>(0);
 
     int local_playerCount=0;
@@ -36,5 +38,10 @@ public class PlayerCounterNetwork : NetworkBehaviour
         }
         
         _text.text = $"PC : {local_playerCount}/5";
+
+        if(IsHost && playerCount.Value>1)
+        {
+            _UIManager.GetComponent<UIManager>().GameStartButton.SetActive(true);
+        }
     }
 }

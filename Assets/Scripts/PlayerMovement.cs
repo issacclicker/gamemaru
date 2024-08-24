@@ -102,19 +102,20 @@ public class PlayerMovement : NetworkBehaviour
         // //디버깅 용
         if(IsOwner)
         {
-            // if(IsHost){
-            //     playerState = "Tiger"; //ServerRpc로 바꿔야함
-            //     Set_playerStateSyncServerRpc("Tiger");
+            if(IsHost){
+                playerState = "Tiger"; //ServerRpc로 바꿔야함
+                Set_playerStateSyncServerRpc("Tiger");
                 
-            // }else{
-            //     playerState = "Fox"; //ServerRpc로 바꿔야함
-            //     Set_playerStateSyncServerRpc("Fox");
+            }else{
+                playerState = "Fox"; //ServerRpc로 바꿔야함
+                Set_playerStateSyncServerRpc("Fox");
+            }
                 
             // }
             // playerState = "Tiger";  
             // Set_playerStateSyncServerRpc("Tiger");
-            playerState = "Fox";                //기본은 여우로 하고 한 클라이언트만 호랑이로 바꾸기
-            Set_playerStateSyncServerRpc("Fox");
+            // playerState = "Fox";                //기본은 여우로 하고 한 클라이언트만 호랑이로 바꾸기
+            // Set_playerStateSyncServerRpc("Fox");
         }
 
         // if(string.IsNullOrEmpty(playerState))
@@ -162,7 +163,7 @@ public class PlayerMovement : NetworkBehaviour
     void Update()
     {
         // //For Network Owner
-        if(!IsOwner){
+        if(!IsOwner||!_uiManager.__StartGame__.GetComponent<StartGame>().IsGameStarted){
             return;
         }
 
@@ -583,7 +584,7 @@ private void ActivateDogHoleClientRpc(NetworkObjectReference holeRef)
     }
 
     [ServerRpc]
-    private void Set_playerStateSyncServerRpc(FixedString128Bytes value)
+    public void Set_playerStateSyncServerRpc(FixedString128Bytes value)
     {
         playerStateSync.Value = value;
     }

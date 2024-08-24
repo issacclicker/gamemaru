@@ -19,10 +19,12 @@ public class UIManager : MonoBehaviour
     public Text beadCountText; //여의주 갯수 텍스트
     public GameObject HealthBar; //체력바
 
-    public GameObject[] LobbyUIs;
-    public bool IsGameStarted=false; 
-
+    public GameObject[] LobbyUIs; //로비 UI
+    // public bool IsGameStarted=false; //게임 시작 변수
+    public GameObject GameStartButton; //게임 시작 버튼
     public GameObject PlayerCounterText; //연결된 플레이어 수 오브젝트
+
+    public GameObject __StartGame__; //게임 시작 클래스
 
     private void Awake()
     {
