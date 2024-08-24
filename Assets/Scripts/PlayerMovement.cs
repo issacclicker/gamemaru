@@ -459,20 +459,26 @@ public class PlayerMovement : NetworkBehaviour
     }
 
     //이미호로 바뀌는 함수
-private void ChangeModel()
-{
-    if (PlayerNetworkStats.Instance.BeadCount >= 2 && !isAwaken.Value && IsOwner)
+    private void ChangeModel()
     {
-        Set_isAwakenServerRpc(true);
-        Set_isAwakenClientRpc(true);
-        
-        GetComponent<AnimalTransform>().ChangeModelToSecFox();
-        ChangeAllPlayerModelToSecFoxServerRpc();
-        
-        Debug.Log("이미호로 변신");
-        ActivateFarthestDogHoleServerRpc();
+        if (PlayerNetworkStats.Instance.BeadCount >= 2 && !isAwaken.Value && IsOwner)
+        {
+            Set_isAwakenServerRpc(true);
+            Set_isAwakenClientRpc(true);
+
+            GetComponent<AnimalTransform>().ChangeModelToSecFox();
+            ChangeAllPlayerModelToSecFoxServerRpc();
+
+            Debug.Log("이미호로 변신");
+
+            // 이미호로 변신 시 조명 제어
+            ToggleLights(true); // 플레이어의 빛만 켜기
+            SetPlayerLightActiveServerRpc(true); // 서버에서 모든 클라이언트로 조명 동기화
+            
+            ActivateFarthestDogHoleServerRpc();
+        }
     }
-}
+
 
     //생명의 샘에 닿으면 모습을 바꿈
     void OnTriggerEnter(Collider other)
@@ -480,6 +486,7 @@ private void ChangeModel()
         if (other.gameObject.name == "Lake")
         {
             ChangeModel();
+            ToggleLights(true);
         }
 
         if (other.gameObject.name == "Girl" && playerState == "Fox" && isAwaken.Value && IsOwner)
@@ -488,8 +495,40 @@ private void ChangeModel()
             EndGame(); 
         }
     }
+
+    private void ToggleLights(bool activatePlayerLight)
+    {
+        Light[] allLights = FindObjectsOfType<Light>();
+
+        foreach (Light light in allLights)
+        {
+            bool isPlayerLight = light.gameObject == this.gameObject;
+            light.enabled = isPlayerLight && activatePlayerLight;
+        }
+
+        SyncLightStateClientRpc(activatePlayerLight);
+    }
+
+    [ClientRpc]
+    private void SyncLightStateClientRpc(bool activatePlayerLight)
+    {
+        Light[] allLights = FindObjectsOfType<Light>();
+
+        foreach (Light light in allLights)
+        {
+            bool isPlayerLight = light.gameObject == this.gameObject;
+            light.enabled = isPlayerLight && activatePlayerLight;
+        }
+    }
+
     [ServerRpc]
-private void ActivateFarthestDogHoleServerRpc()
+    private void SetPlayerLightActiveServerRpc(bool isActive)
+    {
+        SyncLightStateClientRpc(isActive);
+    }
+
+    [ServerRpc]
+    private void ActivateFarthestDogHoleServerRpc()
 {
     if (!IsServer) return;
 
@@ -503,7 +542,6 @@ private void ActivateFarthestDogHoleServerRpc()
             break;
         }
     }
-
     DogHole farthestHole = null;
     float maxDistance = float.MinValue;
 
