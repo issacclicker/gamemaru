@@ -10,6 +10,8 @@ public class PlayerCounterNetwork : NetworkBehaviour
 
     private NetworkVariable<int> playerCount = new NetworkVariable<int>(0);
 
+    int local_playerCount=0;
+
     void Start()
     {
         _text = GetComponent<Text>();
@@ -25,6 +27,14 @@ public class PlayerCounterNetwork : NetworkBehaviour
     [ClientRpc]
     public void ChangePlayerCountTextClientRpc()
     {
-        _text.text = $"PC : {playerCount.Value}/5";
+
+        
+        local_playerCount = playerCount.Value+1;
+        if(IsHost)
+        {
+            local_playerCount--;
+        }
+        
+        _text.text = $"PC : {local_playerCount}/5";
     }
 }
