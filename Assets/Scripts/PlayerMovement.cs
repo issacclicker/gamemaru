@@ -111,10 +111,10 @@ public class PlayerMovement : NetworkBehaviour
             //     Set_playerStateSyncServerRpc("Fox");
                 
             // }
-            // playerState = "Tiger";  
-            // Set_playerStateSyncServerRpc("Tiger");
-            playerState = "Fox";  
-            Set_playerStateSyncServerRpc("Fox");
+            playerState = "Tiger";  
+            Set_playerStateSyncServerRpc("Tiger");
+            // playerState = "Fox";  
+            // Set_playerStateSyncServerRpc("Fox");
         }
 
         // if(string.IsNullOrEmpty(playerState))
@@ -138,7 +138,9 @@ public class PlayerMovement : NetworkBehaviour
         _healthBar = UIManagerObject.GetComponent<HealthBar>(); // HealthBar 스크립트 가져오기
 
         UIManagerObject.GetComponent<UIManager>().playerState = playerState;
+        Debug.Log($"Player State: {playerState}"); 
         _uiManager.UIEnable();
+        Debug.Log("Hearts should be visible for Tiger state."); 
         _healthBar.IsGameStarted = true;
 
         scoreManager = GameObject.FindObjectOfType<ScoreManager>();

@@ -37,6 +37,7 @@ public class UIManager : MonoBehaviour
     }
 
     public void UIEnable(){ //호랑이와 여우 UI 구분
+    Debug.Log("Hearts should be visible for Tiger state."); 
         if(playerState=="Tiger")
         {
             UpdateHeartUI();
@@ -51,13 +52,21 @@ public class UIManager : MonoBehaviour
     
 
     //하트 UI 표시(호랑이)
-    public void UpdateHeartUI()
+public void UpdateHeartUI()
+{
+
+    if (Heart1 == null || Heart2 == null || Heart3 == null)
     {
-        Heart1.SetActive(health_tiger >= 1);
-        Heart2.SetActive(health_tiger >= 2);
-        Heart3.SetActive(health_tiger >= 3);
+        Debug.LogError("Heart UI elements are not assigned in the inspector.");
+        return;
     }
 
+    Heart1.SetActive(health_tiger >= 1);
+
+    Heart2.SetActive(health_tiger >= 2);
+
+    Heart3.SetActive(health_tiger >= 3);
+}
     //여의주 갯수 표시(여우)
     public void UpdateBeadCountText(int value)
     {
