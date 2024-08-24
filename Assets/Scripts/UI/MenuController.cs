@@ -11,7 +11,6 @@ public class MenuController : MonoBehaviour
     public GameObject RulesPanel4;
     public GameObject RulesPanel5;
     public GameObject RulesPanel6;
-    public GameObject RulesPanel7;
     public GameObject mainSettingsPanel;
     public GameObject VolumePanel;
     public GameObject KeyPanel;
@@ -28,7 +27,6 @@ public class MenuController : MonoBehaviour
         RulesPanel4.SetActive(false);
         RulesPanel5.SetActive(false);
         RulesPanel6.SetActive(false);
-        RulesPanel7.SetActive(false);
 
         KeyPanel.SetActive(false);
     }
@@ -47,7 +45,6 @@ public class MenuController : MonoBehaviour
         RulesPanel4.SetActive(false);
         RulesPanel5.SetActive(false);
         RulesPanel6.SetActive(false);
-        RulesPanel7.SetActive(false);
 
         KeyPanel.SetActive(false);
     }
@@ -62,7 +59,6 @@ public class MenuController : MonoBehaviour
         RulesPanel4.SetActive(false);
         RulesPanel5.SetActive(false);
         RulesPanel6.SetActive(false);
-        RulesPanel7.SetActive(false);
 
         VolumePanel.SetActive(false);
         
@@ -79,7 +75,6 @@ public class MenuController : MonoBehaviour
         RulesPanel4.SetActive(false);
         RulesPanel5.SetActive(false);
         RulesPanel6.SetActive(false);
-        RulesPanel7.SetActive(false);
 
         VolumePanel.SetActive(false);
         
@@ -96,7 +91,6 @@ public class MenuController : MonoBehaviour
         RulesPanel4.SetActive(false);
         RulesPanel5.SetActive(false);
         RulesPanel6.SetActive(false);
-        RulesPanel7.SetActive(false);
 
         VolumePanel.SetActive(false);
         
@@ -113,7 +107,6 @@ public class MenuController : MonoBehaviour
         RulesPanel4.SetActive(false);
         RulesPanel5.SetActive(false);
         RulesPanel6.SetActive(false);
-        RulesPanel7.SetActive(false);
 
         VolumePanel.SetActive(false);
 
@@ -130,7 +123,6 @@ public class MenuController : MonoBehaviour
         RulesPanel4.SetActive(false);
         RulesPanel5.SetActive(false);
         RulesPanel6.SetActive(false);
-        RulesPanel7.SetActive(false);
 
         VolumePanel.SetActive(false);
 
@@ -146,7 +138,6 @@ public class MenuController : MonoBehaviour
         RulesPanel4.SetActive(false);
         RulesPanel5.SetActive(false);
         RulesPanel6.SetActive(false);
-        RulesPanel7.SetActive(false);
 
         VolumePanel.SetActive(false);
 
@@ -162,7 +153,6 @@ public class MenuController : MonoBehaviour
         RulesPanel4.SetActive(true);
         RulesPanel5.SetActive(false);
         RulesPanel6.SetActive(false);
-        RulesPanel7.SetActive(false);
 
         VolumePanel.SetActive(false);
 
@@ -178,7 +168,6 @@ public class MenuController : MonoBehaviour
         RulesPanel4.SetActive(false);
         RulesPanel5.SetActive(false);
         RulesPanel6.SetActive(false);
-        RulesPanel7.SetActive(false);
 
         VolumePanel.SetActive(false);
 
@@ -194,7 +183,6 @@ public class MenuController : MonoBehaviour
         RulesPanel4.SetActive(false);
         RulesPanel5.SetActive(true);
         RulesPanel6.SetActive(false);
-        RulesPanel7.SetActive(false);
 
         VolumePanel.SetActive(false);
 
@@ -210,7 +198,6 @@ public class MenuController : MonoBehaviour
         RulesPanel4.SetActive(false);
         RulesPanel5.SetActive(false);
         RulesPanel6.SetActive(false);
-        RulesPanel7.SetActive(false);
 
         VolumePanel.SetActive(false);
 
@@ -226,7 +213,6 @@ public class MenuController : MonoBehaviour
         RulesPanel4.SetActive(false);
         RulesPanel5.SetActive(false);
         RulesPanel6.SetActive(true);
-        RulesPanel7.SetActive(false);
 
         VolumePanel.SetActive(false);
 
@@ -242,29 +228,12 @@ public class MenuController : MonoBehaviour
         RulesPanel4.SetActive(true);
         RulesPanel5.SetActive(false);
         RulesPanel6.SetActive(false);
-        RulesPanel7.SetActive(false);
 
         VolumePanel.SetActive(false);
 
         KeyPanel.SetActive(false);
     }
-    public void OnClick6_7nextbutton()
-    {
-        mainSettingsPanel.SetActive(false);
-
-        RulesPanel.SetActive(false);
-        RulesPanel2.SetActive(false);
-        RulesPanel3.SetActive(false);
-        RulesPanel4.SetActive(false);
-        RulesPanel5.SetActive(false);
-        RulesPanel6.SetActive(false);
-        RulesPanel7.SetActive(true);
-
-        VolumePanel.SetActive(false);
-
-        KeyPanel.SetActive(false);
-    }
-    public void OnClick6_7priorbutton()
+    public void OnClick6priorbutton()
     {
         mainSettingsPanel.SetActive(false);
 
@@ -274,23 +243,6 @@ public class MenuController : MonoBehaviour
         RulesPanel4.SetActive(false);
         RulesPanel5.SetActive(true);
         RulesPanel6.SetActive(false);
-        RulesPanel7.SetActive(false);
-
-        VolumePanel.SetActive(false);
-
-        KeyPanel.SetActive(false);
-    }
-    public void OnClick7priorbutton()
-    {
-        mainSettingsPanel.SetActive(false);
-
-        RulesPanel.SetActive(false);
-        RulesPanel2.SetActive(false);
-        RulesPanel3.SetActive(false);
-        RulesPanel4.SetActive(false);
-        RulesPanel5.SetActive(false);
-        RulesPanel6.SetActive(true);
-        RulesPanel7.SetActive(false);
 
         VolumePanel.SetActive(false);
 
