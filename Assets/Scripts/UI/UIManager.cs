@@ -20,6 +20,9 @@ public class UIManager : MonoBehaviour
 
     public GameObject Tiger_Skills_UI;
     public GameObject Fox_Skills_UI;
+    public GameObject isAwaken_Skills_UI;
+
+    public bool isAwaken = false; //이미호 인지 아닌지
 
     //여우 UI 변수
     public int beadCount; //여의주 갯수
@@ -50,6 +53,12 @@ public class UIManager : MonoBehaviour
             UpdateBeadCountText();
             Tiger_Skills_UI.SetActive(false);
             Fox_Skills_UI.SetActive(true);
+        }
+        else if (isAwaken = true)
+        {  
+            Tiger_Skills_UI.SetActive(false);
+            Fox_Skills_UI.SetActive(false);
+            isAwaken_Skills_UI.SetActive(true);
         }
 
     }

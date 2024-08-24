@@ -53,7 +53,7 @@ public class PlayerMovement : NetworkBehaviour
     public GameObject originalModel;
     public bool isAwaken = false; //이미호 인지 아닌지
 
-
+   
 
     // // Start is called before the first frame update
     void Start()
@@ -64,9 +64,9 @@ public class PlayerMovement : NetworkBehaviour
         
         //디버깅 용
         //if(IsHost){
-           playerState = "Tiger";
+           //playerState = "Tiger";
         //}else{
-           // playerState = "Fox";
+           playerState = "Fox";
         //}
 
 
@@ -85,7 +85,7 @@ public class PlayerMovement : NetworkBehaviour
         _uiManager.UIEnable();
         _healthBar.IsGameStarted = true;
 
-
+       
         
 
     }
