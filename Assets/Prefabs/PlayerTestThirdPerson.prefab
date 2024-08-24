@@ -611,7 +611,7 @@ MonoBehaviour:
   - {fileID: 5908685864431512274, guid: ffc430f9f1eb2f24eb41ef6e11963738, type: 3}
   - {fileID: 4990482849642214827, guid: afddc1ad77b5c214a85e1d14fe6b1b80, type: 3}
   - {fileID: 1380563811241207707, guid: c1c64c1129736f34b90d58877f96ab99, type: 3}
-  animalModel_Sec_Fox: {fileID: 6418129869022611863, guid: fe080cfa1d00e5d4eae6394f4246e525, type: 3}
+  animalModel_Sec_Fox: {fileID: 1121467957057490412, guid: 283a94320766a3245b3a7108267fd596, type: 3}
   animalModelsNames:
   - Capybara(Clone)
   - Cat(Clone)
