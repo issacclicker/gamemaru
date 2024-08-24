@@ -370,7 +370,7 @@ public class PlayerMovement : NetworkBehaviour
 
     IEnumerator PenaltyTimer()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(10);
         RemovePenalty();
     }
 
