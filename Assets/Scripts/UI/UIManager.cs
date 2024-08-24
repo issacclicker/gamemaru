@@ -20,7 +20,9 @@ public class UIManager : MonoBehaviour
     public GameObject HealthBar; //체력바
 
     public GameObject[] LobbyUIs;
-    public bool IsGameStarted=false;
+    public bool IsGameStarted=false; 
+
+    public GameObject PlayerCounterText; //연결된 플레이어 수 오브젝트
 
     private void Awake()
     {
@@ -62,5 +64,13 @@ public class UIManager : MonoBehaviour
     public void UpdateBeadCountText(int value)
     {
         beadCountText.text = "Number: " + value;
+    }
+
+    public void OnJoinLobby_ActiveUI()
+    {
+        foreach(var Object in LobbyUIs)
+        {
+            Object.SetActive(true);
+        }
     }
 }

@@ -113,7 +113,7 @@ public class PlayerMovement : NetworkBehaviour
             // }
             // playerState = "Tiger";  
             // Set_playerStateSyncServerRpc("Tiger");
-            playerState = "Fox";  
+            playerState = "Fox";                //기본은 여우로 하고 한 클라이언트만 호랑이로 바꾸기
             Set_playerStateSyncServerRpc("Fox");
         }
 
@@ -140,6 +140,14 @@ public class PlayerMovement : NetworkBehaviour
         UIManagerObject.GetComponent<UIManager>().playerState = playerState;
         _uiManager.UIEnable();
         _healthBar.IsGameStarted = true;
+
+
+        //UI Manager
+        if(IsOwner)
+        {
+            _uiManager.PlayerCounterText.GetComponent<PlayerCounterNetwork>().ChangePlayerCountTextServerRpc();
+        }
+
 
         scoreManager = GameObject.FindObjectOfType<ScoreManager>();
 
