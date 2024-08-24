@@ -62,11 +62,11 @@ public class PlayerMovement : NetworkBehaviour
         _controller = this.GetComponent<CharacterController>();
         
         //디버깅 용
-        if(IsHost){
-            playerState = "Tiger";
-        }else{
+        //if(IsHost){
+          //  playerState = "Tiger";
+        //}else{
             playerState = "Fox";
-        }
+        //}
 
 
         if(!IsOwner){

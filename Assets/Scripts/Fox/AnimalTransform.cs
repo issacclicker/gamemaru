@@ -17,6 +17,7 @@ public class AnimalTransform : NetworkBehaviour
     // private GameObject currentModel; // 현재 활성화된 모델
     // private GameObject originalModel; // 원래 사람 모델
     private bool isAnimal = false; // 현재 모델이 동물인지 여부
+    public bool SkillCoolingTime_fox;
 
     GameObject UIManagerObject; //UI매니저
     HealthBar _healthBar; //체력바
@@ -49,7 +50,7 @@ public class AnimalTransform : NetworkBehaviour
             RevertToOriginalModel();
         }
         // X키를 누르면 모델 변경 - 추후 키는 변경
-        if (Input.GetKeyDown(KeyCode.X) && !_playerMovement.isAwaken && IsOwner)
+        if (Input.GetKeyDown(KeyCode.X) && !_playerMovement.isAwaken && IsOwner && !SkillCoolingTime_fox)
         {
             ChangeModel();
         }
@@ -112,6 +113,24 @@ public class AnimalTransform : NetworkBehaviour
                 Debug.Log("체력 부족 동물 모델로 변경 불가");
             }
         }
+
+        SkillCoolTime();
+
+    }
+    void SkillCoolTime()
+    {
+        SkillCoolingTime_fox = true;
+        StartCoroutine(SkillCoolingTime2());
+    }
+    IEnumerator SkillCoolingTime2()
+    {
+        yield return new WaitForSeconds(45f);
+        SkillCoolTimeEnd();
+    }
+
+    void SkillCoolTimeEnd()
+    {
+        SkillCoolingTime_fox = false;
     }
 
     // 일정 시간이 경과했을 때 원래 모델로 돌아가기
