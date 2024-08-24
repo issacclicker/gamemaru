@@ -103,7 +103,6 @@ public class PlayerMovement : NetworkBehaviour
                 Interaction();
             }
             
-            
         }
         else if(playerState=="Tiger")
         {
