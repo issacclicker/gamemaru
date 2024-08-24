@@ -101,19 +101,19 @@ public class PlayerMovement : NetworkBehaviour
         // //디버깅 용
         if(IsOwner)
         {
-            if(IsHost){
-                playerState = "Tiger"; //ServerRpc로 바꿔야함
-                Set_playerStateSyncServerRpc("Tiger");
+            // if(IsHost){
+            //     playerState = "Tiger"; //ServerRpc로 바꿔야함
+            //     Set_playerStateSyncServerRpc("Tiger");
                 
-            }else{
-                playerState = "Fox"; //ServerRpc로 바꿔야함
-                Set_playerStateSyncServerRpc("Fox");
+            // }else{
+            //     playerState = "Fox"; //ServerRpc로 바꿔야함
+            //     Set_playerStateSyncServerRpc("Fox");
                 
-            }
+            // }
             // playerState = "Tiger";  
             // Set_playerStateSyncServerRpc("Tiger");
-            // playerState = "Fox";  
-            // Set_playerStateSyncServerRpc("Fox");
+            playerState = "Fox";  
+            Set_playerStateSyncServerRpc("Fox");
         }
 
         // if(string.IsNullOrEmpty(playerState))
@@ -203,16 +203,16 @@ public class PlayerMovement : NetworkBehaviour
         {
             toggleCameraRotation = false; // �ѷ����� ��Ȱ��ȭ
         }
-        // if (Input.GetKey(KeyCode.LeftShift))
-        // {
-        //     run = true;
-        //     _animator.SetBool("isRun", true);
-        // }
-        // else
-        // {
-        //     run = false;
-        //     _animator.SetBool("isRun", false);
-        // }
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            run = true;
+            _animator.SetBool("isRun", true);
+        }
+        else
+        {
+            run = false;
+            _animator.SetBool("isRun", false);
+        }
 
         isGrounded = _controller.isGrounded;
 
