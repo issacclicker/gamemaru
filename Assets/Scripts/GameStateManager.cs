@@ -2,12 +2,15 @@ using UnityEngine;
 using Unity.Netcode;
 using Unity.Collections;
 using UnityEngine.SceneManagement;
+using Unity.Services.Lobbies;
+using Unity.Services.Lobbies.Models;
 //역할 할당 및 scene 전환
 
 public class GameStateManager : NetworkBehaviour
 {
     public static GameStateManager Instance;
 
+    public Lobby _joinedLobby;
     public NetworkVariable<FixedString128Bytes> playerRole = new NetworkVariable<FixedString128Bytes>();
 
     private void Awake()
@@ -35,8 +38,14 @@ public class GameStateManager : NetworkBehaviour
 
     public void AssignRolesAndStartGame()
     {
+
         if (IsHost)
         {
+            int maxPlayers = _joinedLobby.Players.Count;
+            int randint_tiger_player;
+
+
+
             foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
             {
                 var playerObject = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(client.ClientId);
@@ -49,7 +58,7 @@ public class GameStateManager : NetworkBehaviour
                 }
             }
 
-            NetworkManager.Singleton.SceneManager.LoadScene("gamescene", LoadSceneMode.Single);
+            // NetworkManager.Singleton.SceneManager.LoadScene("gamescene", LoadSceneMode.Single);
         }
     }
 

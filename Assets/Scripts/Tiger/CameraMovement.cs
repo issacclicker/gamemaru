@@ -53,6 +53,9 @@ public class NewBehaviourScript : NetworkBehaviour
         rotX = Mathf.Clamp(rotX, -clampAngle, clampAngle);
         Quaternion rot = Quaternion.Euler(rotX, rotY, 0);
         transform.rotation = rot;
+
+    
+
     }
     void LateUpdate()
     {

@@ -31,6 +31,9 @@ public class TestRelay : MonoBehaviour
     [SerializeField] private GameObject lobbyListItemPrefab;
     [SerializeField] private Transform lobbyListContent;
 
+
+    public GameObject GameStateManager;
+
     private async void Start()
     {
         await UnityServices.InitializeAsync();
@@ -77,6 +80,8 @@ public class TestRelay : MonoBehaviour
         try
         {
             joinedLobby = await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
+
+            GameStateManager.GetComponent<GameStateManager>()._joinedLobby = joinedLobby;
 
             if (joinedLobby.Data.ContainsKey("GameStarted") && joinedLobby.Data["GameStarted"].Value == "true")
             {
@@ -396,6 +401,7 @@ public class TestRelay : MonoBehaviour
 
 public async void StartGame()
 {
+
     if (hostLobby != null)
     {
         try
@@ -408,9 +414,9 @@ public async void StartGame()
                 }
             });
 
-            if (GameStateManager.Instance != null)
+            if (GameStateManager.GetComponent<GameStateManager>() != null)
             {
-                GameStateManager.Instance.AssignRolesAndStartGame();
+                GameStateManager.GetComponent<GameStateManager>().AssignRolesAndStartGame();
             }
         }
         catch (LobbyServiceException e)

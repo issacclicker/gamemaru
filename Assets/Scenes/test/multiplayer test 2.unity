@@ -1227,6 +1227,8 @@ MonoBehaviour:
   - {fileID: 1214578292}
   - {fileID: 2055221734}
   - {fileID: 855638335}
+  UI_waiting_room:
+  - {fileID: 1135650547}
   TestCodeUI: {fileID: 1847575896}
   inputField: {fileID: 855638335}
 --- !u!1 &427067309
