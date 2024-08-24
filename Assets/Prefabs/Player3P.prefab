@@ -43,7 +43,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4795780231728524715}
-  - {fileID: 5577641850140516171}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4915839007917446361
@@ -228,6 +227,8 @@ MonoBehaviour:
         byte0123: 0
         byte0124: 0
         byte0125: 0
+  newSkyboxMaterial: {fileID: 2100000, guid: c6bc817a0ce71c84ca13ac5636da179b, type: 2}
+  spotLight: {fileID: 3562387937066348922}
   nearObject: {fileID: 0}
   animalModel: {fileID: 919132149155446097, guid: 27520bf6009bb064d8744d18ff6ee12e, type: 3}
   originalModel: {fileID: 0}
@@ -503,12 +504,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3562387937066348922}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 5.63, z: 0}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 88.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2175271483563459796}
+  m_Father: {fileID: 4795780231728524715}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!108 &4151629482550417772
 Light:
@@ -522,8 +523,8 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 20
+  m_Intensity: 1.5
+  m_Range: 200
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -725,7 +726,10 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 3253949356774894863, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
     - {fileID: 3253949356774894861, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3253949356774669807, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 5577641850140516171}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
 --- !u!4 &1345363014204312307 stripped
