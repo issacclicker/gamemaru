@@ -111,8 +111,8 @@ public class PlayerMovement : NetworkBehaviour
             //     Set_playerStateSyncServerRpc("Fox");
                 
             // }
-            playerState = "Fox";  
-            Set_playerStateSyncServerRpc("Fox");
+            playerState = "Tiger";  
+            Set_playerStateSyncServerRpc("Tiger");
         }
 
         // if(string.IsNullOrEmpty(playerState))

@@ -6,11 +6,13 @@ public class Tiger_animation : MonoBehaviour
 {
     private PlayerMovement playerMovement;
     private Animator _animator;
+    private AudioSource audioSource;
 
     void Start()
     {
         playerMovement = FindObjectOfType<PlayerMovement>();
         _animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -63,6 +65,11 @@ public class Tiger_animation : MonoBehaviour
     {
         Debug.Log("Roar animation triggered");
         _animator.Play("Roar");
+
+        if (audioSource != null)
+        {
+            audioSource.Play();
+        }
     }
 
     public void StopRoarAnimation()
