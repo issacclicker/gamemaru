@@ -293,18 +293,23 @@ public class PlayerMovement : NetworkBehaviour
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             _animator.SetTrigger("Jump");
 
-            //player_animation
-            player_animation playerAnimation = FindObjectOfType<player_animation>();
-            if (playerAnimation != null)
+            if(playerState == "Fox")
             {
-                playerAnimation.PlayJumpAnimation();
+                //player_animation
+                player_animation playerAnimation = FindObjectOfType<player_animation>();
+                if (playerAnimation != null)
+                {
+                    playerAnimation.PlayJumpAnimation();
+                }
             }
-
-            //Tiger_animation
-            Tiger_animation tigerAnimation = FindObjectOfType<Tiger_animation>();
-            if (tigerAnimation != null)
+            else if(playerState == "Tiger")
             {
-                tigerAnimation.PlayJumpAnimation();
+                //Tiger_animation
+                Tiger_animation tigerAnimation = FindObjectOfType<Tiger_animation>();
+                if (tigerAnimation != null)
+                {
+                    tigerAnimation.PlayJumpAnimation();
+                }
             }
         }
     }
