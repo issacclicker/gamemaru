@@ -41,7 +41,6 @@ public class AnimalTransform : NetworkBehaviour
     HealthBar _healthBar; //체력바
     PlayerMovement _playerMovement;
 
-    int p_modelNum ; // 플레이어 모델 번호
 
     private void Start()
     {
