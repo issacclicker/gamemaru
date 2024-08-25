@@ -41,6 +41,8 @@ public class AnimalTransform : NetworkBehaviour
     HealthBar _healthBar; //체력바
     PlayerMovement _playerMovement;
 
+    int p_modelNum ; // 플레이어 모델 번호
+
     private void Start()
     {
         if(!IsOwner)
@@ -59,12 +61,10 @@ public class AnimalTransform : NetworkBehaviour
         if(_playerMovement.playerStateSync.Value=="Fox")
         {
             PlayerNewModelSpawnServerRpc(this.gameObject,0);
-             p_modelNum = 0;
         }
         else if(_playerMovement.playerStateSync.Value=="Tiger")
         {
             PlayerNewModelSpawnServerRpc(this.gameObject,1);
-             p_modelNum = 1;
         }
         else
         {
@@ -137,7 +137,6 @@ public class AnimalTransform : NetworkBehaviour
                 // 2. 양
                 int randomIndex = Random.Range(0, animalModelsForNetworks.Length);
                 randomIndex_temp = randomIndex;
-
                 NewModelSpawnServerRpc(this.gameObject,randomIndex);
                 PlayerNewModelDespawnServerRpc(this.gameObject,0);
 
