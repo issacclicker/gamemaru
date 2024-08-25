@@ -244,12 +244,7 @@ public class AnimalTransform : NetworkBehaviour
     {
         if(player.TryGet(out var p))
         {
-            if (_playerMovement.currentModel.Value.TryGet(out var exist) && exist.gameObject != _playerMovement.originalModel)
-            {
-                exist.Despawn();
-                _playerMovement.currentModel.Value = default;
-            }
-
+            
             GameObject newMd = Instantiate(animalModelsForNetworks[num]);
 
             var networkObject = newMd.GetComponent<NetworkObject>();
