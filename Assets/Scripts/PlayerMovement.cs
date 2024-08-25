@@ -45,8 +45,6 @@ public class PlayerMovement : NetworkBehaviour
 
     [SerializeField] public NetworkVariable<FixedString128Bytes> playerStateSync = new NetworkVariable<FixedString128Bytes>(); //네트워크 동기화용
 
-    [SerializeField] private Material newSkyboxMaterial;//하늘
-    [SerializeField] private GameObject spotLight;//빛
     //Tiger features(from Tiger_Controller.cs)
     private int huntFailures = 0;
     private bool isPenaltyActive = false;
@@ -503,58 +501,15 @@ private void ChangeModel()
         Set_isAwakenClientRpc(true);
 
         _uiManager.isAwaken = true;
-
+        
         GetComponent<AnimalTransform>().ChangeModelToSecFox();
         ChangeAllPlayerModelToSecFoxServerRpc();
-
-        Debug.Log("Transformed to Fox");
-        ToggleLights(false); 
-        ActivatePlayerSpotLight(true); 
-        ChangeSkybox(); 
-
-        SetPlayerLightActiveServerRpc(true); 
+        
+        Debug.Log("이미호로 변신");
         ActivateFarthestDogHoleServerRpc();
     }
 }
-private void ChangeSkybox()
-{
-    if (IsServer)
-    {
-        ChangeSkyboxOnServerRpc();
-    }
-    else
-    {
-        ChangeSkyboxOnServerRpc();
-    }
-}
 
-[ServerRpc]
-private void ChangeSkyboxOnServerRpc()
-{
-    if (newSkyboxMaterial != null)
-    {
-        RenderSettings.skybox = newSkyboxMaterial;
-        DynamicGI.UpdateEnvironment();
-        ChangeSkyboxClientRpc();
-    }
-    else
-    {
-        Debug.LogWarning("skybox 없음");
-    }
-}
-[ClientRpc]
-private void ChangeSkyboxClientRpc()
-{
-    if (newSkyboxMaterial != null)
-    {
-        RenderSettings.skybox = newSkyboxMaterial;
-        DynamicGI.UpdateEnvironment();
-    }
-    else
-    {
-        Debug.LogWarning("skybox 없음");
-    }
-}
     //생명의 샘에 닿으면 모습을 바꿈
     void OnTriggerEnter(Collider other)
     {
@@ -569,38 +524,7 @@ private void ChangeSkyboxClientRpc()
             EndGame(); 
         }
     }
-private void ToggleLights(bool activatePlayerLight)
-{
-    Light[] allLights = FindObjectsOfType<Light>();
-
-    foreach (Light light in allLights)
-    {
-        // 플레이어의 Spot Light만 켜고 나머지 모든 빛은 꺼짐
-        bool isPlayerSpotLight = light.gameObject == spotLight;
-        light.enabled = isPlayerSpotLight && activatePlayerLight;
-    }
-}
-
-private void ActivatePlayerSpotLight(bool isActive)
-{
-    if (spotLight != null)
-    {
-        spotLight.SetActive(isActive);
-    }
-}
-
-[ClientRpc]
-private void SyncLightStateClientRpc(bool activatePlayerLight)
-{
-    ToggleLights(activatePlayerLight);
-}
-
-[ServerRpc]
-private void SetPlayerLightActiveServerRpc(bool isActive)
-{
-    SyncLightStateClientRpc(isActive);
-}
-[ServerRpc]
+    [ServerRpc]
 private void ActivateFarthestDogHoleServerRpc()
 {
     if (!IsServer) return;
