@@ -86,6 +86,7 @@ MonoBehaviour:
   toggleCameraRotation: 0
   run: 0
   smoothness: 10
+  _tiger_roaring: {fileID: 0}
   jumpHeight: 1.5
   gravity: -9.81
   isGhost: 0
@@ -287,6 +288,7 @@ MonoBehaviour:
   - Capybara(Clone)
   - Cat(Clone)
   - Sheep(Clone)
+  SkillCoolingTime_fox: 0
 --- !u!114 &358276075813051715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -492,6 +494,14 @@ PrefabInstance:
     - target: {fileID: 1733921769004531740, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
       propertyPath: field of view
       value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3130183078460832363, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3237205757965180500, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3253949356774669807, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
       propertyPath: m_LocalPosition.x
