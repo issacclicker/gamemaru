@@ -8,6 +8,7 @@ TagManager:
   - NPC
   - Food
   - PlayerMesh
+  - DogHole
   layers:
   - Default
   - TransparentFX

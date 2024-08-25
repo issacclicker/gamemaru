@@ -26,7 +26,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/test/multiplayer test.unity
     guid: a64fa478ebedae7458a25cb52db72342
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/test/multiplayer test 1.unity
     guid: a22311853a4ff434c81bfdbb15c5eefd
   - enabled: 0

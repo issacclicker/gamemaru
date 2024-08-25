@@ -409,6 +409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd414444af2470f43926e39fd63e1639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _camera: {fileID: 0}
   MainCamera: {fileID: 825259794876241739}
   speed: 5
   runspeed: 8
@@ -418,6 +419,7 @@ MonoBehaviour:
   smoothness: 10
   jumpHeight: 1.5
   gravity: -9.81
+  isGhost: 0
   playerState: 
   playerStateSync:
     m_InternalValue:
@@ -556,6 +558,7 @@ MonoBehaviour:
         byte0123: 0
         byte0124: 0
         byte0125: 0
+  dogHolesParent: {fileID: 0}
   nearObject: {fileID: 0}
   animalModel: {fileID: 919132149155446097, guid: 27520bf6009bb064d8744d18ff6ee12e, type: 3}
   originalModel: {fileID: 0}

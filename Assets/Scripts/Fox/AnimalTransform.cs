@@ -35,39 +35,53 @@ public class AnimalTransform : NetworkBehaviour
 
     int randomIndex_temp; //무작위 수 저장
 
+    int p_modelNum; // 플레이어 모델 번호
+
     GameObject UIManagerObject; //UI매니저
     HealthBar _healthBar; //체력바
     PlayerMovement _playerMovement;
 
-    int p_modelNum ; // 플레이어 모델 번호
 
     private void Start()
     {
-        
+        if(!IsOwner)
+        {
+            return;
+        }
 
         UIManagerObject = GameObject.Find("UIManager");
         _healthBar = UIManagerObject.GetComponent<HealthBar>();
 
         _playerMovement = GetComponent<PlayerMovement>();
 
-        DisableForiegnModelServerRpc(this.gameObject,"DummyMesh");
-        DisableForiegnModelClientRpc(this.gameObject,"DummyMesh");
+        // DisableForiegnModelServerRpc(this.gameObject,"DummyMesh");
+        // DisableForiegnModelClientRpc(this.gameObject,"DummyMesh");
 
         if(_playerMovement.playerStateSync.Value=="Fox")
         {
             PlayerNewModelSpawnServerRpc(this.gameObject,0);
-            p_modelNum = 0;
         }
         else if(_playerMovement.playerStateSync.Value=="Tiger")
         {
             PlayerNewModelSpawnServerRpc(this.gameObject,1);
-            p_modelNum = 1;
+        }
+        else
+        {
+            if(_playerMovement.playerState == "Fox")
+            {
+                PlayerNewModelSpawnServerRpc(this.gameObject,0);
+            }
+            else if(_playerMovement.playerState == "Tiger")
+            {
+                PlayerNewModelSpawnServerRpc(this.gameObject,1);
+            }
         }
 
         // 현재 오브젝트를 기본 모델로 설정
         // _playerMovement.currentModel = new NetworkVariable<NetworkObjectReference>();
         // _playerMovement.currentModel.Value = gameObject.GetComponent<NetworkObject>();
         // _playerMovement.originalModel = gameObject;
+
     }
 
     private void Update()
@@ -99,14 +113,8 @@ public class AnimalTransform : NetworkBehaviour
                 //체력 닮기 비활성화
                 _healthBar.isAnimal = false;
 
-
-                // this.transform.Find("DummyMesh").GetComponent<SkinnedMeshRenderer>().enabled = true; //DummyMesh 변경해야 할 수도.
-
-                // AbleForiegnModelServerRpc(this.gameObject,"DummyMesh");
-                // AbleForiegnModelClientRpc(this.gameObject,"DummyMesh");
-            
-            PlayerNewModelSpawnServerRpc(this.gameObject,p_modelNum);
             NewModelDespawnServerRpc(this.gameObject,randomIndex_temp);
+            PlayerNewModelSpawnServerRpc(this.gameObject,0);
 
             isAnimal = false;
             Debug.Log("변신");
@@ -128,16 +136,8 @@ public class AnimalTransform : NetworkBehaviour
                 // 2. 양
                 int randomIndex = Random.Range(0, animalModelsForNetworks.Length);
                 randomIndex_temp = randomIndex;
-                
-
-                // 원래 모델 비활성화
-                    // this.transform.Find("DummyMesh").GetComponent<SkinnedMeshRenderer>().enabled = false;
-
-                    // DisableForiegnModelServerRpc(this.gameObject,"DummyMesh");
-                    // DisableForiegnModelClientRpc(this.gameObject,"DummyMesh");
-                
-                PlayerNewModelDespawnServerRpc(this.gameObject,p_modelNum);
                 NewModelSpawnServerRpc(this.gameObject,randomIndex);
+                PlayerNewModelDespawnServerRpc(this.gameObject,0);
 
                 isAnimal = true;
                 Debug.Log("동물 모델로 변경");
@@ -219,7 +219,7 @@ public class AnimalTransform : NetworkBehaviour
             GameObject newMd = Instantiate(animalModelsForDefaultPlayer[num]);
 
             var networkObject = newMd.GetComponent<NetworkObject>();
-            networkObject.Spawn();
+            networkObject.SpawnWithOwnership(p.OwnerClientId);
             networkObject.TrySetParent(p, worldPositionStays: false);
             // _playerMovement.currentModel.Value = networkObject;
         }
@@ -274,6 +274,19 @@ public class AnimalTransform : NetworkBehaviour
     {
         if (player.TryGet(out var p))
         {
+
+
+            if(p.transform.Find("FoxNet(Clone)")==null)
+            {
+                Debug.Log("모델없ㅇ므!!!!!!!!!!!!!!!!!!!!");
+                return;
+            }
+
+            if (p.transform.Find("FoxNet(Clone)").GetComponent<NetworkObject>()!=null)
+            {
+                    p.transform.Find("FoxNet(Clone)").GetComponent<NetworkObject>().Despawn();
+                    // _playerMovement.currentModel.Value = default;
+            }
 
             if (p.transform.Find("FoxNet(Clone)") == null)
             {
