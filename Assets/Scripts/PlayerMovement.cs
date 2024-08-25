@@ -107,14 +107,14 @@ public class PlayerMovement : NetworkBehaviour
         // //디버깅 용
         if(IsOwner)
         {
-            if(IsHost){
-                playerState = "Tiger"; //ServerRpc로 바꿔야함
-                Set_playerStateSyncServerRpc("Tiger");
+            // if(IsHost){
+            //     playerState = "Tiger"; //ServerRpc로 바꿔야함
+            //     Set_playerStateSyncServerRpc("Tiger");
                 
-            }else{
+            // }else{
                 playerState = "Fox"; //ServerRpc로 바꿔야함
                 Set_playerStateSyncServerRpc("Fox");
-            }
+            // }
                 
             // }
             // playerState = "Tiger";  
