@@ -16,7 +16,7 @@ public class PlayerMovement : NetworkBehaviour
 
     //ThirdPerson Movement
     Animator _animator;
-    Camera _camera;
+    [SerializeField]Camera _camera;
     [SerializeField]
     GameObject MainCamera;
     CharacterController _controller;
@@ -35,7 +35,7 @@ public class PlayerMovement : NetworkBehaviour
     private bool isGrounded;
 
 
-    private bool isGhost=false;
+    [SerializeField]private bool isGhost=false;
 
 
     //Player State
@@ -72,10 +72,12 @@ public class PlayerMovement : NetworkBehaviour
 
     private ScoreManager scoreManager;
 
+
     void Awake()
     {
         Instance = this;
     }
+
 
 
     // // Start is called before the first frame update
@@ -97,20 +99,23 @@ public class PlayerMovement : NetworkBehaviour
         // _controller = this.GetComponent<CharacterController>();
          _controller = GetComponent<CharacterController>();
 
-        //디버깅 용
+        // //디버깅 용
         if(IsOwner)
         {
-            // if(IsHost){
-            //     playerState = "Tiger"; //ServerRpc로 바꿔야함
-            //     Set_playerStateSyncServerRpc("Tiger");
+            if(IsHost){
+                playerState = "Tiger"; //ServerRpc로 바꿔야함
+                Set_playerStateSyncServerRpc("Tiger");
                 
-            // }else{
-            //     playerState = "Fox"; //ServerRpc로 바꿔야함
-            //     Set_playerStateSyncServerRpc("Fox");
+            }else{
+                playerState = "Fox"; //ServerRpc로 바꿔야함
+                Set_playerStateSyncServerRpc("Fox");
+            }
                 
             // }
-            playerState = "Fox";  
-            Set_playerStateSyncServerRpc("Fox");
+            // playerState = "Tiger";  
+            // Set_playerStateSyncServerRpc("Tiger");
+            // playerState = "Fox";                //기본은 여우로 하고 한 클라이언트만 호랑이로 바꾸기
+            // Set_playerStateSyncServerRpc("Fox");
         }
 
         // if(string.IsNullOrEmpty(playerState))
@@ -137,20 +142,28 @@ public class PlayerMovement : NetworkBehaviour
         _uiManager.UIEnable();
         _healthBar.IsGameStarted = true;
 
+
+        //UI Manager
+        if(IsOwner)
+        {
+            _uiManager.PlayerCounterText.GetComponent<PlayerCounterNetwork>().ChangePlayerCountTextServerRpc();
+            Debug.Log("시정요청");
+        }
+
+
         scoreManager = GameObject.FindObjectOfType<ScoreManager>();
 
         if(scoreManager == null)
         {
             Debug.LogError("ScoreManager instance not found in the scene.");
         }
-
     }
 
     // Update is called once per frame
     void Update()
     {
         // //For Network Owner
-        if(!IsOwner){
+        if(!IsOwner||!_uiManager.__StartGame__.GetComponent<StartGame>().IsGameStarted){
             return;
         }
 
@@ -186,7 +199,8 @@ public class PlayerMovement : NetworkBehaviour
         if(Input.GetKey(KeyCode.G)&&!isGhost)
         {
             isGhost = true;
-            PlayerDie();
+            Debug.Log("현재상태(클라) : " + isGhost);
+            PlayerDieServerRpc(this.gameObject);
         }
 
 
@@ -241,7 +255,7 @@ public class PlayerMovement : NetworkBehaviour
             return;
         }
 
-        if (!toggleCameraRotation && _camera.enabled)
+        if (!toggleCameraRotation && enabled)
         {
             Vector3 playerRotate = Vector3.Scale(_camera.transform.forward, new Vector3(1, 0, 1));
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerRotate), Time.deltaTime * smoothness);
@@ -456,20 +470,20 @@ public class PlayerMovement : NetworkBehaviour
     }
 
     //이미호로 바뀌는 함수
-    private void ChangeModel()
+private void ChangeModel()
+{
+    if (PlayerNetworkStats.Instance.BeadCount >= 2 && !isAwaken.Value && IsOwner)
     {
-        if (PlayerNetworkStats.Instance.BeadCount >= 2 && !isAwaken.Value && IsOwner)
-        {
-            Set_isAwakenServerRpc(true);
-            Set_isAwakenClientRpc(true);
-            
-            GetComponent<AnimalTransform>().ChangeModelToSecFox();
-            // ChangeAllPlayerModelToSecFoxClientRpc();
-            ChangeAllPlayerModelToSecFoxServerRpc();
-            
-            Debug.Log("이미호로 변신");
-        }
+        Set_isAwakenServerRpc(true);
+        Set_isAwakenClientRpc(true);
+        
+        GetComponent<AnimalTransform>().ChangeModelToSecFox();
+        ChangeAllPlayerModelToSecFoxServerRpc();
+        
+        Debug.Log("이미호로 변신");
+        ActivateFarthestDogHoleServerRpc();
     }
+}
 
     //생명의 샘에 닿으면 모습을 바꿈
     void OnTriggerEnter(Collider other)
@@ -485,6 +499,50 @@ public class PlayerMovement : NetworkBehaviour
             EndGame(); 
         }
     }
+    [ServerRpc]
+private void ActivateFarthestDogHoleServerRpc()
+{
+    if (!IsServer) return;
+
+    Vector3 tigerPosition = Vector3.zero;
+    foreach (var client in NetworkManager.Singleton.ConnectedClients)
+    {
+        var player = client.Value.PlayerObject.GetComponent<PlayerMovement>();
+        if (player.playerStateSync.Value == "Tiger")
+        {
+            tigerPosition = player.transform.position;
+            break;
+        }
+    }
+
+    DogHole farthestHole = null;
+    float maxDistance = float.MinValue;
+
+    foreach (var hole in DogHole.allHoles)
+    {
+        float distance = Vector3.Distance(hole.transform.position, tigerPosition);
+        if (distance > maxDistance)
+        {
+            maxDistance = distance;
+            farthestHole = hole;
+        }
+    }
+
+    if (farthestHole != null)
+    {
+        farthestHole.EnableHole();
+        ActivateDogHoleClientRpc(farthestHole.gameObject);
+    }
+}
+
+[ClientRpc]
+private void ActivateDogHoleClientRpc(NetworkObjectReference holeRef)
+{
+    if (holeRef.TryGet(out NetworkObject holeObject))
+    {
+        holeObject.GetComponent<DogHole>().EnableHole();
+    }
+}
 
     private void EndGame()
     {
@@ -526,7 +584,7 @@ public class PlayerMovement : NetworkBehaviour
     }
 
     [ServerRpc]
-    private void Set_playerStateSyncServerRpc(FixedString128Bytes value)
+    public void Set_playerStateSyncServerRpc(FixedString128Bytes value)
     {
         playerStateSync.Value = value;
     }
@@ -552,7 +610,7 @@ public class PlayerMovement : NetworkBehaviour
 
                 //모델 바꾸는 명령어 실행
 
-                if(playerGameObject.GetComponent<PlayerMovement>().playerStateSync.Value == "Fox")
+                if(playerGameObject.GetComponent<PlayerMovement>().playerStateSync.Value == "Fox" && !IsHost)
                 {
                     playerGameObject.GetComponent<AnimalTransform>().ChangeModelToSecFox();
                 }
@@ -564,9 +622,11 @@ public class PlayerMovement : NetworkBehaviour
 
 
     //플레이어 죽음처리
-    public void PlayerDie()
+    //현재 전부다 같이 죽는 버그가 있음 -> ServerRpc로 죽은 사람만 실행하게 변경.
+    [ClientRpc]
+    public void PlayerDieClientRpc()
     {
-        Debug.Log("Player die.!");
+        Debug.Log($"Player die! : {OwnerClientId}, {name}");
 
         //player_animation
         player_animation playerAnimation = FindObjectOfType<player_animation>();
@@ -575,19 +635,46 @@ public class PlayerMovement : NetworkBehaviour
             playerAnimation.PlayDieAnimation();
         }
 
-        _camera.enabled = false;
-        _camera.gameObject.GetComponent<AudioListener>().enabled = false; 
 
-        if(playerStateSync.Value == "Fox")
+        if(IsOwner)
         {
-            GetComponent<AnimalTransform>().PlayerNewModelDespawnServerRpc(this.gameObject,0);
+            _camera.enabled = false;
+            _camera.gameObject.GetComponent<AudioListener>().enabled = false; 
         }
-        else if(playerStateSync.Value == "Tiger")
-        {
-            GetComponent<AnimalTransform>().PlayerNewModelDespawnServerRpc(this.gameObject,1);
-        }
+        // _camera.enabled = false;
+        // _camera.gameObject.GetComponent<AudioListener>().enabled = false; 
 
-        GetComponent<AnimalTransform>().PlayerNewModelSpawnServerRpc(this.gameObject,2);
+        
     }
 
+    [ServerRpc(RequireOwnership = false)]
+    private void PlayerDieServerRpc(NetworkObjectReference player)
+    {
+
+        if(player.TryGet(out var p) == false)
+        {
+            return;
+        }
+
+        ProcessDieOnServer(p.GetComponent<PlayerMovement>());
+    }
+
+    public static void ProcessDieOnServer(PlayerMovement player)
+    {
+        player.PlayerDieClientRpc();
+        
+        if(player.playerStateSync.Value == "Fox")
+        {
+            Debug.Log("여우 지움");
+            player.GetComponent<AnimalTransform>().PlayerNewModelDespawnServerRpc(player.gameObject,0);
+        }
+        else if(player.playerStateSync.Value == "Tiger")
+        {
+            Debug.Log("호랑이 지움");
+            player.GetComponent<AnimalTransform>().PlayerNewModelDespawnServerRpc(player.gameObject,1);
+        }
+
+        player.GetComponent<AnimalTransform>().PlayerNewModelSpawnServerRpc(player.gameObject,2);
+        Debug.Log("소환");
+    }
 }

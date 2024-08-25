@@ -11,11 +11,6 @@ public class UIManager : MonoBehaviour
 
     public string playerState = ""; //호랑이인지 여우인지 구분
 
-    // public void LogState()
-    // {
-    //     Debug.Log(playerState);
-    // }
-
     //호랑이 UI 변수
     public int health_tiger; //호랑이 체력
     public GameObject Heart1, Heart2, Heart3;
@@ -23,6 +18,13 @@ public class UIManager : MonoBehaviour
     //여우 UI 변수
     public Text beadCountText; //여의주 갯수 텍스트
     public GameObject HealthBar; //체력바
+
+    public GameObject[] LobbyUIs; //로비 UI
+    // public bool IsGameStarted=false; //게임 시작 변수
+    public GameObject GameStartButton; //게임 시작 버튼
+    public GameObject PlayerCounterText; //연결된 플레이어 수 오브젝트
+
+    public GameObject __StartGame__; //게임 시작 클래스
 
     private void Awake()
     {
@@ -64,5 +66,13 @@ public class UIManager : MonoBehaviour
     public void UpdateBeadCountText(int value)
     {
         beadCountText.text = "Number: " + value;
+    }
+
+    public void OnJoinLobby_ActiveUI()
+    {
+        foreach(var Object in LobbyUIs)
+        {
+            Object.SetActive(true);
+        }
     }
 }

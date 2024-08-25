@@ -87,6 +87,7 @@ public class TestRelay2 : MonoBehaviour
             );
 
             DisableUIObjects();
+            
 
             NetworkManager.Singleton.StartClient();
         }catch(RelayServiceException e){
@@ -107,4 +108,5 @@ public class TestRelay2 : MonoBehaviour
             UI_Objects[i].SetActive(false);
         }
     }
+
 }
