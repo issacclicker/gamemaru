@@ -59,7 +59,7 @@ public class PlayerMovement : NetworkBehaviour
 
     GameObject UIManagerObject;
 
-    UIManager _uiManager; //UI관리
+    public UIManager _uiManager; //UI관리
     HealthBar _healthBar; //여우 체력바
 
     public GameObject animalModel;//이미호
@@ -660,6 +660,7 @@ private void ActivateDogHoleClientRpc(NetworkObjectReference holeRef)
             playerAnimation.PlayDieAnimation();
         }
 
+        _uiManager.__EngGame__.GetComponent<EndGame>().GameOver();
 
         if(IsOwner)
         {
@@ -701,5 +702,8 @@ private void ActivateDogHoleClientRpc(NetworkObjectReference holeRef)
 
         player.GetComponent<AnimalTransform>().PlayerNewModelSpawnServerRpc(player.gameObject,2);
         Debug.Log("소환");
+
     }
+
+    
 }

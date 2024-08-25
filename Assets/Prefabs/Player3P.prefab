@@ -86,7 +86,7 @@ MonoBehaviour:
   toggleCameraRotation: 0
   run: 0
   smoothness: 10
-  _tiger_roaring: {fileID: 0}
+  _tiger_roaring: {fileID: 7365230893502877095}
   jumpHeight: 1.5
   gravity: -9.81
   isGhost: 0
@@ -229,6 +229,7 @@ MonoBehaviour:
         byte0124: 0
         byte0125: 0
   nearObject: {fileID: 0}
+  _uiManager: {fileID: 0}
   animalModel: {fileID: 919132149155446097, guid: 27520bf6009bb064d8744d18ff6ee12e, type: 3}
   originalModel: {fileID: 0}
   isAwaken:
@@ -421,10 +422,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2.0086453
+  m_Radius: 1.5062336
+  m_Height: 3.524826
   m_Direction: 1
-  m_Center: {x: 0, y: 0.9945468, z: 0}
+  m_Center: {x: 0.027109861, y: 1.3225923, z: -0.4418794}
 --- !u!95 &7978573125033682171
 Animator:
   serializedVersion: 5
@@ -559,6 +560,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 29.492
       objectReference: {fileID: 0}
+    - target: {fileID: 4515311346957252737, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.4137
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515311346957252737, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.1588
+      objectReference: {fileID: 0}
     - target: {fileID: 5767077220417084644, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
       propertyPath: realCamera
       value: 
@@ -573,11 +582,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9011106427312675511, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.19
+      value: 3.34
       objectReference: {fileID: 0}
     - target: {fileID: 9011106427312675511, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.87
+      value: -8.29
       objectReference: {fileID: 0}
     - target: {fileID: 9130685224232239991, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
       propertyPath: playerHead
@@ -631,6 +640,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 825259794876241739, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
   m_PrefabInstance: {fileID: 8045206866439884868}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7365230893502877095 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 689296469296291299, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
+  m_PrefabInstance: {fileID: 8045206866439884868}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5676eafa64700194696fbddb1862da16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &8626207122230333528 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 1733921769004531740, guid: 3b04879d08192494fa729827f4527f4b, type: 3}

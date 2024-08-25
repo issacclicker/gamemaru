@@ -33,6 +33,8 @@ public class UIManager : MonoBehaviour
 
     public GameObject __StartGame__; //게임 시작 클래스
 
+    public GameObject __EngGame__; //게임 끝 클래스
+
     private void Awake()
     {
         Instance = this;
