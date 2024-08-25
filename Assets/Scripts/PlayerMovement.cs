@@ -64,9 +64,9 @@ public class PlayerMovement : NetworkBehaviour
         
         //디버깅 용
         //if(IsHost){
-           //playerState = "Tiger";
+           playerState = "Tiger";
         //}else{
-           playerState = "Fox";
+        //    playerState = "Fox";
         //}
 
 
@@ -105,6 +105,7 @@ public class PlayerMovement : NetworkBehaviour
             if(!isAwaken)
             {
                 Interaction();
+                Debug.Log("레전드 버그");
             }
             
 
@@ -121,6 +122,7 @@ public class PlayerMovement : NetworkBehaviour
             if (Input.GetKey(KeyCode.R)&&!_tiger_roaring.SkillCoolingTime) 
             {
                 _tiger_roaring.Roar();
+                Debug.Log("굳");
             }
 
             //Tiger UI update

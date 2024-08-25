@@ -38,7 +38,7 @@ public class Tiger_roaring : MonoBehaviour
         }
 
 
-        Debug.Log("Äí¿Õ");
+        Debug.Log("ì•„ë‹ˆ ì™œ");
         meshRenderer.enabled = true;
         boxCollider.enabled = true;
         SkillContinuing = true;
@@ -70,7 +70,7 @@ public class Tiger_roaring : MonoBehaviour
         {
             _npcController = _other.GetComponent<NPCController>();
             _npcController.enabled = false;
-            Debug.Log("Àâ");
+            Debug.Log("ï¿½ï¿½");
             StartCoroutine(SkillContinuingTime());
         }
     }
@@ -84,7 +84,7 @@ public class Tiger_roaring : MonoBehaviour
     void FreezeEnd()
     {
         _npcController.enabled = true;
-        Debug.Log("¾È¤±¤Ã¤±Ãã");
+        Debug.Log("ï¿½È¤ï¿½ï¿½Ã¤ï¿½ï¿½ï¿½");
     }
 
     void SkillCoolTime()

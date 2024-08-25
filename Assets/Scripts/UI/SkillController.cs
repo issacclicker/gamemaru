@@ -15,6 +15,14 @@ public class SkillController : MonoBehaviour
     private float[] getSkillTimes = { 0, 0 };
     private bool SkillCoolingTime_Click;
 
+
+    public static SkillController Instance;
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +36,7 @@ public class SkillController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R)&&!Instance.isHideSkills[0])
         {
             HideSkillSetting(0);
         }
@@ -60,9 +68,9 @@ public class SkillController : MonoBehaviour
 
     public void HideSkillSetting(int skillNum)
     {
-        hideSkillButtons[skillNum].SetActive(true);
-        getSkillTimes[skillNum] = skillTimes[skillNum];
-        isHideSkills[skillNum] = true;
+        Instance.hideSkillButtons[skillNum].SetActive(true);
+        Instance.getSkillTimes[skillNum] = skillTimes[skillNum];
+        Instance.isHideSkills[skillNum] = true;
     }
 
     private void HideSkillChk()
@@ -78,7 +86,7 @@ public class SkillController : MonoBehaviour
         }
     }
 
-    IEnumerator SkillTimeChk(int skillNum)
+    IEnumerator SkillTimeChk(uint skillNum)
     {
         yield return null;
 
