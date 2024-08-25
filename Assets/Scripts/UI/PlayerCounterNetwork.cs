@@ -39,7 +39,7 @@ public class PlayerCounterNetwork : NetworkBehaviour
         
         _text.text = $"PC : {local_playerCount}/5";
 
-        if(IsHost && playerCount.Value>1)
+        if(IsHost && playerCount.Value>=1)
         {
             _UIManager.GetComponent<UIManager>().GameStartButton.SetActive(true);
         }
