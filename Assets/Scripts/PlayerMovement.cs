@@ -29,6 +29,8 @@ public class PlayerMovement : NetworkBehaviour
     public float smoothness = 10f;
 
 
+    public Tiger_roaring _tiger_roaring;
+
     public float jumpHeight = 1.5f;
     public float gravity = -9.81f;
     private Vector3 velocity;
@@ -188,6 +190,12 @@ public class PlayerMovement : NetworkBehaviour
             {
                 ApplyPenalty();
             }
+
+            if (Input.GetKey(KeyCode.R)&&!_tiger_roaring.SkillCoolingTime) 
+            {
+                _tiger_roaring.Roar();
+            }
+
 
             //Tiger UI update
             _uiManager.UpdateHeartUI();
@@ -491,6 +499,8 @@ private void ChangeModel()
     {
         Set_isAwakenServerRpc(true);
         Set_isAwakenClientRpc(true);
+
+        _uiManager.isAwaken = true;
         
         GetComponent<AnimalTransform>().ChangeModelToSecFox();
         ChangeAllPlayerModelToSecFoxServerRpc();

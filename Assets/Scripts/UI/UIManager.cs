@@ -15,7 +15,14 @@ public class UIManager : MonoBehaviour
     public int health_tiger; //호랑이 체력
     public GameObject Heart1, Heart2, Heart3;
 
+    public GameObject Tiger_Skills_UI;
+    public GameObject Fox_Skills_UI;
+    public GameObject isAwaken_Skills_UI;
+
     //여우 UI 변수
+
+    public bool isAwaken;
+
     public Text beadCountText; //여의주 갯수 텍스트
     public GameObject HealthBar; //체력바
 
@@ -44,11 +51,21 @@ public class UIManager : MonoBehaviour
         if(playerState=="Tiger")
         {
             UpdateHeartUI();
+            Tiger_Skills_UI.SetActive(true);
+            Fox_Skills_UI.SetActive(false);
         }
         else if(playerState=="Fox")
         {
             HealthBar.SetActive(true);
             UpdateBeadCountText(PlayerNetworkStats.Instance.BeadCount);
+            Tiger_Skills_UI.SetActive(false);
+            Fox_Skills_UI.SetActive(true);
+        }
+        else if (isAwaken = true)
+        {  
+            Tiger_Skills_UI.SetActive(false);
+            Fox_Skills_UI.SetActive(false);
+            isAwaken_Skills_UI.SetActive(true);
         }
     }
 

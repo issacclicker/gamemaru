@@ -3015,6 +3015,10 @@ MonoBehaviour:
   Heart1: {fileID: 90469983}
   Heart2: {fileID: 1022135520}
   Heart3: {fileID: 1547113527}
+  Tiger_Skills_UI: {fileID: 0}
+  Fox_Skills_UI: {fileID: 0}
+  isAwaken_Skills_UI: {fileID: 0}
+  isAwaken: 0
   beadCountText: {fileID: 1214578294}
   HealthBar: {fileID: 6777299699405926812}
   LobbyUIs:

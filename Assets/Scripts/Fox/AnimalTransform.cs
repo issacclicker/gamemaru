@@ -35,7 +35,7 @@ public class AnimalTransform : NetworkBehaviour
 
     int randomIndex_temp; //무작위 수 저장
 
-    int p_modelNum; // 플레이어 모델 번호
+    public bool SkillCoolingTime_fox;
 
     GameObject UIManagerObject; //UI매니저
     HealthBar _healthBar; //체력바
@@ -97,7 +97,7 @@ public class AnimalTransform : NetworkBehaviour
             Debug.Log("원래 모델로 변경");
         }
         // X키를 누르면 모델 변경 - 추후 키는 변경
-        if (Input.GetKeyDown(KeyCode.X) && !_playerMovement.isAwaken.Value && PlayerMovement.Instance.playerState == "Fox" && IsOwner)
+        if (Input.GetKeyDown(KeyCode.R) && !_playerMovement.isAwaken.Value && PlayerMovement.Instance.playerState == "Fox" && IsOwner)
         {
             ChangeModel();
         }
@@ -141,6 +141,9 @@ public class AnimalTransform : NetworkBehaviour
 
                 isAnimal = true;
                 Debug.Log("동물 모델로 변경");
+            
+                SkillCoolTime();
+            
             }
             else
             {
@@ -151,6 +154,24 @@ public class AnimalTransform : NetworkBehaviour
         
 
     }
+
+
+    void SkillCoolTime()
+    {
+        SkillCoolingTime_fox = true;
+        StartCoroutine(SkillCoolingTime2());
+    }
+    IEnumerator SkillCoolingTime2()
+    {
+        yield return new WaitForSeconds(45f);
+        SkillCoolTimeEnd();
+    }
+
+    void SkillCoolTimeEnd()
+    {
+        SkillCoolingTime_fox = false;
+    }
+
 
     // 일정 시간이 경과했을 때 원래 모델로 돌아가기
     public void RevertToOriginalModel()
