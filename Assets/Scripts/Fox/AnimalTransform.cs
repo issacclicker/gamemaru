@@ -111,6 +111,7 @@ public class AnimalTransform : NetworkBehaviour
                 _healthBar.isAnimal = false;
 
             NewModelDespawnServerRpc(this.gameObject,randomIndex_temp);
+            PlayerNewModelSpawnServerRpc(this.gameObject,0);
 
             isAnimal = false;
             Debug.Log("변신");
@@ -134,6 +135,7 @@ public class AnimalTransform : NetworkBehaviour
                 randomIndex_temp = randomIndex;
 
                 NewModelSpawnServerRpc(this.gameObject,randomIndex);
+                PlayerNewModelDespawnServerRpc(this.gameObject,0);
 
                 isAnimal = true;
                 Debug.Log("동물 모델로 변경");
