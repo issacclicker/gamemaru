@@ -35,6 +35,8 @@ public class AnimalTransform : NetworkBehaviour
 
     int randomIndex_temp; //무작위 수 저장
 
+    int p_modelNum; // 플레이어 모델 번호
+
     GameObject UIManagerObject; //UI매니저
     HealthBar _healthBar; //체력바
     PlayerMovement _playerMovement;
@@ -57,10 +59,12 @@ public class AnimalTransform : NetworkBehaviour
         if(_playerMovement.playerStateSync.Value=="Fox")
         {
             PlayerNewModelSpawnServerRpc(this.gameObject,0);
+             p_modelNum = 0;
         }
         else if(_playerMovement.playerStateSync.Value=="Tiger")
         {
             PlayerNewModelSpawnServerRpc(this.gameObject,1);
+             p_modelNum = 1;
         }
         else
         {
