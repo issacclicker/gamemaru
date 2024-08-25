@@ -122,16 +122,16 @@ public class npc_animation: NetworkBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Cube") || collision.gameObject.CompareTag("Player"))
-        {
-            // �浹 �� ����
-            currentState = CatState.Dying;
+    // void OnCollisionEnter(Collision collision)
+    // {
+    //     if (collision.gameObject.CompareTag("Cube") || collision.gameObject.CompareTag("Player"))
+    //     {
+    //         // �浹 �� ����
+    //         currentState = CatState.Dying;
 
-            // �״� �ִϸ��̼� ���
-            anim.SetTrigger("doDie");
-        }
-    }
+    //         // �״� �ִϸ��̼� ���
+    //         anim.SetTrigger("doDie");
+    //     }
+    // }
 }
 
