@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
 public class EndGame : MonoBehaviour
 {
     public GameObject[] EndGameUI;
 
+    public GameObject SceneManager;
 
     public void GameOver()
     {
@@ -13,5 +15,23 @@ public class EndGame : MonoBehaviour
         {
             obj.SetActive(true);
         }
+        StartCoroutine(WaitForSeconds());
+    }
+
+    IEnumerator WaitForSeconds()
+    {
+        Debug.Log("코루틴 시작: " + Time.time);
+        
+        // 5초 동안 대기
+        yield return new WaitForSeconds(3);
+
+        Debug.Log("코루틴 종료: " + Time.time);
+        __GameOver__();
+    }
+
+    void __GameOver__()
+    {
+        SceneManager.GetComponent<SceneChanger>().OnChangingBtnClick();
+        NetworkManager.Singleton.Shutdown();
     }
 }
