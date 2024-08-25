@@ -600,7 +600,7 @@ private void SetPlayerLightActiveServerRpc(bool isActive)
 {
     SyncLightStateClientRpc(isActive);
 }
-    [ServerRpc]
+[ServerRpc]
 private void ActivateFarthestDogHoleServerRpc()
 {
     if (!IsServer) return;
