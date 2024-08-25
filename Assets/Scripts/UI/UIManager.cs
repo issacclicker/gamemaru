@@ -19,8 +19,12 @@ public class UIManager : MonoBehaviour
     public Text beadCountText; //여의주 갯수 텍스트
     public GameObject HealthBar; //체력바
 
-    public GameObject[] LobbyUIs;
-    public bool IsGameStarted=false;
+    public GameObject[] LobbyUIs; //로비 UI
+    // public bool IsGameStarted=false; //게임 시작 변수
+    public GameObject GameStartButton; //게임 시작 버튼
+    public GameObject PlayerCounterText; //연결된 플레이어 수 오브젝트
+
+    public GameObject __StartGame__; //게임 시작 클래스
 
     private void Awake()
     {
@@ -37,7 +41,6 @@ public class UIManager : MonoBehaviour
     }
 
     public void UIEnable(){ //호랑이와 여우 UI 구분
-    Debug.Log("Hearts should be visible for Tiger state."); 
         if(playerState=="Tiger")
         {
             UpdateHeartUI();
@@ -52,24 +55,24 @@ public class UIManager : MonoBehaviour
     
 
     //하트 UI 표시(호랑이)
-public void UpdateHeartUI()
-{
-
-    if (Heart1 == null || Heart2 == null || Heart3 == null)
+    public void UpdateHeartUI()
     {
-        Debug.LogError("Heart UI elements are not assigned in the inspector.");
-        return;
+        Heart1.SetActive(health_tiger >= 1);
+        Heart2.SetActive(health_tiger >= 2);
+        Heart3.SetActive(health_tiger >= 3);
     }
 
-    Heart1.SetActive(health_tiger >= 1);
-
-    Heart2.SetActive(health_tiger >= 2);
-
-    Heart3.SetActive(health_tiger >= 3);
-}
     //여의주 갯수 표시(여우)
     public void UpdateBeadCountText(int value)
     {
         beadCountText.text = "Number: " + value;
+    }
+
+    public void OnJoinLobby_ActiveUI()
+    {
+        foreach(var Object in LobbyUIs)
+        {
+            Object.SetActive(true);
+        }
     }
 }

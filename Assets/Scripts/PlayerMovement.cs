@@ -102,18 +102,19 @@ public class PlayerMovement : NetworkBehaviour
         // //디버깅 용
         if(IsOwner)
         {
-            // if(IsHost){
-            //     playerState = "Tiger"; //ServerRpc로 바꿔야함
-            //     Set_playerStateSyncServerRpc("Tiger");
+            if(IsHost){
+                playerState = "Tiger"; //ServerRpc로 바꿔야함
+                Set_playerStateSyncServerRpc("Tiger");
                 
-            // }else{
-            //     playerState = "Fox"; //ServerRpc로 바꿔야함
-            //     Set_playerStateSyncServerRpc("Fox");
+            }else{
+                playerState = "Fox"; //ServerRpc로 바꿔야함
+                Set_playerStateSyncServerRpc("Fox");
+            }
                 
             // }
-            playerState = "Tiger";  
-            Set_playerStateSyncServerRpc("Tiger");
-            // playerState = "Fox";  
+            // playerState = "Tiger";  
+            // Set_playerStateSyncServerRpc("Tiger");
+            // playerState = "Fox";                //기본은 여우로 하고 한 클라이언트만 호랑이로 바꾸기
             // Set_playerStateSyncServerRpc("Fox");
         }
 
@@ -138,10 +139,17 @@ public class PlayerMovement : NetworkBehaviour
         _healthBar = UIManagerObject.GetComponent<HealthBar>(); // HealthBar 스크립트 가져오기
 
         UIManagerObject.GetComponent<UIManager>().playerState = playerState;
-        Debug.Log($"Player State: {playerState}"); 
         _uiManager.UIEnable();
-        Debug.Log("Hearts should be visible for Tiger state."); 
         _healthBar.IsGameStarted = true;
+
+
+        //UI Manager
+        if(IsOwner)
+        {
+            _uiManager.PlayerCounterText.GetComponent<PlayerCounterNetwork>().ChangePlayerCountTextServerRpc();
+            Debug.Log("시정요청");
+        }
+
 
         scoreManager = GameObject.FindObjectOfType<ScoreManager>();
 
@@ -155,7 +163,7 @@ public class PlayerMovement : NetworkBehaviour
     void Update()
     {
         // //For Network Owner
-        if(!IsOwner){
+        if(!IsOwner||!_uiManager.__StartGame__.GetComponent<StartGame>().IsGameStarted){
             return;
         }
 
@@ -370,7 +378,7 @@ public class PlayerMovement : NetworkBehaviour
 
     IEnumerator PenaltyTimer()
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(5);
         RemovePenalty();
     }
 
@@ -576,7 +584,7 @@ private void ActivateDogHoleClientRpc(NetworkObjectReference holeRef)
     }
 
     [ServerRpc]
-    private void Set_playerStateSyncServerRpc(FixedString128Bytes value)
+    public void Set_playerStateSyncServerRpc(FixedString128Bytes value)
     {
         playerStateSync.Value = value;
     }
