@@ -86,7 +86,7 @@ MonoBehaviour:
   toggleCameraRotation: 0
   run: 0
   smoothness: 10
-  _tiger_roaring: {fileID: 0}
+  _tiger_roaring: {fileID: 7365230893502877095}
   jumpHeight: 1.5
   gravity: -9.81
   isGhost: 0
@@ -229,6 +229,7 @@ MonoBehaviour:
         byte0124: 0
         byte0125: 0
   nearObject: {fileID: 0}
+  _uiManager: {fileID: 0}
   animalModel: {fileID: 919132149155446097, guid: 27520bf6009bb064d8744d18ff6ee12e, type: 3}
   originalModel: {fileID: 0}
   isAwaken:
@@ -631,6 +632,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 825259794876241739, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
   m_PrefabInstance: {fileID: 8045206866439884868}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7365230893502877095 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 689296469296291299, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
+  m_PrefabInstance: {fileID: 8045206866439884868}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5676eafa64700194696fbddb1862da16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &8626207122230333528 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 1733921769004531740, guid: 3b04879d08192494fa729827f4527f4b, type: 3}

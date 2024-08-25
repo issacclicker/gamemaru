@@ -97,6 +97,8 @@ public class CubeController : NetworkBehaviour
         }
         else if (isActive && PlayerMovement.Instance.isAwaken.Value && collision.gameObject.CompareTag("Player")) //여우(이미호)가 호랑이 사냥
         {
+            _playerMovement._uiManager.__EngGame__.GetComponent<EndGame>().GameOver();
+
             OnSecFoxHuntsServerRpc(collision.gameObject);
 
         }
@@ -126,4 +128,6 @@ public class CubeController : NetworkBehaviour
             PlayerMovement.ProcessDieOnServer(p.GetComponent<PlayerMovement>());
         }
     }
+
+    
 }
