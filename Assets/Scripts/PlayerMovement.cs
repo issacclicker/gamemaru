@@ -573,9 +573,19 @@ private void ToggleLights(bool activatePlayerLight)
 {
     Light[] allLights = FindObjectsOfType<Light>();
 
+    if(!IsOwner)
+    {
+        return;
+    }
+    
     foreach (Light light in allLights)
     {
         // 플레이어의 Spot Light만 켜고 나머지 모든 빛은 꺼짐
+        // if(IsOwner)
+        // {
+        //     bool isPlayerSpotLight = light.gameObject == spotLight;
+        //     light.enabled = isPlayerSpotLight && activatePlayerLight;
+        // }
         bool isPlayerSpotLight = light.gameObject == spotLight;
         light.enabled = isPlayerSpotLight && activatePlayerLight;
     }
