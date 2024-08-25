@@ -232,12 +232,26 @@ public class AnimalTransform : NetworkBehaviour
         }
     }
 
+    bool isGhostSpawned;
+
     [ServerRpc (RequireOwnership = false)]
     public void PlayerNewModelSpawnServerRpc(NetworkObjectReference player,int num)
     {
+        if(isGhostSpawned)
+        {
+            Debug.Log("이미 스폰됨");
+            return;
+        }
+
+
         if(player.TryGet(out var p))
         {
             GameObject newMd = Instantiate(animalModelsForDefaultPlayer[num]);
+
+            if(num==2)
+            {
+                isGhostSpawned = true;
+            }
 
             var networkObject = newMd.GetComponent<NetworkObject>();
             networkObject.SpawnWithOwnership(p.OwnerClientId);
@@ -252,7 +266,11 @@ public class AnimalTransform : NetworkBehaviour
     {
         if(player.TryGet(out var p))
         {
-            p.transform.Find(animalModelsForDefaultPlayerNames[num]).gameObject.GetComponent<NetworkObject>().Despawn();
+            if(p.transform.Find((animalModelsForDefaultPlayerNames[num])))
+            {
+                p.transform.Find(animalModelsForDefaultPlayerNames[num]).gameObject.GetComponent<NetworkObject>().Despawn();
+            }
+            
         }
 
     }

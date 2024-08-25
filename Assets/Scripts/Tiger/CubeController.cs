@@ -10,6 +10,7 @@ public class CubeController : NetworkBehaviour
     public GameObject playerHead;
     private string playerState;
     private bool isActive = false;
+    private bool isHunting = false;
     private Renderer renderer;
     private Tiger_animation tigerAnimation;
 
@@ -40,7 +41,7 @@ public class CubeController : NetworkBehaviour
         }
 
 
-        if (Input.GetButtonDown("Interaction") && (playerState == "Tiger" || _playerMovement.isAwaken.Value))
+        if (Input.GetButtonDown("Interaction") && (playerState == "Tiger" || _playerMovement.isAwaken.Value) && !isActive)
         {
             Debug.Log("Attack!");
 
@@ -63,7 +64,7 @@ public class CubeController : NetworkBehaviour
 
             SetCubeActive(true);
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(0.1f);
 
             SetCubeActive(false);
             isActive = false;
@@ -82,10 +83,11 @@ public class CubeController : NetworkBehaviour
     private void OnTriggerEnter(Collider collision)
     {
 
-        Debug.Log(collision.gameObject.tag);
+        Debug.Log(collision.gameObject.tag + " : " + collision.gameObject.GetComponent<NetworkObject>().OwnerClientId);
 
         if (isActive && playerState=="Tiger" && collision.gameObject.CompareTag("NPC")) //호랑이가 NPC 사냥
         {
+            Debug.Log("호랑이가 NPC를 사냥!!");
             if (playerHead.GetComponent<PlayerMovement>() != null)
             {
                 playerHead.GetComponent<PlayerMovement>().HuntFailure();
@@ -93,11 +95,24 @@ public class CubeController : NetworkBehaviour
         }
         else if (isActive && playerState == "Tiger" && collision.gameObject.CompareTag("Player")) //호랑이가 여우 사냥
         {
+            if(collision.gameObject == this.gameObject)
+            {
+                Debug.Log("좆버그");
+                return;
+            }
+            Debug.Log("호랑이가 여우를 사냥!!");
+
             OnTigerHuntsServerRpc(collision.gameObject);
         }
-        else if (isActive && PlayerMovement.Instance.isAwaken.Value && collision.gameObject.CompareTag("Player")) //여우(이미호)가 호랑이 사냥
+        else if (isActive && PlayerMovement.Instance.isAwaken.Value && collision.gameObject.CompareTag("Player") && !collision.gameObject.GetComponent<PlayerMovement>().isAwaken.Value) //여우(이미호)가 호랑이 사냥
         {
-            _playerMovement._uiManager.__EngGame__.GetComponent<EndGame>().GameOver();
+
+            if(collision.gameObject == this.gameObject)
+            {
+                Debug.Log("좆버그");
+                return;
+            }
+            Debug.Log("여우가 호랑이를 사냥!!");
 
             OnSecFoxHuntsServerRpc(collision.gameObject);
 
@@ -126,8 +141,14 @@ public class CubeController : NetworkBehaviour
         {
             Debug.Log("Sec_Fox Hunts!");
             PlayerMovement.ProcessDieOnServer(p.GetComponent<PlayerMovement>());
+            OnTigerDiesClientRpc(); 
         }
     }
 
-    
+    [ClientRpc]
+    private void OnTigerDiesClientRpc()
+    {
+        if(IsOwner)
+        _playerMovement.GetComponent<PlayerMovement>()._uiManager.__EngGame__.GetComponent<EndGame>().GameOver();
+    }
 }
