@@ -67,6 +67,9 @@ public class PlayerMovement : NetworkBehaviour
     //player_animation
     public float BlendValue { get; private set; }
     private player_animation playerAnimation;
+
+    //Tiger_animation
+    private Tiger_animation tigerAnimation;
     
     public NetworkVariable<bool> isAwaken = new NetworkVariable<bool>();
 
@@ -304,11 +307,23 @@ public class PlayerMovement : NetworkBehaviour
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             _animator.SetTrigger("Jump");
 
-            //player_animation
-            player_animation playerAnimation = FindObjectOfType<player_animation>();
-            if (playerAnimation != null)
+            if (playerState == "Fox")
             {
-                playerAnimation.PlayJumptAnimation();
+                //player_animation
+                player_animation playerAnimation = FindObjectOfType<player_animation>();
+                if (playerAnimation != null)
+                {
+                    playerAnimation.PlayJumpAnimation();
+                }
+            }
+            else if (playerState == "Tiger")
+            {
+                //Tiger_animation
+                Tiger_animation tigerAnimation = FindObjectOfType<Tiger_animation>();
+                if (tigerAnimation != null)
+                {
+                    tigerAnimation.PlayJumpAnimation();
+                }
             }
         }
     }

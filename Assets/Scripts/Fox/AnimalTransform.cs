@@ -272,8 +272,9 @@ public class AnimalTransform : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void SecondFoxModelSpawnServerRpc(NetworkObjectReference player)
     {
-        if(player.TryGet(out var p))
+        if (player.TryGet(out var p))
         {
+
 
             if(p.transform.Find("FoxNet(Clone)")==null)
             {
@@ -287,11 +288,23 @@ public class AnimalTransform : NetworkBehaviour
                     // _playerMovement.currentModel.Value = default;
             }
 
-                GameObject newMd = Instantiate(animalModel_Sec_Fox);
+            if (p.transform.Find("FoxNet(Clone)") == null)
+            {
 
-                var networkObject = newMd.GetComponent<NetworkObject>();
-                networkObject.Spawn();
-                networkObject.TrySetParent(p, worldPositionStays: false);
+                return;
+            }
+
+            if (p.transform.Find("FoxNet(Clone)").GetComponent<NetworkObject>() != null)
+            {
+                p.transform.Find("FoxNet(Clone)").GetComponent<NetworkObject>().Despawn();
+                // _playerMovement.currentModel.Value = default;
+            }
+
+            GameObject newMd = Instantiate(animalModel_Sec_Fox);
+
+            var networkObject = newMd.GetComponent<NetworkObject>();
+            networkObject.Spawn();
+            networkObject.TrySetParent(p, worldPositionStays: false);
         }
     }
 

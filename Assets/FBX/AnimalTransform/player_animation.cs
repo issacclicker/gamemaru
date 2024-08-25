@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -22,7 +22,7 @@ public class player_animation : MonoBehaviour
             _animator.SetFloat("Blend", blendValue);
 
             AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-            if (stateInfo.IsName("Eat")||stateInfo.IsName("Die")|| stateInfo.IsName("Jump"))
+            if (stateInfo.IsName("Eat") || stateInfo.IsName("Die") || stateInfo.IsName("Jump"))
             {
                 _animator.SetFloat("Blend", 0);
             }
@@ -33,33 +33,33 @@ public class player_animation : MonoBehaviour
         }
     }
 
-    // Eat ¾Ö´Ï¸ŞÀÌ¼Ç Æ®¸®°Å
+    // Eat ì• ë‹ˆë©”ì´ì…˜ íŠ¸ë¦¬ê±°
     public void PlayEatAnimation()
     {
         Debug.Log("Eat animation triggered");
-        _animator.SetTrigger("Eat");
+        _animator.Play("Eat");
     }
 
     public void StopEatAnimation()
     {
-        // Eat ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ³¡³­ ÈÄ Blend ¾Ö´Ï¸ŞÀÌ¼ÇÀ¸·Î µ¹¾Æ°¡µµ·Ï ¼³Á¤
+        // Eat ì• ë‹ˆë©”ì´ì…˜ì´ ëë‚œ í›„ Blend ì• ë‹ˆë©”ì´ì…˜ìœ¼ë¡œ ëŒì•„ê°€ë„ë¡ ì„¤ì •
         _animator.SetFloat("Blend", playerMovement.BlendValue);
     }
 
-    // Jump ¾Ö´Ï¸ŞÀÌ¼Ç Æ®¸®°Å
-    public void PlayJumptAnimation()
+    // Jump ì• ë‹ˆë©”ì´ì…˜ íŠ¸ë¦¬ê±°
+    public void PlayJumpAnimation()
     {
         Debug.Log("Jump animation triggered");
-        _animator.SetTrigger("Jump");
+        _animator.Play("Jump");
     }
 
     public void StopJumpAnimation()
     {
-        // Jump ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ³¡³­ ÈÄ Blend ¾Ö´Ï¸ŞÀÌ¼ÇÀ¸·Î µ¹¾Æ°¡µµ·Ï ¼³Á¤
+        // Jump ì• ë‹ˆë©”ì´ì…˜ì´ ëë‚œ í›„ Blend ì• ë‹ˆë©”ì´ì…˜ìœ¼ë¡œ ëŒì•„ê°€ë„ë¡ ì„¤ì •
         _animator.SetFloat("Blend", playerMovement.BlendValue);
     }
 
-    // Die ¾Ö´Ï¸ŞÀÌ¼Ç Æ®¸®°Å
+    // Die ì• ë‹ˆë©”ì´ì…˜ íŠ¸ë¦¬ê±°
     public void PlayDieAnimation()
     {
         _animator.SetTrigger("Die");
