@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
     public bool isAwaken;
 
     public Text beadCountText; //여의주 갯수 텍스트
-    public GameObject HealthBar; //체력바
+    //public GameObject HealthBar; //체력바
 
     public GameObject[] LobbyUIs; //로비 UI
     // public bool IsGameStarted=false; //게임 시작 변수
@@ -45,7 +45,7 @@ public class UIManager : MonoBehaviour
         Heart1.SetActive(false);
         Heart2.SetActive(false);
         Heart3.SetActive(false);
-        HealthBar.SetActive(false);
+        //HealthBar.SetActive(false);
         health_tiger = 3;
     }
 
@@ -58,7 +58,7 @@ public class UIManager : MonoBehaviour
         }
         else if(playerState=="Fox")
         {
-            HealthBar.SetActive(true);
+            //HealthBar.SetActive(true);
             UpdateBeadCountText(PlayerNetworkStats.Instance.BeadCount);
             Tiger_Skills_UI.SetActive(false);
             Fox_Skills_UI.SetActive(true);

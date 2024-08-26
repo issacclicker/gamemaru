@@ -572,19 +572,13 @@ private void ChangeSkyboxClientRpc()
             ChangeModel();
         }
 
-        if (other.gameObject.name == "Girl" && playerState == "Fox" && isAwaken.Value && IsOwner)
-        {
-            AddScoreServerRpc("Fox", 1); // 여우가 소녀한테 닿으면 점수 1점 얻음
-            EndGame();  // 기존의 EndGame() 호출을 유지하거나 필요에 따라 수정 가능
-        }
-
         // 이미호와 소녀가 닿았을 때 게임 종료
-        if (other.gameObject.name == "Girl" && playerState == "Fox" && isAwaken.Value && IsOwner)
+        if (other.gameObject.CompareTag("Girl") && playerState == "Fox" && isAwaken.Value && IsOwner)
         {
             Debug.Log("소녀와 닿음");
             if (endGameScript != null)
             {
-                endGameScript.GameOver();
+                _uiManager.__EngGame__.GetComponent<EndGame>().GameOver();
             }
         }
     }
