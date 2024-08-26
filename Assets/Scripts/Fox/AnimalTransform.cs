@@ -110,7 +110,7 @@ public class AnimalTransform : NetworkBehaviour
         // 원래 모델로 변경
         if (isAnimal)
         {
-                //체력 닮기 비활성화
+                //체력 닳기 비활성화
                 _healthBar.isAnimal = false;
 
             NewModelDespawnServerRpc(this.gameObject,randomIndex_temp);
@@ -128,7 +128,7 @@ public class AnimalTransform : NetworkBehaviour
             if (_healthBar != null && _healthBar.health > 0)
             {
                 
-                //체력 닮기 활성화
+                //체력 닳기 활성화
                 _healthBar.isAnimal = true;
 
                 // 랜덤으로 동물 모델

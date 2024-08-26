@@ -9,6 +9,7 @@ TagManager:
   - Food
   - PlayerMesh
   - DogHole
+  - Girl
   layers:
   - Default
   - TransparentFX

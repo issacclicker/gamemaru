@@ -79,6 +79,9 @@ public class PlayerMovement : NetworkBehaviour
 
     private ScoreManager scoreManager;
 
+    public EndGame endGameHandler;
+    private EndGame endGameScript;
+
 
     void Awake()
     {
@@ -163,6 +166,12 @@ public class PlayerMovement : NetworkBehaviour
         if(scoreManager == null)
         {
             Debug.LogError("ScoreManager instance not found in the scene.");
+        }
+
+        GameObject endGameObject = GameObject.Find("Endgame");
+        if (endGameObject != null)
+        {
+            endGameScript = endGameObject.GetComponent<EndGame>();
         }
     }
 
@@ -497,7 +506,7 @@ public class PlayerMovement : NetworkBehaviour
     //이미호로 바뀌는 함수
 private void ChangeModel()
 {
-    if (PlayerNetworkStats.Instance.BeadCount >= 3 && !isAwaken.Value && IsOwner)
+    if (PlayerNetworkStats.Instance.BeadCount >= 1 && !isAwaken.Value && IsOwner)
     {
         Set_isAwakenServerRpc(true);
         Set_isAwakenClientRpc(true);
@@ -566,10 +575,21 @@ private void ChangeSkyboxClientRpc()
         if (other.gameObject.name == "Girl" && playerState == "Fox" && isAwaken.Value && IsOwner)
         {
             AddScoreServerRpc("Fox", 1); // 여우가 소녀한테 닿으면 점수 1점 얻음
-            EndGame(); 
+            EndGame();  // 기존의 EndGame() 호출을 유지하거나 필요에 따라 수정 가능
+        }
+
+        // 이미호와 소녀가 닿았을 때 게임 종료
+        if (other.gameObject.name == "Girl" && playerState == "Fox" && isAwaken.Value && IsOwner)
+        {
+            Debug.Log("소녀와 닿음");
+            if (endGameScript != null)
+            {
+                endGameScript.GameOver();
+            }
         }
     }
-private void ToggleLights(bool activatePlayerLight)
+
+        private void ToggleLights(bool activatePlayerLight)
 {
     Light[] allLights = FindObjectsOfType<Light>();
 
@@ -657,12 +677,16 @@ private void ActivateDogHoleClientRpc(NetworkObjectReference holeRef)
 
     private void EndGame()
     {
-        if (scoreManager != null)
+        if (endGameHandler != null)
         {
-            scoreManager.EndGame();
+            endGameHandler.GameOver(); // EndGame의 GameOver() 메서드 호출
+        }
+        else
+        {
+            Debug.LogError("EndGameHandler가 설정되지 않았습니다!");
         }
     }
-    
+
     [ServerRpc]
     private void AddScoreServerRpc(string playerType, int points)
     {
