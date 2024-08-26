@@ -21,7 +21,7 @@ public class PlayerMovement : NetworkBehaviour
     GameObject MainCamera;
     CharacterController _controller;
 
-    public float speed = 5f;
+    public float speed = 10f;
     public float runspeed = 8f;
     public float finalSpeed;
     public bool toggleCameraRotation;
@@ -497,7 +497,7 @@ public class PlayerMovement : NetworkBehaviour
     //이미호로 바뀌는 함수
 private void ChangeModel()
 {
-    if (PlayerNetworkStats.Instance.BeadCount >= 1 && !isAwaken.Value && IsOwner)
+    if (PlayerNetworkStats.Instance.BeadCount >= 3 && !isAwaken.Value && IsOwner)
     {
         Set_isAwakenServerRpc(true);
         Set_isAwakenClientRpc(true);
