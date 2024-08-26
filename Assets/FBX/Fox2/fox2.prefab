@@ -461,7 +461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 717869820
+  GlobalObjectIdHash: 2945398383
   InScenePlacedSourceGlobalObjectIdHash: 2945398383
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -481,7 +481,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 0d462477d95c820438139dc125584f50, type: 3}
   m_Controller: {fileID: 9100000, guid: 0743bedb8569e0148a3b809c9251d945, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0

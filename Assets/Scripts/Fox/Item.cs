@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.UIElements;
 
 public class Item : NetworkBehaviour
 {
@@ -27,6 +28,10 @@ public class Item : NetworkBehaviour
     // 개구멍이 소환될 위치
     [SerializeField] private Transform[] dogHoleTransForm;
 
+    // 여의주 스폰 범위
+    [SerializeField] private float spawnRangeX = 100.0f; // x축 범위
+    [SerializeField] private float spawnRangeZ = 150.0f; // z축 범위
+
     private void Awake()
     {
         Instance = this;
@@ -48,7 +53,7 @@ public class Item : NetworkBehaviour
     {
         for (int i = 0; i < beadTransForm.Length; i++)
         {
-            Vector3 randomPosition = new Vector3(Random.Range(-10f, 10f), Random.Range(1f, 5f), Random.Range(-10f, 10f));
+            Vector3 randomPosition = GetRandomPosition();
             beadTransForm[i].position = randomPosition;
 
             Debug.Log($"beadTransForm[{i}] new position: {beadTransForm[i].position}");
@@ -64,17 +69,56 @@ public class Item : NetworkBehaviour
             return hit.point;
         }
         else{
-            return originalPosition; 
+            return originalPosition;
         }
     }
+
+    private Vector3 GetRandomPosition()
+    {
+        Vector3 randomPosition = Vector3.zero; // 초기값 설정
+        bool validPosition = false;
+        int maxAttempts = 10; // 최대 시도 횟수
+        int attempts = 0;
+
+        while (!validPosition && attempts < maxAttempts)
+        {
+            // 설정한 범위 내에서 랜덤한 x와 z 좌표 생성
+            float randomX = Random.Range(-spawnRangeX, spawnRangeX);
+            float randomZ = Random.Range(-spawnRangeZ, spawnRangeZ);
+
+            // y 값을 고정
+            float fixedY = -8.3f;
+
+            // 최종 랜덤 위치 설정
+            randomPosition = new Vector3(randomX, fixedY, randomZ);
+
+            // Collider가 있는지 확인 (반경 1.0f로 설정)
+            Collider[] colliders = Physics.OverlapSphere(randomPosition, 1.0f);
+            if (colliders.Length == 0)
+            {
+                validPosition = true; // 겹치지 않으면 유효한 위치
+            }
+
+            attempts++;
+        }
+
+        if (!validPosition)
+        {
+            Debug.LogWarning("Could not find a valid spawn position after multiple attempts.");
+            return Vector3.zero; // 유효한 위치를 찾지 못한 경우 기본 위치 반환
+        }
+
+        return randomPosition; // 유효한 위치 반환
+    }
+
 
     [ServerRpc]
     private void MakeBeadServerRpc()
     {
         for (int i = 0; i < beadTransForm.Length; i++)
         {
-            Vector3 groundPosition = GetGroundPosition(beadTransForm[i].position);
-            GameObject bd = Instantiate(Bead, groundPosition, beadTransForm[i].rotation);
+            Vector3 randomPosition = GetRandomPosition();
+            GameObject bd = Instantiate(Bead, randomPosition, Quaternion.identity);
             bd.GetComponent<NetworkObject>().Spawn();
         }
 

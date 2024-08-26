@@ -5408,6 +5408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd414444af2470f43926e39fd63e1639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _camera: {fileID: 0}
   MainCamera: {fileID: 825259794876241739}
   speed: 5
   runspeed: 8
@@ -5415,12 +5416,156 @@ MonoBehaviour:
   toggleCameraRotation: 0
   run: 0
   smoothness: 10
-  playerState: 
   _tiger_roaring: {fileID: 689296469296291299}
+  jumpHeight: 1.5
+  gravity: -9.81
+  isGhost: 0
+  playerState: 
+  playerStateSync:
+    m_InternalValue:
+      utf8LengthInBytes: 0
+      bytes:
+        offset0000:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        offset0016:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        offset0032:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        offset0048:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        offset0064:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        offset0080:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        offset0096:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        byte0112: 0
+        byte0113: 0
+        byte0114: 0
+        byte0115: 0
+        byte0116: 0
+        byte0117: 0
+        byte0118: 0
+        byte0119: 0
+        byte0120: 0
+        byte0121: 0
+        byte0122: 0
+        byte0123: 0
+        byte0124: 0
+        byte0125: 0
+  newSkyboxMaterial: {fileID: 0}
+  spotLight: {fileID: 0}
+  nearObject: {fileID: 0}
+  _uiManager: {fileID: 0}
   animalModel: {fileID: 919132149155446097, guid: 27520bf6009bb064d8744d18ff6ee12e, type: 3}
-  currentModel: {fileID: 3253949356774894863}
   originalModel: {fileID: 0}
-  isAwaken: 0
+  isAwaken:
+    m_InternalValue: 0
 --- !u!143 &6395637254529567614
 CharacterController:
   m_ObjectHideFlags: 0
@@ -5459,9 +5604,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de8a834697078e24cb9d0e1b559d7000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animalModels:
-  - {fileID: 919132149155446097, guid: eb01aa77ca942c14cb6073117de53c41, type: 3}
-  - {fileID: 919132149155446097, guid: 7f0cf2ca8898368498dd221cbefb1c19, type: 3}
+  animalModelsForDefaultPlayer: []
+  animalModelsForDefaultPlayerNames: []
+  animalModelsForNetworks:
+  - {fileID: 5908685864431512274, guid: ffc430f9f1eb2f24eb41ef6e11963738, type: 3}
+  - {fileID: 4990482849642214827, guid: afddc1ad77b5c214a85e1d14fe6b1b80, type: 3}
+  - {fileID: 1380563811241207707, guid: c1c64c1129736f34b90d58877f96ab99, type: 3}
+  animalModel_Sec_Fox: {fileID: 1121467957057490412, guid: 283a94320766a3245b3a7108267fd596, type: 3}
+  animalModelsNames:
+  - Capybara(Clone)
+  - Cat(Clone)
+  - Sheep(Clone)
   SkillCoolingTime_fox: 0
 --- !u!114 &8637592993313646757
 MonoBehaviour:
