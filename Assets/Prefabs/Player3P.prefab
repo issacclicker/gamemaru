@@ -703,11 +703,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9011106427312675511, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.34
+      value: 5.95
       objectReference: {fileID: 0}
     - target: {fileID: 9011106427312675511, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.29
+      value: -11.53
       objectReference: {fileID: 0}
     - target: {fileID: 9130685224232239991, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
       propertyPath: playerHead

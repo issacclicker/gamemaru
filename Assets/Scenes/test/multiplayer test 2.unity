@@ -3775,6 +3775,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: sheep
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 31dcf0372229ced4c9a9aa6c385151c6, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 31dcf0372229ced4c9a9aa6c385151c6, type: 3}
       propertyPath: m_Controller
       value: 
@@ -6462,6 +6466,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 0582cf67a1fe0f742a6af5889c5a56b1, type: 3}
       propertyPath: m_Name
       value: cat
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0582cf67a1fe0f742a6af5889c5a56b1, type: 3}
+      propertyPath: m_TagString
+      value: NPC
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 0582cf67a1fe0f742a6af5889c5a56b1, type: 3}
       propertyPath: m_Controller
@@ -11296,6 +11304,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 4985116a51c98284ab9bbcd801b95026, type: 3}
       propertyPath: m_Name
       value: Capybara (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4985116a51c98284ab9bbcd801b95026, type: 3}
+      propertyPath: m_TagString
+      value: NPC
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 4985116a51c98284ab9bbcd801b95026, type: 3}
       propertyPath: m_Controller

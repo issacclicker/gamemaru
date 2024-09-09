@@ -95,7 +95,7 @@ public class CubeController : NetworkBehaviour
         }
         else if (isActive && playerState == "Tiger" && collision.gameObject.CompareTag("Player")) //호랑이가 여우 사냥
         {
-            if(collision.gameObject == this.gameObject)
+            if(collision.gameObject == this.gameObject || collision.gameObject.name == "TigerNet(Clone)")
             {
                 Debug.Log("좆버그");
                 return;
