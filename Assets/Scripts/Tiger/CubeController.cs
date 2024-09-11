@@ -83,7 +83,13 @@ public class CubeController : NetworkBehaviour
     private void OnTriggerEnter(Collider collision)
     {
 
-        Debug.Log(collision.gameObject.tag + " : " + collision.gameObject.GetComponent<NetworkObject>().OwnerClientId);
+        Debug.Log(collision.gameObject.tag + " : " + collision.gameObject.name + " : " + collision.gameObject.GetComponent<NetworkObject>().OwnerClientId);
+
+        if(IsHost && collision.gameObject.CompareTag("Player") && collision.gameObject.GetComponent<NetworkObject>().OwnerClientId == 0)
+        {
+            Debug.Log("자기자신 공격");
+            return;
+        }
 
         if (isActive && playerState=="Tiger" && collision.gameObject.CompareTag("NPC")) //호랑이가 NPC 사냥
         {

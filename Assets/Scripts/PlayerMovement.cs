@@ -37,6 +37,7 @@ public class PlayerMovement : NetworkBehaviour
     private bool isGrounded;
 
 
+
     [SerializeField]private bool isGhost=false;
 
 
@@ -79,6 +80,9 @@ public class PlayerMovement : NetworkBehaviour
 
     private ScoreManager scoreManager;
 
+    //자기 자신 히트박스
+    [SerializeField]private Collider MyHitBox;
+
 
     void Awake()
     {
@@ -101,6 +105,12 @@ public class PlayerMovement : NetworkBehaviour
             Debug.Log("Animator component is found.");
         }
 
+
+        if(IsOwner)
+        {
+            MyHitBox.enabled = false;
+        }
+        
 
         _camera = Camera.main;
         // _controller = this.GetComponent<CharacterController>();
