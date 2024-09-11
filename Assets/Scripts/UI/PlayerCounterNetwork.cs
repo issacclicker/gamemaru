@@ -10,7 +10,7 @@ public class PlayerCounterNetwork : NetworkBehaviour
 
     public GameObject _UIManager;
 
-    private NetworkVariable<int> playerCount = new NetworkVariable<int>(0);
+    public NetworkVariable<int> playerCount = new NetworkVariable<int>(0);
 
     int local_playerCount=0;
 

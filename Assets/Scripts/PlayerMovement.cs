@@ -219,12 +219,12 @@ public class PlayerMovement : NetworkBehaviour
 
 
         //유령 테스트
-        if(Input.GetKey(KeyCode.G)&&!isGhost)
-        {
-            isGhost = true;
-            Debug.Log("현재상태(클라) : " + isGhost);
-            PlayerDieServerRpc(this.gameObject);
-        }
+        // if(Input.GetKey(KeyCode.G)&&!isGhost)
+        // {
+        //     isGhost = true;
+        //     Debug.Log("현재상태(클라) : " + isGhost);
+        //     PlayerDieServerRpc(this.gameObject);
+        // }
 
 
 
