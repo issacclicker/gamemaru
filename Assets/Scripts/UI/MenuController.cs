@@ -31,7 +31,7 @@ public class MenuController : MonoBehaviour
         KeyPanel.SetActive(false);
     }
 
-    // Quit ¹öÆ° Å¬¸¯ ½Ã È£ÃâµÉ ÇÔ¼ö
+    // Quit ï¿½ï¿½Æ° Å¬ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     public void OnClickQuitButton()
     {  
         Debug.Log("Game is quitting...");
@@ -47,7 +47,10 @@ public class MenuController : MonoBehaviour
         RulesPanel6.SetActive(false);
 
         KeyPanel.SetActive(false);
+    
     }
+
+    
 
     public void OnClickRulesButton()
     {
