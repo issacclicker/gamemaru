@@ -81,8 +81,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 8626207122230333528}
   MainCamera: {fileID: 7265916348695070479}
-  speed: 5
-  runspeed: 8
+  speed: 10
+  runspeed: 15
   finalSpeed: 0
   toggleCameraRotation: 0
   run: 0
@@ -353,12 +353,10 @@ MonoBehaviour:
   nearObject: {fileID: 0}
   Bead: {fileID: 4919220932830677973, guid: 203615d793fd13f41ab73c9573203dae, type: 3}
   beadTransForm:
-  - {fileID: 7319528757254569673, guid: 203615d793fd13f41ab73c9573203dae, type: 3}
   - {fileID: 7375570948873625387, guid: 762d86f560045074a88807ca2b854b92, type: 3}
   - {fileID: 1126146824203454041, guid: 7beb478ee9f159849acfa0a387eb183f, type: 3}
   - {fileID: 2600246247579103129, guid: 881a28e3374342c4a9c5362eec668456, type: 3}
   - {fileID: 9068761321880600687, guid: a876df6960150764fa11850b0635ea72, type: 3}
-  - {fileID: 8111073045069211909, guid: 2b6d363518d5d414c981c638d0d4c8af, type: 3}
   Food: {fileID: 4919220932830677973, guid: e2241283a97b76a4abcc2d4453806510, type: 3}
   foodTransForm: []
   DogHole: {fileID: 6336124780047759324, guid: 52f55c72ba8e7b341a840cd0cedb2be1, type: 3}
@@ -714,11 +712,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9011106427312675511, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.95
+      value: 7.25
       objectReference: {fileID: 0}
     - target: {fileID: 9011106427312675511, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -11.53
+      value: -16.64
       objectReference: {fileID: 0}
     - target: {fileID: 9130685224232239991, guid: 3b04879d08192494fa729827f4527f4b, type: 3}
       propertyPath: playerHead
