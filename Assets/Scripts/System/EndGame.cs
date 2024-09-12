@@ -5,16 +5,35 @@ using Unity.Netcode;
 
 public class EndGame : MonoBehaviour
 {
-    public GameObject[] EndGameUI;
+    // public GameObject[] EndGameUI;
+
+    public GameObject[] FoxWinsUI;
+    public GameObject[] TigerWinsUI;
 
     public GameObject SceneManager;
 
-    public void GameOver()
+    public void GameOver(string winner)
     {
-        foreach (var obj in EndGameUI)
+        // foreach (var obj in EndGameUI)
+        // {
+        //     obj.SetActive(true);
+        // }
+
+        if(winner=="Tiger")
         {
-            obj.SetActive(true);
+            foreach (var obj in TigerWinsUI)
+            {
+                obj.SetActive(true);
+            }
         }
+        else if(winner=="Fox")
+        {
+            foreach (var obj in FoxWinsUI)
+            {
+                obj.SetActive(true);
+            }
+        }
+
         StartCoroutine(WaitForSeconds());
     }
 

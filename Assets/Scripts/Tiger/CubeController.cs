@@ -162,17 +162,28 @@ public class CubeController : NetworkBehaviour
         {
             Debug.Log("Sec_Fox Hunts!");
             PlayerMovement.ProcessDieOnServer(p.GetComponent<PlayerMovement>());
-            OnTigerDiesClientRpc(); 
+            OnTigerDiesClientRpc(player); 
         }
     }
 
     [ClientRpc]
-    private void OnTigerDiesClientRpc()
+    private void OnTigerDiesClientRpc(NetworkObjectReference player)
     {
         Debug.Log("여우 승리1!!!");
 
-        if(IsOwner)
-        _playerMovement.GetComponent<PlayerMovement>()._uiManager.__EndGame__.GetComponent<EndGame>().GameOver();
+        if(!IsHost)
+        {
+            GameObject.Find("UIManager").GetComponent<UIManager>().__EndGame__.GetComponent<EndGame>().GameOver("Fox");
+        }
+        else
+        {
+            if(player.TryGet(out var p))
+            {
+                p.GetComponent<PlayerMovement>()._uiManager.__EndGame__.GetComponent<EndGame>().GameOver("Fox");
+            }
+
+        }
+        
     }
 
 
@@ -182,10 +193,22 @@ public class CubeController : NetworkBehaviour
         Debug.Log("죽은 여우 : " + HuntedFoxCounter + "/" + PlayerCounterObject.GetComponent<PlayerCounterNetwork>().playerCount.Value);
         HuntedFoxCounter+=1;
 
-        if(HuntedFoxCounter>=PlayerCounterObject.GetComponent<PlayerCounterNetwork>().playerCount.Value-1&&IsOwner)
+        if(HuntedFoxCounter>=PlayerCounterObject.GetComponent<PlayerCounterNetwork>().playerCount.Value-1)
         {
             Debug.Log("호랑이 승리!!!!");
-            _playerMovement.GetComponent<PlayerMovement>()._uiManager.__EndGame__.GetComponent<EndGame>().GameOver();
+            // _playerMovement._uiManager.__EndGame__.GetComponent<EndGame>().GameOver("Tiger");
+
+            if(!IsHost)
+            {
+                GameObject.Find("UIManager").GetComponent<UIManager>().__EndGame__.GetComponent<EndGame>().GameOver("Tiger");
+        
+            }
+            else
+            {
+                _playerMovement._uiManager.__EndGame__.GetComponent<EndGame>().GameOver("Tiger");
+            }
+            
+            
         }
     }
 }
