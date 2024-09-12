@@ -5849,7 +5849,7 @@ MonoBehaviour:
   GameStartButton: {fileID: 165996604}
   PlayerCounterText: {fileID: 1828863466}
   __StartGame__: {fileID: 2129715658}
-  __EngGame__: {fileID: 2129715658}
+  __EndGame__: {fileID: 2129715658}
 --- !u!4 &1035629945
 Transform:
   m_ObjectHideFlags: 0
@@ -10280,6 +10280,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _UIManager: {fileID: 1035629943}
+  playerCount:
+    m_InternalValue: 0
 --- !u!114 &1828863471
 MonoBehaviour:
   m_ObjectHideFlags: 0

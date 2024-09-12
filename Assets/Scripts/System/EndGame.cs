@@ -31,6 +31,10 @@ public class EndGame : MonoBehaviour
 
     void __GameOver__()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+
         SceneManager.GetComponent<SceneChanger>().OnChangingBtnClick();
         NetworkManager.Singleton.Shutdown();
     }

@@ -38,6 +38,7 @@ public class CubeController : NetworkBehaviour
 
         PlayerCounterObject = GameObject.Find("PlayerCountText");
         PlayerCount = PlayerCounterObject.GetComponent<PlayerCounterNetwork>().playerCount.Value;
+        Debug.Log("플레이어 수 : " + PlayerCount);
         HuntedFoxCounter = 0;
 
     }
@@ -168,17 +169,23 @@ public class CubeController : NetworkBehaviour
     [ClientRpc]
     private void OnTigerDiesClientRpc()
     {
+        Debug.Log("여우 승리1!!!");
+
         if(IsOwner)
-        _playerMovement.GetComponent<PlayerMovement>()._uiManager.__EngGame__.GetComponent<EndGame>().GameOver();
+        _playerMovement.GetComponent<PlayerMovement>()._uiManager.__EndGame__.GetComponent<EndGame>().GameOver();
     }
 
 
     [ClientRpc]
     private void OnFoxDiesClientRpc()
     {
-        if(HuntedFoxCounter>=PlayerCount&&IsOwner)
+        Debug.Log("죽은 여우 : " + HuntedFoxCounter + "/" + PlayerCounterObject.GetComponent<PlayerCounterNetwork>().playerCount.Value);
+        HuntedFoxCounter+=1;
+
+        if(HuntedFoxCounter>=PlayerCounterObject.GetComponent<PlayerCounterNetwork>().playerCount.Value-1&&IsOwner)
         {
-            _playerMovement.GetComponent<PlayerMovement>()._uiManager.__EngGame__.GetComponent<EndGame>().GameOver();
+            Debug.Log("호랑이 승리!!!!");
+            _playerMovement.GetComponent<PlayerMovement>()._uiManager.__EndGame__.GetComponent<EndGame>().GameOver();
         }
     }
 }

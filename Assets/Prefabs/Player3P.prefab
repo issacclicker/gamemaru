@@ -360,15 +360,9 @@ MonoBehaviour:
   - {fileID: 9068761321880600687, guid: a876df6960150764fa11850b0635ea72, type: 3}
   - {fileID: 8111073045069211909, guid: 2b6d363518d5d414c981c638d0d4c8af, type: 3}
   Food: {fileID: 4919220932830677973, guid: e2241283a97b76a4abcc2d4453806510, type: 3}
-  foodTransForm:
-  - {fileID: 8187124496121675323, guid: 0f61774499a218242a4ed75b5d9ae662, type: 3}
-  - {fileID: 5247737906794823978, guid: 7b9b2b348afebfd4f835f349509dde17, type: 3}
+  foodTransForm: []
   DogHole: {fileID: 6336124780047759324, guid: 52f55c72ba8e7b341a840cd0cedb2be1, type: 3}
-  dogHoleTransForm:
-  - {fileID: 2426177212952509125, guid: 771f1444eb5399344b4f29d84b85c967, type: 3}
-  - {fileID: 3484244974046545024, guid: cbd7be85ce1c3654e9d283cdc4915ecc, type: 3}
-  - {fileID: 8667358753672989614, guid: 032f12e4aa82a3349982986cae6deca3, type: 3}
-  - {fileID: 5995618919258248691, guid: 3911c501d866a0c469640d46da2a16ec, type: 3}
+  dogHoleTransForm: []
 --- !u!114 &8106065598953404180
 MonoBehaviour:
   m_ObjectHideFlags: 0

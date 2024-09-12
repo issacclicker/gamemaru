@@ -756,7 +756,12 @@ private void ActivateDogHoleClientRpc(NetworkObjectReference holeRef)
             playerAnimation.PlayDieAnimation();
         }
 
-        _uiManager.__EngGame__.GetComponent<EndGame>().GameOver();
+        if(IsOwner)
+        {
+            _uiManager.__EndGame__.GetComponent<EndGame>().GameOver();
+        }
+
+        
 
         if(IsOwner)
         {
