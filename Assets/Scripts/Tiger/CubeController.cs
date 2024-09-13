@@ -16,6 +16,11 @@ public class CubeController : NetworkBehaviour
 
     PlayerMovement _playerMovement;
 
+    GameObject PlayerCounterObject;
+    private int PlayerCount;
+
+    private int HuntedFoxCounter;
+
     public bool IsActive
     {
         get { return isActive; }
@@ -30,6 +35,11 @@ public class CubeController : NetworkBehaviour
         //     SetCubeActive(false);
         // }
         SetCubeActive(false);
+
+        PlayerCounterObject = GameObject.Find("PlayerCountText");
+        PlayerCount = PlayerCounterObject.GetComponent<PlayerCounterNetwork>().playerCount.Value;
+        Debug.Log("플레이어 수 : " + PlayerCount);
+        HuntedFoxCounter = 0;
 
     }
 
@@ -109,6 +119,9 @@ public class CubeController : NetworkBehaviour
             Debug.Log("호랑이가 여우를 사냥!!");
 
             OnTigerHuntsServerRpc(collision.gameObject);
+
+            HuntedFoxCounter += 1;
+            Debug.Log("여우 잡은 수 : " + HuntedFoxCounter);
         }
         else if (isActive && PlayerMovement.Instance.isAwaken.Value && collision.gameObject.CompareTag("Player") && !collision.gameObject.GetComponent<PlayerMovement>().isAwaken.Value) //여우(이미호)가 호랑이 사냥
         {
@@ -134,7 +147,9 @@ public class CubeController : NetworkBehaviour
             Debug.Log("Tiger Hunts!");
             if (!p.GetComponent<PlayerMovement>().isAwaken.Value)
             {
+                Debug.Log("호랑이가 여우를 사냥 성공함!");
                 PlayerMovement.ProcessDieOnServer(p.GetComponent<PlayerMovement>());
+                OnFoxDiesClientRpc();
             }
 
         }
@@ -147,14 +162,53 @@ public class CubeController : NetworkBehaviour
         {
             Debug.Log("Sec_Fox Hunts!");
             PlayerMovement.ProcessDieOnServer(p.GetComponent<PlayerMovement>());
-            OnTigerDiesClientRpc(); 
+            OnTigerDiesClientRpc(player); 
         }
     }
 
     [ClientRpc]
-    private void OnTigerDiesClientRpc()
+    private void OnTigerDiesClientRpc(NetworkObjectReference player)
     {
-        if(IsOwner)
-        _playerMovement.GetComponent<PlayerMovement>()._uiManager.__EngGame__.GetComponent<EndGame>().GameOver();
+        Debug.Log("여우 승리1!!!");
+
+        if(!IsHost)
+        {
+            GameObject.Find("UIManager").GetComponent<UIManager>().__EndGame__.GetComponent<EndGame>().GameOver("Fox");
+        }
+        else
+        {
+            if(player.TryGet(out var p))
+            {
+                p.GetComponent<PlayerMovement>()._uiManager.__EndGame__.GetComponent<EndGame>().GameOver("Fox");
+            }
+
+        }
+        
+    }
+
+
+    [ClientRpc]
+    private void OnFoxDiesClientRpc()
+    {
+        Debug.Log("죽은 여우 : " + HuntedFoxCounter + "/" + PlayerCounterObject.GetComponent<PlayerCounterNetwork>().playerCount.Value);
+        HuntedFoxCounter+=1;
+
+        if(HuntedFoxCounter>=PlayerCounterObject.GetComponent<PlayerCounterNetwork>().playerCount.Value-1)
+        {
+            Debug.Log("호랑이 승리!!!!");
+            // _playerMovement._uiManager.__EndGame__.GetComponent<EndGame>().GameOver("Tiger");
+
+            if(!IsHost)
+            {
+                GameObject.Find("UIManager").GetComponent<UIManager>().__EndGame__.GetComponent<EndGame>().GameOver("Tiger");
+        
+            }
+            else
+            {
+                _playerMovement._uiManager.__EndGame__.GetComponent<EndGame>().GameOver("Tiger");
+            }
+            
+            
+        }
     }
 }
