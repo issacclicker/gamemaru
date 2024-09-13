@@ -358,7 +358,8 @@ MonoBehaviour:
   - {fileID: 2600246247579103129, guid: 881a28e3374342c4a9c5362eec668456, type: 3}
   - {fileID: 9068761321880600687, guid: a876df6960150764fa11850b0635ea72, type: 3}
   Food: {fileID: 4919220932830677973, guid: e2241283a97b76a4abcc2d4453806510, type: 3}
-  foodTransForm: []
+  foodTransForm:
+  - {fileID: 2028939323399504288, guid: 0f61774499a218242a4ed75b5d9ae662, type: 3}
   DogHole: {fileID: 6336124780047759324, guid: 52f55c72ba8e7b341a840cd0cedb2be1, type: 3}
   dogHoleTransForm: []
 --- !u!114 &8106065598953404180
