@@ -6,12 +6,14 @@ using UnityEngine.UI;
 public class SettingMenuController : MonoBehaviour
 {
     [SerializeField]private GameObject settingsPanel;
+    [SerializeField]private GameObject orginCanvas;
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            // ¼³Á¤ Ã¢ÀÇ È°¼º/ºñÈ°¼º »óÅÂ¸¦ Åä±Û
+            // ï¿½ï¿½ï¿½ï¿½ Ã¢ï¿½ï¿½ È°ï¿½ï¿½/ï¿½ï¿½È°ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½ï¿½
             settingsPanel.SetActive(!settingsPanel.activeSelf);
+            orginCanvas.SetActive(!orginCanvas.activeSelf);
         }
     }
 }
